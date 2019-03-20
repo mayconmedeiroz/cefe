@@ -11,10 +11,6 @@ html, body {
     overflow-x: hidden;
 }
 
-.content {
-    width: 100%;
-}
-
 /*****************************
     TOPBAR
 *****************************/
@@ -281,7 +277,7 @@ html, body {
 }
 
 /*****************************
-    GAMBIARRA RESPONSIVA
+    MEDIA QUERIES
 *****************************/
 
 @media (max-width: 768px) {
@@ -310,6 +306,8 @@ html, body {
         height: 60px !important;
     }
     .sidebar{
+        position: absolute !important;
+        z-index: 1;
         min-height: calc(100vh - 60px);
     }
     .nav-user > a {
