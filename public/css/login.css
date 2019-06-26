@@ -1,0 +1,89 @@
+/*****************************
+    GLOBAL
+*****************************/
+
+html, body {
+    font-family: 'Poppins';
+    font-weight: 300;
+    font-size: 14px;
+}
+
+/*****************************
+    CONTAINER LEFT
+*****************************/
+
+.container-left-background {
+    background-image: url("../img/background.jpg");
+}
+
+.container-left {
+    height: 100vh;
+}
+
+.logo-left img {
+    height: 60px;
+}
+
+.phrase p {
+    font-weight: 500;
+    color: white;
+    text-shadow: 1px 1px 5px #000;
+}
+
+.phrase p:first-child {
+    font-size: 1.8rem;
+}
+
+.phrase p:last-child {
+    font-size: 1.2rem;
+}
+
+/*****************************
+    CONTAINER RIGHT
+*****************************/
+
+.container-right {
+    height: calc(100vh - 100px);
+}
+
+.container-right h1 {
+    font-size: 2rem;
+    color: #67666e;
+    text-align: center;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.container-right .form-group {
+    width: 66%;
+    margin: 0 auto 1rem;
+}
+
+.container-right input {
+    height: 50px;
+    margin-top: 1.25rem;
+    padding: 0 1.25rem;
+    
+}
+
+.button-group .btn:focus, .container-right input:focus {
+    outline: none;
+    box-shadow: none !important;
+}
+
+.button-group .btn {
+    display: inline-block;
+    padding: 12px 10px;
+    width: 126px;
+}
+
+.button-group a {
+    padding-top: 12px;
+    display: inline-block;
+}
+
+@media (max-width: 576px) {
+    .button-group {
+        text-align: center;
+    }
+}

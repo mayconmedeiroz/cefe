@@ -1,0 +1,607 @@
+/*****************************
+    GLOBAL
+*****************************/
+
+html, body {
+    height: 100%;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    background-color: #f2f3f8;
+    overflow-x: hidden;
+}
+
+/*****************************
+    TOPBAR
+*****************************/
+
+.main-topbar{
+    background-color: #201f2b;
+}
+
+.sidebar-toggle {
+    color: #fff !important;
+}
+
+.logo {
+    font-size: 40px;
+    font-weight: 400;
+    text-decoration: none !important;
+    color: white !important;
+}
+
+.logo span {
+    font-size: 20px;
+    color: #db1430;
+}
+
+/*****************************
+    TOPBAR USER
+*****************************/
+
+.nav-user{
+    padding: 0 12px;
+}
+
+.nav-user > a {
+    padding: 15px 0 14px;
+    display: block;
+    outline: none !important;
+}
+
+.nav-user img {
+    max-width: 41px !important;
+    min-width: 41px !important;
+    max-height: 41px !important;
+    min-height: 41px !important;
+    border-radius: 50%;
+    border-style: none;
+}
+
+.nav-user:hover, .nav-user.show {
+    background-color: #2d2c3d;
+}
+
+.nav-user .dropdown-toggle::after {
+    display:none;
+}
+
+.dropdown-user-inner {
+    left: auto;
+    right: 0;
+    width: 325px;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: 0 0 15px 1px rgba(69,65,78,0.2);
+}
+
+.dropdown-user-header {
+    padding: 20px 20px;
+    box-shadow: 1px 34px 52px -19px rgba(68,62,84,0.03);
+}
+
+.dropdown-user-photo {
+    display: table-cell;
+    padding: 5px 5px 5px 0;
+    width: 70px;
+}
+
+.dropdown-user-photo img {
+    max-width: 70px !important;
+    min-width: 70px !important;
+    max-height: 70px !important;
+    min-height: 70px !important;
+    border-radius: 100%;
+}
+
+.dropdown-user-profile {
+    display: table-cell;
+    width: 100%;
+    text-align: left;
+    vertical-align: middle;
+    padding-left: 15px;
+}
+
+.dropdown-user-profile-name {
+    color: #1b1c1e;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.dropdown-user-profile-email {
+    color: #3f4047;
+    font-size: 0.9rem;
+    font-weight: 300;
+}
+
+.dropdown-user-menu{
+    padding: 20px;
+    margin: 0;
+    list-style: none;
+}
+
+.dropdown-user-menu li {
+    padding: 9px 0;
+}
+
+.dropdown-user-menu li a {
+    text-decoration: none;
+    display: block;
+    width: 100%;
+}
+
+.dropdown-user-menu li i {
+    color: #c1bfd0;
+    display: table-cell;
+    vertical-align: middle;
+    width: 35px;
+    font-size: 1.1rem;
+}
+
+.dropdown-user-menu li a > span {
+    display: table-cell;
+}
+
+.dropdown-user-menu li a > span > span {
+    display: table;
+}
+
+.dropdown-user-menu li a > span > span > span {
+    display: table-cell;
+    font-size: 1rem;
+    color: #6f727d;
+    font-weight: 400;
+}
+
+.dropdown-user-menu li a:hover i, .dropdown-user-menu li a:hover > span > span > span {
+    color: #db1430 !important;
+}
+
+.dropdown-user-menu-separator {
+    padding: 0 !important;
+    margin: 15px 0;
+    border-bottom: 1px solid #f4f5f8;
+}
+
+/*****************************
+    SIDEBAR
+*****************************/
+
+.sidebar {
+    padding: 30px 0;
+    min-width: 255px;
+    max-width: 255px;
+    transition: all 0.3s;
+    background-color: #282733;
+}
+
+.sidebar ul {
+    padding-left: 0;
+}
+
+.sidebar li a {
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 0.95rem;
+    display: block;
+    padding: 12.1px 30px;
+    color: #868aa8;
+}
+
+.sidebar ul ul a {
+    padding: 10px 40px;
+}
+
+.sidebar ul ul a:hover{
+    background-color: #2f2e3c;
+}
+
+.menu-active {
+    color: #fff !important;
+    background-color: #db1430 !important;
+}
+
+.menu-section {
+    display: table;
+    padding: 0 27px;
+    height: 40px;
+}
+
+.menu-section span {
+    display: table-cell;
+    vertical-align: middle;
+    text-transform: uppercase;
+    color: #464b66;
+    font-size: .77rem;
+    font-weight: 500;
+    letter-spacing: .3px;
+}
+
+.sidebar a i {
+    width: 32px;
+    font-size: 1.2rem;
+    color: #fff;
+    opacity: 0.4;
+    vertical-align: middle;
+}
+
+.sidebar [data-toggle="collapse"] {
+    position: relative;
+}
+
+.sidebar [data-toggle="collapse"]:before {
+    content: "\f0d7";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    position: absolute;
+    right: 1.7rem;
+}
+.sidebar [aria-expanded="true"] {
+    color: #9ca1c3;
+}
+
+.sidebar [aria-expanded="true"]:before {
+    content: "\f0d8";
+}
+
+.sidebar.toggled {
+    margin-left: -255px;
+}
+
+.sidebar [aria-expanded="true"], .sidebar > ul > li > a:hover, .menu-sub-active {
+    color: #9ca1c3;
+    background: #2f2e3c;
+}
+
+.sidebar li ul li a::before {
+    font-size: 1.1rem;
+    content: '-';
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 6px;
+    width: 26px;
+}
+
+/*****************************
+    BREADCRUMB
+*****************************/
+
+.page-breadcrumb ol {
+    background: #f2f3f8;
+    border-bottom: 1px solid #e7ecf1;
+    margin: 0;
+}
+
+.page-breadcrumb ol, .page-breadcrumb ol a {
+    color: #888;
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+    content: "-";
+}
+
+/*****************************
+    PÁGINA ADICIONAR
+*****************************/
+
+.form, .list-div, .profile, .calendar-div {
+    box-shadow: 0 0 13px 0 rgba(82,63,105,0.05);
+    background-color: #fff;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.form-title{
+    display: flex;
+    padding: 0 25px;
+    border-bottom: 1px solid #ebedf2;
+    min-height: 60px;
+}
+
+.form-title > div {
+    display: flex;
+    align-items: center;
+}
+
+.form-title p {
+    margin: 0;
+    padding: 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #464457;
+}
+
+.form-body {
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+}
+
+.form-body label {
+    font-size: 0.9rem;
+    font-weight: 400;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
+.form-body span {
+    font-size: 0.9rem;
+}
+
+input:focus, .btn:focus, .pagination a:focus, select {
+    outline: none;
+    box-shadow: none !important;
+}
+
+.form-body .form-control {
+    padding: .65rem 1rem;
+    height: calc(1.5em + 1.3rem + 2px);
+    font-size: 0.9rem;
+}
+
+.form-footer {
+    padding: 25px;
+    border-top: 1px solid #ebedf2;
+}
+
+.form-footer button {
+    padding: .65rem 1rem;
+}
+
+/*****************************
+    LISTAR ALUNOS
+*****************************/
+
+.list-div td {
+    vertical-align: middle;
+}
+
+.selected {
+    color: #000 !important;
+    background-color: #e9ebec !important;
+}
+
+.list-div td:last-child {
+    text-align: center;
+}
+
+.list-div  td a {
+    color: #fff !important;
+}
+
+/*****************************
+    PERFIL
+*****************************/
+
+.image-wrapper {
+    background: rgba(0, 0, 0, 0.4);
+    bottom: -50px;
+    height: 50px;
+    left: 0;
+    position: absolute;
+    transition: bottom 0.15s linear;
+    width: 100%;
+}
+.edit-picture {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    cursor: pointer;
+    font-weight: 400;
+    font-size: 16px;
+    top: 10px;
+}
+
+.profile-pic {
+    background-color: #f2f3f8;
+    transform: translateX(0);
+    border-radius: 50%;
+    vertical-align: middle;
+    border: 4px solid #f2f3f8;
+    overflow: hidden;
+    width:150px;
+    height:150px;
+    margin-right:25px;
+}
+
+.profile-pic img {
+    height: 100%;
+    left: 50%;
+    max-height: 100%;
+    position: absolute;
+    transform: translateX(-50%);
+    transition: all 0.15s ease-out;
+    width: auto;
+    min-width: 100%;
+}
+
+.profile-pic:hover .image-wrapper {
+    bottom: 0;
+}
+
+/*****************************
+    MEDIA QUERIES
+*****************************/
+
+@media (max-width: 768px) {
+    .sidebar {
+        margin-left: -255px;
+    }
+    .sidebar.toggled {
+        margin-left: 0;
+    }
+}
+
+@media (min-width: 1025px) {
+    .main-topbar {
+        height: 70px;
+    }
+    .sidebar {
+        min-height: calc(100vh - 70px);
+    }
+    .nav-user > a {
+        padding: 15px 0 14px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .main-topbar {
+        height: 60px;
+    }
+    .sidebar {
+        position: absolute;
+        z-index: 10;
+        min-height: calc(100vh - 60px);
+    }
+    .nav-user > a {
+        padding: 10px 0 9px;
+    }
+    .logo span {
+        display: none;
+    }
+}
+
+/*****************************
+    DASHBOARD STATUS
+*****************************/
+
+.tile-red {
+    background: #e7505a;
+}
+
+.tile-blue {
+    background: #337ab7;
+}
+
+.tile-hoki {
+    background: #67809F;
+}
+
+.tile-purple {
+    background: #8E44AD;
+}
+
+.tile-stats {
+    display: block;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.tile-stats .tile-icon {
+    color: rgba(0, 0, 0, 0.1);
+    position: absolute;
+    right: 5px;
+    bottom: 35px;
+    z-index: 1;
+}
+
+.tile-stats .tile-icon i {
+    font-size: 100px;
+    line-height: 0;
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+}
+
+.tile-stats .tile-num {
+     font-size: 38px;
+     font-weight: bold;
+}
+
+.tile-stats .tile-num, .tile-stats h3, .tile-stats p {
+    position: relative;
+    color: #fff;
+    z-index: 5;
+    margin: 0;
+    padding: 0;
+}
+.tile-stats h3 {
+    font-size: 18px;
+    margin-top: 5px;
+}
+.tile-stats p {
+    font-size: 11px;
+    margin-top: 5px;
+}
+
+/*****************************
+    DASHBOARD CALENDAR
+*****************************/
+
+.calendar th, .calendar td, .calendar thead, .calendar tbody, .calendar .fc-row, .calendar .fc-content {
+    border-color: #EBEDF2;
+}
+
+.calendar .fc-button {
+    color: #A7ABC3;
+    background: transparent;
+    border: 1px solid #EBEDF2;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    height: 2.75rem;
+    padding: 0 1.25rem;
+    font-size: 1rem;
+}
+
+.calendar .fc-icon {
+    font-size: 1em;
+}
+
+.calendar button:hover {
+    background: #F7F8FA;
+}
+
+.calendar button:focus, .calendar button:active {
+    border: 1px solid #DB1430 !important;
+    background: #DB1430 !important;
+    color: #FFF;
+}
+
+.calendar .fc-day-header {
+    padding: 0.75rem 0.5rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #a7abc3;
+}
+
+.calendar .fc-event {
+    background: #fff;
+    border: 1px solid #ebedf2;
+    box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.055);
+    padding: 0.5rem;
+}
+
+.calendar .fc-title {
+    color: #6C7293;
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+.calendar .fc-event-container {
+    padding: 0.2rem 0.5rem;
+}
+
+.calendar h5 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-top: 0.75rem;
+}
+
+.calendar .fc-today {
+    background: none !important;
+    border: none !important;
+    font-weight: bold;
+    color: #000;
+}
+
+.calendar .fc-time {
+    color: #212529;
+    display: block;
+}
