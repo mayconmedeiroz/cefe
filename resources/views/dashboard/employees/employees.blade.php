@@ -30,17 +30,25 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="post" id="sport-form" class="form-horizontal">
+            <form method="post" id="employee-form" class="form-horizontal">
                 <div class="modal-body">
                     <span id="form-result"></span>
                     @csrf
                     <div class="form-group">
-                        <label for="name" class="control-label mb-0">Nome da Modalidade:</label>
-                        <input type="text" name="name" id="name" class="form-control" autofocus required/>
+                        <label for="enrollment" class="control-label mb-0">Matrícula:</label>
+                        <input name="enrollment" id="enrollment" type="text" class="form-control" autofocus required/>
                     </div>
                     <div class="form-group">
-                        <label for="acronym" class="control-label mb-0">Sigla: </label>
-                        <input type="text" name="acronym" id="acronym" class="form-control" required/>
+                        <label for="name" class="control-label mb-0">Nome Completo: </label>
+                        <input name="name" id="name" type="text" class="form-control" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="control-label mb-0">Email: </label>
+                        <input name="email" id="email" type="email" class="form-control" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="control-label mb-0">Senha: </label>
+                        <input name="password" id="password" type="password" class="form-control" required/>
                     </div>
                 </div>
                 <div class="modal-footer">

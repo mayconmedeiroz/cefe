@@ -2,8 +2,12 @@
 
 namespace CEFE\Http\Controllers;
 
+use CEFE\ClassTeacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use CEFE\User;
+use Validator;
+use Hash;
 
 class TeacherController extends Controller
 {
@@ -22,9 +26,14 @@ class TeacherController extends Controller
         if(request()->ajax())
         {
             $teachers = DB::table('users')
+                ->leftJoin('class_teachers', 'users.id', '=', 'class_teachers.teacher_id')
+                ->leftJoin('sport_classes', 'class_teachers.class_id', '=', 'sport_classes.id')
                 ->select('users.id', 'users.name')
-                ->where('level', '=', '2')
+                ->selectRaw('GROUP_CONCAT(`sport_classes`.`name` ORDER BY `sport_classes`.`name` ASC SEPARATOR ", ") AS `sport_class_name`')
+                ->where('users.level', '2')
                 ->whereNull('users.deleted_at')
+                ->whereNull('class_teachers.deleted_at')
+                ->groupBy('users.id')
                 ->get();
 
             return DataTables()->of($teachers)
@@ -36,6 +45,17 @@ class TeacherController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
+    }
+
+    public function validation($request)
+    {
+        $id = $request->hidden_id;
+        return Validator::make($request->all(), [
+            'enrollment' => 'required|max:20|unique:users,enrollment,' . $id,
+            'name' => 'required|max:64',
+            'email' => 'required|email|max:50|unique:users,email,' . $id,
+            'password' => 'required_if:action,==,add|max:60',
+        ]);
     }
 
     /**
@@ -56,7 +76,24 @@ class TeacherController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $error = $this->validation($request);
+
+        if($error->fails())
+        {
+            return response()->json(['errors' => "Falha na solicitação, tente novamente!"]);
+        }
+
+        $user = [
+            'enrollment' => $request->enrollment,
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'level' => '2',
+        ];
+
+        User::create($user);
+
+        return response()->json(['success' => 'Professor adicionado com sucesso.']);
     }
 
     /**
@@ -78,7 +115,20 @@ class TeacherController extends Controller
      */
     public function edit($id)
     {
-        //
+        if(request()->ajax())
+        {
+            $data = DB::table('users')
+                ->leftJoin('class_teachers', 'users.id', '=', 'class_teachers.teacher_id')
+                ->leftJoin('sport_classes', 'class_teachers.class_id', '=', 'sport_classes.id')
+                ->select('users.id', 'users.name', 'users.enrollment', 'users.email')
+                ->selectRaw('GROUP_CONCAT(`sport_classes`.`name` ORDER BY `sport_classes`.`name` ASC SEPARATOR ", ") AS `sport_class_name`')
+                ->where('users.id', $id)
+                ->whereNull('users.deleted_at')
+                ->whereNull('class_teachers.deleted_at')
+                ->groupBy('class_teachers.teacher_id')
+                ->first();
+            return response()->json(['data' => $data]);
+        }
     }
 
     /**
@@ -88,9 +138,28 @@ class TeacherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $error = $this->validation($request);
+
+        if($error->fails())
+        {
+            return response()->json(['errors' => $error->errors()->all()]);
+        }
+
+        $user = [
+            'enrollment' => $request->enrollment,
+            'name' => $request->name,
+            'email' => $request->email
+        ];
+
+        if($request->password) {
+            $user['password'] = Hash::make($request->password);
+        }
+
+        User::whereId($request->hidden_id)->update($user);
+
+        return response()->json(['success' => 'Professor atualizada com sucesso.']);
     }
 
     /**
@@ -101,6 +170,10 @@ class TeacherController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = ClassTeacher::findOrFail($id);
+        $user->delete();
+
+        $user = User::findOrFail($id);
+        $user->delete();
     }
 }

@@ -25,7 +25,7 @@
     <div class="col-md-3">
         <div class="tile-stats tile-purple">
             <div class="tile-icon"><i class="fas fa-chalkboard-teacher"></i></div>
-            <div class="tile-num">{{ \CEFE\Teacher::count() }}</div>
+            <div class="tile-num">{{ \CEFE\User::where('level', 2)->count() }}</div>
             <h3>Professores</h3>
             <p>Total de professores</p>
         </div>

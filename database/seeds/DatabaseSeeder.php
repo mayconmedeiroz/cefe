@@ -24,7 +24,6 @@ class DatabaseSeeder extends Seeder
         $this->CreateUsers();
         $this->CreateSports();
         $this->CreateSchools();
-        $this->CreateTeachers();
         $this->CreateSportClasses();
         $this->CreateClassTeachers();
         $this->CreateStudents();
@@ -115,21 +114,6 @@ class DatabaseSeeder extends Seeder
 
     }
 
-    private function CreateTeachers()
-    {
-        $teachers = [
-            ['user_id' => '5', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['user_id' => '6', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['user_id' => '7', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['user_id' => '8', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['user_id' => '9', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['user_id' => '10', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['user_id' => '11', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['user_id' => '12', 'created_at' => NOW(), 'updated_at' => NOW()],
-        ];
-        Teacher::insert($teachers);
-    }
-
     private function CreateSportClasses()
     {
         $sport_classes = [
@@ -148,19 +132,17 @@ class DatabaseSeeder extends Seeder
     private function CreateClassTeachers()
     {
         $class_teachers = [
-            ['teacher_id' => '1', 'class_id' => '1', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['teacher_id' => '2', 'class_id' => '2', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['teacher_id' => '3', 'class_id' => '3', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['teacher_id' => '4', 'class_id' => '4', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['teacher_id' => '5', 'class_id' => '4', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['teacher_id' => '5', 'class_id' => '5', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['teacher_id' => '6', 'class_id' => '6', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['teacher_id' => '7', 'class_id' => '7', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['teacher_id' => '8', 'class_id' => '8', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['teacher_id' => '5', 'class_id' => '1', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['teacher_id' => '6', 'class_id' => '2', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['teacher_id' => '7', 'class_id' => '3', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['teacher_id' => '8', 'class_id' => '4', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['teacher_id' => '9', 'class_id' => '4', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['teacher_id' => '9', 'class_id' => '5', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['teacher_id' => '10', 'class_id' => '6', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['teacher_id' => '11', 'class_id' => '7', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['teacher_id' => '12', 'class_id' => '8', 'created_at' => NOW(), 'updated_at' => NOW()],
         ];
         ClassTeacher::insert($class_teachers);
-
-
     }
 
     private function CreateStudentClasses()

@@ -20,7 +20,7 @@ class CreateClassTeachersTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('teacher_id')->references('id')->on('teachers');
+            $table->foreign('teacher_id')->references('id')->on('users');
             $table->foreign('class_id')->references('id')->on('sport_classes');
         });
     }

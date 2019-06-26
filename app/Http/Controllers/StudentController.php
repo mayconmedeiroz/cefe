@@ -232,7 +232,7 @@ class StudentController extends Controller
             StudentClass::create($newStudentClass);
         }
 
-        return response()->json(['success' => 'Modalidade atualizada com sucesso.']);
+        return response()->json(['success' => 'Aluno atualizada com sucesso.']);
     }
 
     /**

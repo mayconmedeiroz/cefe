@@ -34,9 +34,9 @@ class SportClassController extends Controller
     public function index()
     {
         $sports = Sport::all();
-        $teachers = DB::table('teachers')
-            ->join('users', 'users.id', '=', 'teachers.user_id')
-            ->select('teachers.id', 'users.name')
+        $teachers = DB::table('users')
+            ->select('users.id', 'users.name')
+            ->where('users.level', 2)
             ->get();
         return view('dashboard.classes.classes')->with(compact('sports', 'teachers'));
     }
@@ -46,10 +46,15 @@ class SportClassController extends Controller
         if(request()->ajax())
         {
             $classes = DB::table('sport_classes')
-                ->join('class_teachers', 'class_teachers.class_id', '=', 'sport_classes.id')
+                ->leftJoin('class_teachers', function($join){
+                    $join->on('class_teachers.class_id', '=', 'sport_classes.id')
+                        ->whereNull('class_teachers.deleted_at');
+                })
+                ->leftJoin('users', function($join){
+                    $join->on('users.id', '=', 'class_teachers.teacher_id')
+                        ->whereNull('users.deleted_at');
+                })
                 ->join('sports', 'sport_classes.sport_id', '=', 'sports.id')
-                ->join('teachers', 'teachers.id', '=', 'class_teachers.teacher_id')
-                ->join('users', 'users.id', '=', 'teachers.user_id')
                 ->select('sport_classes.id', 'sports.name AS sport_name', 'sport_classes.name')
                 ->selectRaw('GROUP_CONCAT(`users`.`name` ORDER BY `users`.`name` SEPARATOR ", ") AS teacher_name')
                 ->selectRaw('CONCAT(CASE `sport_classes`.`weekday` WHEN 0 THEN "Domingo" WHEN 1 THEN "Segunda-feira" WHEN 2 THEN "Terça-feira" WHEN 3 THEN "Quarta-feira" WHEN 4 THEN "Quinta-feira" WHEN 5 THEN "Sexta-feira" WHEN 6 THEN "Sábado" END, ", ", DATE_FORMAT(`sport_classes`.`start_time`, "%H:%i"), "-", DATE_FORMAT(`sport_classes`.`end_time`, "%H:%i")) AS `sport_time`')
@@ -131,7 +136,7 @@ class SportClassController extends Controller
 
         $sport_class = [
             'sport_id' => $request->sport,
-            'name' => $this->getSportName($request->sport)->getData(),
+            'name' => $this->getSportName($request->sport, false)->getData(),
             'vacancies' => $request->vacancies,
             'weekday' => $request->weekday,
             'start_time' => $request->start_time,
@@ -148,7 +153,7 @@ class SportClassController extends Controller
             ];
             ClassTeacher::create($class_teacher);
         }
-        return response()->json(['success' => 'Aluno adicionado com sucesso.']);
+        return response()->json(['success' => 'Turma adicionada com sucesso.']);
     }
 
     /**
@@ -173,12 +178,13 @@ class SportClassController extends Controller
         if(request()->ajax())
         {
             $data = DB::table('sport_classes')
-                ->join('class_teachers', 'class_teachers.class_id', '=', 'sport_classes.id')
-                ->join('sports', 'sport_classes.sport_id', '=', 'sports.id')
-                ->join('teachers', 'teachers.id', '=', 'class_teachers.teacher_id')
-                ->join('users', 'users.id', '=', 'teachers.user_id')
+                ->join('class_teachers', function($join){
+                    $join->on('class_teachers.class_id', '=', 'sport_classes.id')
+                        ->whereNull('class_teachers.deleted_at');
+                })->join('sports', 'sport_classes.sport_id', '=', 'sports.id')
+                ->join('users', 'users.id', '=', 'class_teachers.teacher_id')
                 ->select('sport_classes.id', 'sports.id as sport_id', 'sport_classes.name', 'sport_classes.vacancies', 'sport_classes.weekday', 'sport_classes.start_time', 'sport_classes.end_time')
-                ->selectRaw('GROUP_CONCAT(`teachers`.`id` ORDER BY `teachers`.`id` SEPARATOR ", ") AS teachers_id')
+                ->selectRaw('GROUP_CONCAT(`users`.`id` ORDER BY `users`.`id` SEPARATOR ", ") AS teachers_id')
                 ->where('sport_classes.id', $id)
                 ->groupBy('class_teachers.class_id')
                 ->first();
@@ -224,7 +230,7 @@ class SportClassController extends Controller
 
         SportClass::whereId($request->hidden_id)->update($sport_class);
 
-        return response()->json(['success' => 'Modalidade atualizada com sucesso.']);
+        return response()->json(['success' => 'Turma atualizado com sucesso.']);
     }
 
     /**

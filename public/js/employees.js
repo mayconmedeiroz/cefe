@@ -42,7 +42,7 @@ $(document).ready(function () {
 				title: 'Listar Alunos',
 			},
 			{
-				text: '<i class="fas fa-plus"></i> Nova Modalidade',
+				text: '<i class="fas fa-plus"></i> Novo Funcionário',
 				attr: {
 					id: 'newemployee'
 				}
@@ -62,6 +62,7 @@ $(document).ready(function () {
 		$('.modal-title').text('Adicionar uma nova modalidade');
 		$('#action_button').val('Adicionar');
 		$('#formModal').modal('show');
+		$('#password').attr('required', true);
 	});
 
 	let userID;
@@ -73,10 +74,13 @@ $(document).ready(function () {
 			url:"/employees/"+userID+"/edit",
 			dataType:"json",
 			success:function(html){
+				$('#enrollment').val(html.data.enrollment);
 				$('#name').val(html.data.name);
-				$('#acronym').val(html.data.acronym);
+				$('#email').val(html.data.email);
+				$('#password').val(html.data.password).attr('required', false);
+				$('#action').val('mod');
 				$('#hidden_id').val(html.data.id);
-				$('.modal-title').text('Modificar uma modalidade');
+				$('.modal-title').text('Modificar um aluno');
 				$('#action_button').val('Modificar');
 				$('#formModal').modal('show');
 			}
@@ -123,7 +127,7 @@ $(document).ready(function () {
 					}
 					if (data.success) {
 						html = '<div class="alert alert-success">' + data.success + '</div>';
-						$('#employee-form')[0].reset();
+							$('#employee-form')[0].reset();
 						$('#list').DataTable().ajax.reload();
 					}
 					$('#form-result').html(html);

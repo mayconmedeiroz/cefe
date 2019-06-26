@@ -11,6 +11,7 @@ $(document).ready(function () {
 		columns: [
 			{data: 'id', name: 'id'},
 			{data: 'name', name: 'name'},
+			{data: 'sport_class_name', name: 'sport_class_name'},
 			{data: 'action', name: 'action', orderable: false, searchable: false},
 		],
 		dom: "<'row'<'col-sm-12 mb-3'B>>" +
@@ -42,7 +43,7 @@ $(document).ready(function () {
 				title: 'Listar Alunos',
 			},
 			{
-				text: '<i class="fas fa-plus"></i> Nova Modalidade',
+				text: '<i class="fas fa-plus"></i> Novo Professor',
 				attr: {
 					id: 'newteacher'
 				}
@@ -58,10 +59,12 @@ $(document).ready(function () {
 
     $(document).on('click', '#newteacher', function(){
 		$('#form-result').html('');
-		$('#teacher')[0].reset();
+		$('#teacher-form')[0].reset();
 		$('.modal-title').text('Adicionar uma nova modalidade');
 		$('#action_button').val('Adicionar');
+		$('#action').val('add');
 		$('#formModal').modal('show');
+		$('#password').attr('required', true);
 	});
 
 	let userID;
@@ -73,10 +76,13 @@ $(document).ready(function () {
 			url:"/teachers/"+userID+"/edit",
 			dataType:"json",
 			success:function(html){
+				$('#enrollment').val(html.data.enrollment);
 				$('#name').val(html.data.name);
-				$('#acronym').val(html.data.acronym);
+				$('#email').val(html.data.email);
+				$('#password').val(html.data.password).attr('required', false);
+				$('#action').val('mod');
 				$('#hidden_id').val(html.data.id);
-				$('.modal-title').text('Modificar uma modalidade');
+				$('.modal-title').text('Modificar um aluno');
 				$('#action_button').val('Modificar');
 				$('#formModal').modal('show');
 			}
@@ -105,7 +111,7 @@ $(document).ready(function () {
 		});
 	});
 
-	$('#teacher').on('submit', function(e) {
+	$('#teacher-form').on('submit', function(e) {
 		e.preventDefault();
 		if ($('#action_button').val() === 'Adicionar') {
 			$.ajax({
@@ -123,7 +129,7 @@ $(document).ready(function () {
 					}
 					if (data.success) {
 						html = '<div class="alert alert-success">' + data.success + '</div>';
-						$('#teacher')[0].reset();
+						$('#teacher-form')[0].reset();
 						$('#list').DataTable().ajax.reload();
 					}
 					$('#form-result').html(html);

@@ -2,6 +2,7 @@ $(document).ready(function () {
 	$('#list').DataTable({
 		processing: true,
 		serverSide: true,
+		autoWidth: false,
 		ajax: {
 			url: '/students/getData',
 			type: 'POST'
