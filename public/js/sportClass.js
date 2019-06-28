@@ -11,6 +11,7 @@ $(document).ready(function () {
 		columns: [
 			{data: 'id', name: 'id'},
 			{data: 'name', name: 'name'},
+			{data: 'acronym', name: 'acronym'},
 			{data: 'class', name: 'class'},
 			{data: 'class_number', name: 'class_number'},
 			{data: 'grade_1', name: 'grade_1'},

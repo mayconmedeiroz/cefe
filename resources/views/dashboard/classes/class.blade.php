@@ -11,6 +11,7 @@
             <tr>
                 <th width="18px">ID</th>
                 <th>Nome</th>
+                <th>Escola</th>
                 <th>Turma</th>
                 <th>Número</th>
                 <th>N1T</th>

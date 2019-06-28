@@ -262,12 +262,15 @@ class SportClassController extends Controller
         {
             $classes = DB::table('students')
                 ->join('users', 'users.id', '=', 'students.user_id')
+                ->join('student_school_classes', 'students.id', '=', 'student_school_classes.student_id')
+                ->join('school_classes', 'student_school_classes.school_class_id', '=', 'school_classes.id')
+                ->join('schools', 'school_classes.school_id', '=', 'schools.id')
                 ->join('grades', 'grades.student_id', '=', 'students.id')
                 ->join('student_classes', function($join){
                     $join->on('student_classes.student_id', '=', 'students.id')
                         ->whereNull('student_classes.deleted_at');
                 })
-                ->select('students.id', 'users.name', 'students.class', 'students.class_number', 'grades.grade_1', 'grades.attendance_1', 'grades.grade_2', 'grades.attendance_2', 'grades.grade_3', 'grades.attendance_3')
+                ->select('students.id', 'users.name', 'school_classes.class', 'student_school_classes.class_number', 'schools.acronym', 'grades.grade_1', 'grades.attendance_1', 'grades.grade_2', 'grades.attendance_2', 'grades.grade_3', 'grades.attendance_3')
                 ->where('student_classes.sport_class_id', $id)
                 ->get();
 
