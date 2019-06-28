@@ -13,6 +13,7 @@ use CEFE\School;
 use CEFE\Sport;
 use CEFE\Grade;
 use CEFE\StudentClass;
+use CEFE\StudentSchoolClass;
 
 class StudentController extends Controller
 {
@@ -22,12 +23,21 @@ class StudentController extends Controller
             ->select('sport_classes.id', 'sport_classes.name')
             ->whereNull('sport_classes.deleted_at')
             ->where('sport_classes.vacancies', '>', DB::raw('(SELECT COUNT(*) from `student_classes` WHERE `student_classes`.`sport_class_id` = `sport_classes`.`id`  AND `student_classes`.`deleted_at` IS NULL)'))
-            ->where('sport_classes.id',$id)
+            ->where('sport_classes.sport_id',$id)
             ->get();
 
         return response()->json($sportClasses);
     }
 
+    public function getSchoolClasses($id)
+    {
+        $schoolClasses = DB::table('school_classes')
+            ->select('school_classes.id', 'school_classes.class')
+            ->where('school_classes.school_id',$id)
+            ->get();
+
+        return response()->json($schoolClasses);
+    }
 
     public function validation($request)
     {
@@ -62,13 +72,15 @@ class StudentController extends Controller
         {
             $users = DB::table('students')
                 ->join('users', 'users.id', '=', 'students.user_id')
-                ->join('schools', 'schools.id', '=', 'students.school_id')
+                ->join('student_school_classes', 'students.id', '=', 'student_school_classes.student_id')
+                ->join('school_classes', 'student_school_classes.school_class_id', '=', 'school_classes.id')
+                ->join('schools', 'school_classes.school_id', '=', 'schools.id')
                 ->leftJoin('student_classes', function($join){
                     $join->on('student_classes.student_id', '=', 'students.id')
                          ->whereNull('student_classes.deleted_at');
                 })
                 ->leftJoin('sport_classes', 'sport_classes.id', '=', 'student_classes.sport_class_id')
-                ->select('students.id', 'users.enrollment', 'users.name', 'students.class', 'students.class_number', 'schools.acronym', DB::raw("(SELECT `sport_classes`.`name` FROM `sport_classes`  WHERE `student_classes`.`deleted_at` IS NULL AND `sport_classes`.`id` = `student_classes`.`sport_class_id`) AS `sport_class`"))
+                ->select('students.id', 'users.enrollment', 'users.name', 'schools.acronym', 'school_classes.class', 'student_school_classes.class_number', DB::raw("(SELECT `sport_classes`.`name` FROM `sport_classes`  WHERE `student_classes`.`deleted_at` IS NULL AND `sport_classes`.`id` = `student_classes`.`sport_class_id`) AS `sport_class`"))
                 ->whereNull('students.deleted_at')
                 ->get();
 
@@ -104,7 +116,7 @@ class StudentController extends Controller
 
         if($error->fails())
         {
-            return response()->json(['errors' => "Falha na solicitação, tente novamente!"]);
+            return response()->json(['errors' => 'Falha na solicitação, tente novamente!']);
         }
 
         $user = [
@@ -118,12 +130,18 @@ class StudentController extends Controller
 
         $student = [
             'user_id' => $userId->id,
-            'school_id' => $request->school,
-            'class' => $request->school_class,
-            'class_number' => $request->class_number,
         ];
 
         $studentId = Student::create($student);
+
+        $studentSchoolClass = [
+            'student_id' => $studentId->id,
+            'school_class_id' => $request->school_class,
+            'class_number' => $request->class_number,
+            'school_year' => NOW(),
+        ];
+
+        StudentSchoolClass::create($studentSchoolClass);
 
         $studentClass = [
             'student_id' => $studentId->id,
@@ -166,11 +184,16 @@ class StudentController extends Controller
         {
             $data = DB::table('students')
                 ->join('users', 'users.id', '=', 'students.user_id')
-                ->join('schools', 'schools.id', '=', 'students.school_id')
-                ->leftJoin('student_classes', 'student_classes.student_id', '=', 'students.id')
+                ->join('student_school_classes', 'students.id', '=', 'student_school_classes.student_id')
+                ->join('school_classes', 'student_school_classes.school_class_id', '=', 'school_classes.id')
+                ->join('schools', 'school_classes.school_id', '=', 'schools.id')
+                ->leftJoin('student_classes', function($join){
+                    $join->on('student_classes.student_id', '=', 'students.id')
+                        ->whereNull('student_classes.deleted_at');
+                })
                 ->leftJoin('sport_classes', 'sport_classes.id', '=', 'student_classes.sport_class_id')
                 ->leftJoin('sports', 'sports.id', '=', 'sport_classes.sport_id')
-                ->select('users.id', 'users.enrollment', 'users.name', 'users.email', 'students.class', 'students.class_number', 'schools.id as school_name', 'sport_classes.id as sport_class', 'sports.id as sport_id')
+                ->select('users.id', 'users.enrollment', 'users.name', 'users.email', 'school_classes.id as class', 'student_school_classes.class_number', 'schools.id as school_name', 'sport_classes.id as sport_class', 'sports.id as sport_id')
                 ->where('students.id', $id)
                 ->first();
 
@@ -191,17 +214,8 @@ class StudentController extends Controller
 
         if($error->fails())
         {
-            return response()->json(['errors' => "Falha na solicitação, tente novamente!"]);
+            return response()->json(['errors' => $error->errors()->all()]);
         }
-
-        $student = [
-            'school_id' => $request->school,
-            'class' => $request->school_class,
-            'class_number' => $request->class_number,
-        ];
-
-        $userId = Student::whereId($request->hidden_id)->first();
-        $userId->update($student);
 
         $user = [
             'enrollment' => $request->enrollment,
@@ -213,9 +227,18 @@ class StudentController extends Controller
             $user['password'] = Hash::make($request->password);
         }
 
-        User::whereId($userId->user_id)->update($user);
+        User::whereId($request->hidden_id)->update($user);
 
-        $studentClass = StudentClass::where('student_id', $request->hidden_id)->first();
+        $studentSchoolClass = [
+            'school_class_id' => $request->school_class,
+            'class_number' => $request->class_number,
+        ];
+
+        $student_id = Student::where('user_id', $request->hidden_id)->first();
+
+        StudentSchoolClass::where('student_id', $student_id->id)->update($studentSchoolClass);
+
+        $studentClass = StudentClass::where('student_id', $student_id->id)->first();
 
         if(!$studentClass || !($studentClass->sport_class_id == $request->sport_class))
         {
@@ -224,7 +247,7 @@ class StudentController extends Controller
             }
 
             $newStudentClass = [
-                'student_id' => $request->hidden_id,
+                'student_id' => $student_id->id,
                 'sport_class_id' => $request->sport_class,
                 'school_year' => NOW()
             ];

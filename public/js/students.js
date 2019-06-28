@@ -62,6 +62,7 @@ $(document).ready(function () {
 	});
 
 	let sport_class;
+	let school_class;
 
 	$(document).on('change', '#sport', function() {
 		let sportId = $(this).val();
@@ -76,8 +77,29 @@ $(document).ready(function () {
 						$('#sport_class').append(`<option value="${value.id}">${value.name}</option>`);
 					});
 					if ($('.edit') && sport_class) {
-						changeClass(sport_class);
+                        changeClass(sport_class);
 						sport_class = false;
+					}
+				}
+			});
+		}
+	});
+
+	$(document).on('change', '#school', function() {
+		let schoolId = $(this).val();
+		if(schoolId) {
+			$.ajax({
+				url: '/students/getSchoolClasses/'+schoolId,
+				type: "GET",
+				dataType: "json",
+				success:function(data) {
+					$('#school_class').empty().append('<option value="" disabled selected hidden>Escolha a Turma:</option>');
+					$.each(data, function(key, value){
+						$('#school_class').append(`<option value="${value.id}">${value.class}</option>`);
+					});
+					if ($('.edit') && school_class) {
+                        changeSchoolClass(school_class);
+						school_class = false;
 					}
 				}
 			});
@@ -106,10 +128,10 @@ $(document).ready(function () {
 				$('#name').val(html.data.name);
 				$('#email').val(html.data.email);
 				$('#password').val(html.data.password).attr('required', false);
-				$('#school').val(html.data.school_name);
-				$('#school_class').val(html.data.class);
+				$('#school').val(html.data.school_name).change();
+				school_class = html.data.class;
+                $('#class_number').val(html.data.class_number);
 				sport_class = html.data.sport_class;
-				$('#class_number').val(html.data.class_number);
 				$('#sport').val(html.data.sport_id).change();
 				$('#action').val('mod');
 				$('#hidden_id').val(html.data.id);
@@ -123,6 +145,10 @@ $(document).ready(function () {
 	function changeClass(html){
 		$('#sport_class').val(html);
 	}
+
+    function changeSchoolClass(html){
+        $('#school_class').val(html);
+    }
 
 	$(document).on('click', '.delete', function(){
 		userID = $(this).attr('id');

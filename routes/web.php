@@ -45,6 +45,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('students/update', 'StudentController@update')->name('students.update');
         Route::post('students/getData', 'StudentController@getData')->name('students.getData');
         Route::get('students/getSportClasses/{id}', 'StudentController@getSportClasses');
+        Route::get('students/getSchoolClasses/{id}', 'StudentController@getSchoolClasses');
 
         Route::resource('teachers', 'TeacherController');
         Route::post('teachers/getData', 'TeacherController@getData')->name('teachers.getData');

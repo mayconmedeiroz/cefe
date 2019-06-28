@@ -10,6 +10,8 @@ use CEFE\SportClass;
 use CEFE\ClassTeacher;
 use CEFE\StudentClass;
 use CEFE\Grade;
+use CEFE\SchoolClass;
+use CEFE\StudentSchoolClass;
 use Faker\Factory as Faker;
 
 class DatabaseSeeder extends Seeder
@@ -29,6 +31,7 @@ class DatabaseSeeder extends Seeder
         $this->CreateStudents();
         $this->CreateStudentClasses();
         $this->CreateGrades();
+        $this->CreateStudentSchoolClasses();
     }
 
     private function CreateUsers()
@@ -86,15 +89,42 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Escola Estadual Visconde de Mauá', 'acronym' => 'EEVM', 'created_at' => NOW(), 'updated_at' => NOW()],
         ];
         School::insert($schools);
+
+        $schoolClass = [
+            // All ETEOT classes
+            ['school_id' => '1', 'class' => '1151', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['school_id' => '1', 'class' => '1201', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['school_id' => '1', 'class' => '1202', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['school_id' => '1', 'class' => '1203', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['school_id' => '1', 'class' => '1231', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['school_id' => '1', 'class' => '1232', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['school_id' => '1', 'class' => '1241', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['school_id' => '1', 'class' => '2101', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['school_id' => '1', 'class' => '2102', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['school_id' => '1', 'class' => '2131', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['school_id' => '1', 'class' => '2232', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['school_id' => '1', 'class' => '2151', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['school_id' => '1', 'class' => '2241', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['school_id' => '1', 'class' => '3101', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['school_id' => '1', 'class' => '3102', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['school_id' => '1', 'class' => '3231', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['school_id' => '1', 'class' => '3232', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['school_id' => '1', 'class' => '3241', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['school_id' => '1', 'class' => '3242', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['school_id' => '1', 'class' => '3251', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['school_id' => '1', 'class' => '3232', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['school_id' => '1', 'class' => '3111', 'created_at' => NOW(), 'updated_at' => NOW()],
+        ];
+        SchoolClass::insert($schoolClass);
     }
 
     private function CreateStudents()
     {
         $students = [
-            ['user_id' => '1', 'school_id' => '1', 'class' => '3251', 'class_number' => '9', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['user_id' => '2', 'school_id' => '1', 'class' => '3251', 'class_number' => '11', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['user_id' => '3', 'school_id' => '3', 'class' => '3251', 'class_number' => '6', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['user_id' => '4', 'school_id' => '2', 'class' => '2151', 'class_number' => '17', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['user_id' => '1', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['user_id' => '2', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['user_id' => '3', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['user_id' => '4', 'created_at' => NOW(), 'updated_at' => NOW()],
         ];
         Student::insert($students);
 
@@ -191,5 +221,17 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => NOW(),
             ]);
         }*/
+    }
+
+    private function CreateStudentSchoolClasses()
+    {
+        $studentSchoolClass = [
+            ['student_id' => '1', 'school_class_id' => '1', 'class_number' => '13', 'school_year' => NOW(), 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['student_id' => '2', 'school_class_id' => '1', 'class_number' => '18', 'school_year' => NOW(), 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['student_id' => '3', 'school_class_id' => '1', 'class_number' => '14', 'school_year' => NOW(), 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['student_id' => '4', 'school_class_id' => '1', 'class_number' => '1', 'school_year' => NOW(), 'created_at' => NOW(), 'updated_at' => NOW()],
+        ];
+
+        StudentSchoolClass::insert($studentSchoolClass);
     }
 }

@@ -26,6 +26,8 @@ git clone https://github.com/mayconmedeiroz/cefe
 ```
 * Execute `composer install` para ambiente de `desenvolvedor` ou `composer install --optimize-autoloader --no-dev` para ambiente de   `produção` e instale os pacotes do Laravel
 
+* Copie o arquivo `.env.example` e renomeie-o para `.env`
+
 * Gere `APP_KEY` usando `php artisan key:generate`
 
 * Edite a configuração de conexão do banco de dados no arquivo .env, por exemplo.
@@ -46,4 +48,4 @@ DB_PASSWORD=senhadousuario
 
 ## License
 
-Este projeto está licenciado sob a licença MIT - consulte o arquivo [LICENSE](LICENSE.md) para obter detalhes
+Este projeto está licenciado sob a licença MIT - consulte o arquivo [LICENSE](LICENSE) para obter detalhes

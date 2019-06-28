@@ -2,7 +2,6 @@
 
 namespace CEFE\Http\Controllers;
 
-use CEFE\ClassTeacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use CEFE\User;

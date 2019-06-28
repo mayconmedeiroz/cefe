@@ -66,7 +66,9 @@
                     </div>
                     <div class="form-group">
                         <label for="school_class" class="control-label mb-0">Turma: </label>
-                        <input type="text" name="school_class" id="school_class" class="form-control" maxlength="4" required/>
+                        <select name="school_class" id="school_class" class="form-control" required>
+                            <option value="" disabled selected hidden>Escolha a Turma:</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="class_number" class="control-label mb-0">Número: </label>
