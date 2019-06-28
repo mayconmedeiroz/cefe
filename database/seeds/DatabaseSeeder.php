@@ -12,6 +12,7 @@ use CEFE\StudentClass;
 use CEFE\Grade;
 use CEFE\SchoolClass;
 use CEFE\StudentSchoolClass;
+use CEFE\Evaluation;
 use Faker\Factory as Faker;
 
 class DatabaseSeeder extends Seeder
@@ -24,14 +25,14 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->CreateUsers();
-        $this->CreateSports();
         $this->CreateSchools();
+        $this->CreateSports();
         $this->CreateSportClasses();
         $this->CreateClassTeachers();
         $this->CreateStudents();
-        $this->CreateStudentClasses();
-        $this->CreateGrades();
         $this->CreateStudentSchoolClasses();
+        $this->CreateStudentClasses();
+        $this->CreateEvaluations();
     }
 
     private function CreateUsers()
@@ -233,5 +234,17 @@ class DatabaseSeeder extends Seeder
         ];
 
         StudentSchoolClass::insert($studentSchoolClass);
+    }
+
+    private function CreateEvaluations()
+    {
+        $evaluations = [
+            ['name' => 'Trimestre 1', 'attendance' => '1', 'recuperation' => '1', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['name' => 'Trimestre 2', 'attendance' => '1', 'recuperation' => '1', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['name' => 'Trimestre 3', 'attendance' => '1', 'recuperation' => '1', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['name' => 'Recuperação Final', 'attendance' => '0', 'recuperation' => '0', 'created_at' => NOW(), 'updated_at' => NOW()],
+        ];
+
+        Evaluation::insert($evaluations);
     }
 }

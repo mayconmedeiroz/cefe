@@ -14,12 +14,6 @@ $(document).ready(function () {
 			{data: 'acronym', name: 'acronym'},
 			{data: 'class', name: 'class'},
 			{data: 'class_number', name: 'class_number'},
-			{data: 'grade_1', name: 'grade_1'},
-			{data: 'attendance_1', name: 'attendance_1'},
-			{data: 'grade_2', name: 'grade_2'},
-			{data: 'attendance_2', name: 'attendance_2'},
-			{data: 'grade_3', name: 'grade_3'},
-			{data: 'attendance_3', name: 'attendance_3'},
 			{data: 'action', name: 'action', orderable: false, searchable: false},
 		],
 		dom: "<'row'<'col-sm-12 mb-3'B>>" +

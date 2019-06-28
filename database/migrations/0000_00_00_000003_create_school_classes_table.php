@@ -30,7 +30,7 @@ class CreateSchoolClassesTable extends Migration
      */
     public function down()
     {
-        Schema::table('students', function (Blueprint $table) {
+        Schema::table('school_classes', function (Blueprint $table) {
             $table->dropForeign('school_classes_school_id_foreign');
         });
 

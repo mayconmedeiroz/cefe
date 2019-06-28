@@ -14,12 +14,6 @@
                 <th>Escola</th>
                 <th>Turma</th>
                 <th>Número</th>
-                <th>N1T</th>
-                <th>F1</th>
-                <th>N2T</th>
-                <th>F2</th>
-                <th>N3T</th>
-                <th>F3</th>
                 <th width="64px">Ação</th>
             </tr>
             </thead>
