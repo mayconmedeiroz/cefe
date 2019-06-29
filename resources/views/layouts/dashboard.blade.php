@@ -98,6 +98,12 @@
                 </a>
             </li>
             <li>
+                <a href="{{ url('/grades') }}" class="{{ Request::is('grades') ? 'menu-active' : '' }}">
+                    <i class="fas fa-user"></i>
+                    <span>Lançamento de Notas</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ url('/sports') }}" class="{{ Request::is('sports') ? 'menu-active' : '' }}">
                     <i class="fas fa-user"></i>
                     <span>Gerenciar Modalidades</span>

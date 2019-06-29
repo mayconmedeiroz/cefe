@@ -46,3 +46,10 @@ Breadcrumbs::for('class.index', function ($trail, $classes) {
     $trail->parent('sport_classes.index');
     $trail->push('Turma ' . $classes);
 });
+
+
+// Dashboard > Lançamento de Notas
+Breadcrumbs::for('grades.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Lançamento de Notas');
+});

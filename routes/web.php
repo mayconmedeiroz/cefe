@@ -63,5 +63,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('class/{id}', 'SportClassController@getSportClass')->name('class.index');
         Route::post('class/{id}/getData', 'SportClassController@getSportClassData')->name('class.getData');
         Route::post('class/getStudent/{query}', 'SportClassController@getStudent')->name('class.getStudent');
+
+
+        Route::resource('grades', 'GradeController');
+        Route::post('grades/getData/{sportclass}/{evaluation}', 'GradeController@getData')->name('grades.getData');
+        Route::get('grades/getSportClasses/{id}', 'GradeController@getSportClasses');
+
     });
 });
