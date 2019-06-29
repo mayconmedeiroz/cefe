@@ -68,6 +68,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('grades', 'GradeController');
         Route::post('grades/getData/{sportclass}/{evaluation}', 'GradeController@getData')->name('grades.getData');
         Route::get('grades/getSportClasses/{id}', 'GradeController@getSportClasses');
+        Route::post('grades/getSportAClasses/', 'GradeController@getSportAClasses');
 
     });
 });

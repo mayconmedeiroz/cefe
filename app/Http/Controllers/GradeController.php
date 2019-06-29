@@ -2,6 +2,10 @@
 
 namespace CEFE\Http\Controllers;
 
+use CEFE\Attendance;
+use CEFE\Recuperation;
+use CEFE\StudentGrade;
+use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -20,6 +24,17 @@ class GradeController extends Controller
         return response()->json($sportClasses);
     }
 
+    public function validation($request)
+    {
+        return Validator::make($request->all(),[
+            'id' => 'required|numeric',
+            'grade' => 'required|numeric|between:0,10',
+            'recuperation_grade' => 'nullable|numeric|between:0,10|',
+            'attendance' => 'required|numeric|between:0,100',
+            'evaluation' => 'required|numeric',
+        ]);
+    }
+
     public function getData($sportClass, $evaluation)
     {
         if(request()->ajax())
@@ -34,9 +49,12 @@ class GradeController extends Controller
                     $join->on('student_grades.student_id', '=', 'students.id')
                         ->where('student_grades.evaluation_id', $evaluation);
                 })
-                ->leftJoin('attendances', 'student_grades.evaluation_id', '=', 'attendances.evaluation_id')
+                ->leftJoin('attendances', function($join) use ($evaluation){
+                    $join->on('attendances.student_id', '=', 'students.id')
+                        ->where('attendances.evaluation_id', $evaluation);
+                })
                 ->leftJoin('recuperations', 'student_grades.id', '=', 'recuperations.student_grade_id')
-                ->select('users.id', 'users.name', 'student_grades.grade', 'attendances.attendance', 'recuperations.grade as recuperation_grade', DB::raw("(SELECT `sport_classes`.`name` FROM `sport_classes`  WHERE `student_classes`.`deleted_at` IS NULL AND `sport_classes`.`id` = `student_classes`.`sport_class_id`) AS `sport_class`"))
+                ->select('students.id', 'users.name', 'student_grades.grade', 'attendances.attendance', 'recuperations.grade as recuperation_grade', DB::raw("(SELECT `sport_classes`.`name` FROM `sport_classes`  WHERE `student_classes`.`deleted_at` IS NULL AND `sport_classes`.`id` = `student_classes`.`sport_class_id`) AS `sport_class`"))
                 ->whereNull('students.deleted_at')
                 ->where('student_classes.sport_class_id', $sportClass)
                 ->get();
@@ -89,7 +107,66 @@ class GradeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $error = $this->validation($request);
+
+        if($error->fails())
+        {
+            return response()->json(['errors' => $error->errors()->all()]);
+        }
+
+        $studentGrade = StudentGrade::where('student_id', $request->id)->where('evaluation_id', $request->evaluation)->first();
+
+        if(isset($studentGrade)) {
+            $studentGrade = [
+                'student_id' => $request->id,
+                'evaluation_id' => $request->evaluation,
+                'grade' => $request->grade,
+                'school_year' => NOW(),
+            ];
+
+            $gradeId = StudentGrade::where('student_id', $request->id)->update($studentGrade);
+
+            $attendance = [
+                'student_id' => $request->id,
+                'evaluation_id' => $request->evaluation,
+                'attendance' => $request->attendance
+            ];
+
+
+            Attendance::where('student_id', $request->id)->update($attendance);
+
+            return response()->json(['success' => 'Notas cadastradas com sucesso.']);
+        } else {
+            if(isset($request->grade)) {
+                $studentGrade = [
+                    'student_id' => $request->id,
+                    'evaluation_id' => $request->evaluation,
+                    'grade' => $request->grade,
+                    'school_year' => NOW(),
+                ];
+
+                $gradeId = StudentGrade::insert($studentGrade);
+
+                $attendance = [
+                    'student_id' => $request->id,
+                    'evaluation_id' => $request->evaluation,
+                    'attendance' => $request->attendance
+                ];
+
+                Attendance::insert($attendance);
+
+                if(isset($request->recuperation_grade)) {
+                    $recuperationGrade = [
+                        'student_grade_id' => $gradeId->id,
+                        'grade' => $request->recuperation_grade
+                    ];
+
+                    Recuperation::insert($recuperationGrade);
+                }
+            }
+
+            return response()->json(['success' => 'Notas cadastradas com sucesso.']);
+        }
     }
 
     /**

@@ -7,23 +7,24 @@ $(document).ready(function () {
 		if(sportId) {
 			$.ajax({
 				url: '/grades/getSportClasses/'+sportId,
-				type: "GET",
-				dataType: "json",
+				type: 'GET',
 				success:function(data) {
 					$('#sport_class').empty().append('<option value="" disabled selected hidden>Escolha uma Turma:</option>');
 					$.each(data, function(key, value){
 						$('#sport_class').append(`<option value="${value.id}">${value.name}</option>`);
 					});
-					if ($('.edit') && sport_class) {
-                        changeClass(sport_class);
-						sport_class = false;
-					}
+					$('.list-div').addClass("d-none");
+					$('#sport_class').removeAttr("disabled");
+					$('#evaluation option:first').prop('selected', true);
+					$('#evaluation').attr('disabled', true);
 				}
 			});
 		}
 	});
 
 	$(document).on('change', '#sport_class', function() {
+		$('.list-div').addClass("d-none");
+		$('#evaluation option:first').prop('selected', true);
 		$('#evaluation').removeAttr("disabled");
 	} );
 
@@ -31,15 +32,16 @@ $(document).ready(function () {
 		$('.list-div').removeClass("d-none");
 		let sportclass = $('#sport_class').val();
 		let evaluation = $(this).val();
+		$('#list').DataTable().clear().destroy();
 		$('#list').DataTable({
 			processing: true,
 			serverSide: true,
 			autoWidth: false,
+			pageLength: -1,
 			ajax: {
 				url: `/grades/getData/${sportclass}/${evaluation}`,
 				type: 'POST'
 			},
-			lengthMenu: [ [10, 25, 50, 100, -1], [10, 25, 50, 100, 'Todos'] ],
 			columns: [
 				{data: "id", name: "id"},
 				{data: "name", name: "name"},
@@ -48,12 +50,10 @@ $(document).ready(function () {
 				{data: "recuperation", name: "recuperation"},
 			],
 			dom: "<'row'<'col-sm-12 mb-3'B>>" +
-				"<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
-				"<'row'<'col-sm-12'tr>>" +
-				"<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+				"<'row'<'col-sm-12'tr>>",
 			buttons: [
 				{
-					text: '<i class="fas fa-plus"></i> Salvar',
+					text: '<i class="fas fa-plus"></i> Salvar Notas',
 					attr: {
 						id: 'savebutton'
 					}
@@ -66,17 +66,32 @@ $(document).ready(function () {
 	});
 
 	$(document).on('click', '#savebutton', function(){
-		let array=[];
 		$('#list').find('tbody tr').each(function(){
 			let obj={};
 			obj.id=$(this).find("td:eq(0)").text();
-			obj.name=$(this).find("td:eq(1)").text();
 			obj.attendance=$(this).find("td:eq(2) input").val();
 			obj.grade=$(this).find("td:eq(3) input").val();
 			obj.recuperation_grade=$(this).find("td:eq(4) input").val();
+			obj.evaluation=$('#evaluation').val();
 
-			array.push(obj);
+			$.ajax({
+				data: obj,
+				url: '/grades/',
+				type: 'POST',
+				success:function(data) {
+					console.log(data);
+					console.log(obj);
+					let html = '';
+					if(data.errors) {
+						html = '<div class="alert alert-danger">' + data.errors + '</div>';
+					}
+					if(data.success) {
+						html = '<div class="alert alert-success">' + data.success + '</div>';
+					}
+					$('.form-result').html(html);
+				}
+			});
 		});
-		console.log(JSON.stringify(array));
+		$('#list').DataTable().ajax.reload();
 	});
 });
