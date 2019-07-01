@@ -18,6 +18,7 @@ class CreateAttendancesTable extends Migration
             $table->integer('student_id')->unsigned();
             $table->integer('evaluation_id')->unsigned();
             $table->decimal('attendance', 5, 2)->nullable();
+            $table->year('school_year');
             $table->timestamps();
 
             $table->foreign('student_id')->references('id')->on('students');

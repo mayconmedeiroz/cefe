@@ -3,6 +3,7 @@
 namespace CEFE\Http\Controllers;
 
 use CEFE\Attendance;
+use CEFE\Evaluation;
 use CEFE\Recuperation;
 use CEFE\StudentGrade;
 use Validator;
@@ -14,23 +15,38 @@ class GradeController extends Controller
 
     public function getSportClasses($id)
     {
-        $sportClasses = DB::table('sport_classes')
-            ->select('sport_classes.id', 'sport_classes.name')
-            ->whereNull('sport_classes.deleted_at')
-            ->where('sport_classes.vacancies', '>', DB::raw('(SELECT COUNT(*) from `student_classes` WHERE `student_classes`.`sport_class_id` = `sport_classes`.`id`  AND `student_classes`.`deleted_at` IS NULL)'))
-            ->where('sport_classes.sport_id',$id)
-            ->get();
+        if(request()->ajax()) {
+            $sportClasses = DB::table('sport_classes')
+                ->select('sport_classes.id', 'sport_classes.name')
+                ->whereNull('sport_classes.deleted_at')
+                ->where('sport_classes.vacancies', '>', DB::raw('(SELECT COUNT(*) from `student_classes` WHERE `student_classes`.`sport_class_id` = `sport_classes`.`id`  AND `student_classes`.`deleted_at` IS NULL)'))
+                ->where('sport_classes.sport_id', $id)
+                ->get();
 
-        return response()->json($sportClasses);
+            return response()->json($sportClasses);
+        }
+    }
+
+    public function getEvaluationColumns($id)
+    {
+        if(request()->ajax()) {
+            $evaluationColumns = DB::table('evaluations')
+                ->select('evaluations.attendance', 'evaluations.recuperation')
+                ->where('evaluations.id', $id)
+                ->first();
+
+            return response()->json($evaluationColumns);
+        }
     }
 
     public function validation($request)
     {
+        $evaluation = Evaluation::FindOrFail($request->evaluation);
         return Validator::make($request->all(),[
             'id' => 'required|numeric',
-            'grade' => 'required|numeric|between:0,10',
-            'recuperation_grade' => 'nullable|numeric|between:0,10|',
-            'attendance' => 'required|numeric|between:0,100',
+            'grade' => 'required|numeric|between:0.00,10.00',
+            'recuperation_grade' => 'nullable|numeric|between:0.00,10.00',
+            'attendance' => 'required_if:'.$evaluation->attendance.',==,1|numeric|between:0.00,100.00',
             'evaluation' => 'required|numeric',
         ]);
     }
@@ -114,9 +130,24 @@ class GradeController extends Controller
             return response()->json(['errors' => $error->errors()->all()]);
         }
 
-        $studentGrade = StudentGrade::where('student_id', $request->id)->where('evaluation_id', $request->evaluation)->first();
+        $gradeId = NULL;
+        $evaluation = Evaluation::FindOrFail($request->evaluation);
 
-        if(isset($studentGrade)) {
+        $studentGrade = DB::table('student_grades')
+            ->where('student_id', $request->id)
+            ->where('evaluation_id', $request->evaluation)
+            ->first();
+
+        if($studentGrade) {
+
+            $studentGrade = [
+                'grade' => $request->grade
+            ];
+
+            $gradeId = StudentGrade::where('student_id', $request->id)->where('evaluation_id', $request->evaluation)->first();
+            $gradeId->update($studentGrade);
+
+        } else {
             $studentGrade = [
                 'student_id' => $request->id,
                 'evaluation_id' => $request->evaluation,
@@ -124,49 +155,56 @@ class GradeController extends Controller
                 'school_year' => NOW(),
             ];
 
-            $gradeId = StudentGrade::where('student_id', $request->id)->update($studentGrade);
+            $gradeId = StudentGrade::create($studentGrade);
+        }
 
-            $attendance = [
-                'student_id' => $request->id,
-                'evaluation_id' => $request->evaluation,
-                'attendance' => $request->attendance
-            ];
+        if($evaluation->attendance) {
+            $attendance = DB::table('attendances')
+                ->where('student_id', $request->id)
+                ->where('evaluation_id', $request->evaluation)
+                ->first();
 
-
-            Attendance::where('student_id', $request->id)->update($attendance);
-
-            return response()->json(['success' => 'Notas cadastradas com sucesso.']);
-        } else {
-            if(isset($request->grade)) {
-                $studentGrade = [
-                    'student_id' => $request->id,
-                    'evaluation_id' => $request->evaluation,
-                    'grade' => $request->grade,
-                    'school_year' => NOW(),
-                ];
-
-                $gradeId = StudentGrade::insert($studentGrade);
-
+            if ($attendance) {
                 $attendance = [
-                    'student_id' => $request->id,
-                    'evaluation_id' => $request->evaluation,
                     'attendance' => $request->attendance
                 ];
 
-                Attendance::insert($attendance);
+                Attendance::where('student_id', $request->id)->where('evaluation_id', $request->evaluation)->update($attendance);
 
-                if(isset($request->recuperation_grade)) {
-                    $recuperationGrade = [
-                        'student_grade_id' => $gradeId->id,
-                        'grade' => $request->recuperation_grade
-                    ];
+            } else {
+                $attendance = [
+                    'student_id' => $request->id,
+                    'evaluation_id' => $request->evaluation,
+                    'attendance' => $request->attendance,
+                    'school_year' => NOW(),
+                ];
 
-                    Recuperation::insert($recuperationGrade);
-                }
+                Attendance::create($attendance);
             }
-
-            return response()->json(['success' => 'Notas cadastradas com sucesso.']);
         }
+
+        if(isset($request->recuperation_grade) && $evaluation->recuperation) {
+            $recuperation = DB::table('recuperations')
+                        ->where('student_grade_id', $gradeId->id)
+                        ->first();
+
+            if($recuperation) {
+                $recuperationGrade = [
+                    'grade' => $request->recuperation_grade
+                ];
+
+                Recuperation::where('student_grade_id', $gradeId->id)->update($recuperationGrade);
+            } else {
+                $recuperationGrade = [
+                    'student_grade_id' => $gradeId->id,
+                    'grade' => $request->recuperation_grade
+                ];
+
+                Recuperation::create($recuperationGrade);
+            }
+        }
+
+        return response()->json(['success' => 'Notas cadastradas com sucesso.']);
     }
 
     /**
