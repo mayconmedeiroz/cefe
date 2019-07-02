@@ -4,6 +4,9 @@ namespace CEFE\Http\Controllers;
 
 use Illuminate\Http\Request;
 use CEFE\Sport;
+use CEFE\SportClass;
+use CEFE\StudentClass;
+use CEFE\ClassTeacher;
 use Validator;
 use DataTables;
 
@@ -135,7 +138,14 @@ class SportController extends Controller
      */
     public function destroy($id)
     {
-        $data = Sport::findOrFail($id);
-        $data->delete();
+        $sportClasses = SportClass::where('sport_id', $id)->get();
+        foreach ($sportClasses as $sportClass) {
+            StudentClass::where('sport_class_id', $sportClass->id)->delete();
+            ClassTeacher::where('class_id', $sportClass->id)->delete();
+            SportClass::findOrFail($sportClass->id)->delete();
+        }
+
+        Sport::findOrFail($id)->delete();
+
     }
 }

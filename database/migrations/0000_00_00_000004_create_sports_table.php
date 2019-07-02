@@ -18,6 +18,7 @@ class CreateSportsTable extends Migration
             $table->string('name', '20');
             $table->string('acronym', '10');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

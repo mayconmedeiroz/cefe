@@ -6,7 +6,7 @@ $(document).ready(function () {
 				url: '/grades/getSportClasses/'+sportId,
 				type: 'GET',
 				success:function(data) {
-					$('#sport_class').empty().append('<option value="" disabled selected hidden>Escolha uma Turma:</option>').removeAttr("disabled");
+					$('#sport_class').empty().append('<option value="" disabled selected hidden>Escolha a Turma:</option>').removeAttr("disabled");
 					$.each(data, function(key, value){
 						$('#sport_class').append(`<option value="${value.id}">${value.name}</option>`);
 					});
@@ -27,7 +27,7 @@ $(document).ready(function () {
 	let attendance, recuperation;
 
 	$(document).on('change', '#evaluation', async function () {
-		let sportclass = $('#sport_class').val();
+		let sportClass = $('#sport_class').val();
 		let evaluation = $(this).val();
 
 		await $.ajax({
@@ -60,26 +60,61 @@ $(document).ready(function () {
 		}
 
 		$('#list').DataTable().clear().destroy();
-		$('#list').DataTable({
+		await $('#list').DataTable({
 			processing: true,
 			serverSide: true,
 			autoWidth: false,
 			pageLength: -1,
 			ajax: {
-				url: `/grades/getData/${sportclass}/${evaluation}`,
-				type: 'POST'
+				url: `/grades/getData/${sportClass}/${evaluation}`,
+				type: 'POST',
+			},
+			drawCallback: function() {
+				$('.grade, .recuperation').inputmask({
+					alias: "decimal",
+					rightAlign: false,
+					placeholder: "0",
+					digits: 2,
+					min:0,
+					max:10,
+					digitsOptional: false,
+					radixPoint: ",",
+					allowPlus: false,
+					allowMinus: false,
+					clearMaskOnLostFocus: false,
+					autoUnmask: true,
+					onUnMask: function(maskedValue, unmaskedValue) {
+						if (unmaskedValue != '') {
+							let x = maskedValue.split(',');
+							return x[0] + '.' + x[1];
+						}
+					}
+				});
+				$('.attendance').inputmask({
+					alias: 'decimal',
+					rightAlign: false,
+					placeholder: "0",
+					digits: 2,
+					min:0,
+					max:100,
+					digitsOptional: false,
+					radixPoint: ",",
+					allowPlus: false,
+					allowMinus: false,
+					clearMaskOnLostFocus: false,
+					autoUnmask: true,
+					suffix: "%",
+					onUnMask: function(maskedValue, unmaskedValue) {
+						if (unmaskedValue != '') {
+							let x = maskedValue.slice(0,-1).split(',');
+							return x[0] + '.' + x[1];
+						}
+					}
+				});
 			},
 			columns: columns,
-			dom: "<'row'<'col-sm-12 mb-3'B>>" +
-				"<'row'<'col-sm-12'tr>>",
-			buttons: [
-				{
-					text: '<i class="fas fa-plus"></i> Salvar Notas',
-					attr: {
-						id: 'savebutton'
-					}
-				}
-			],
+			dom: "<'row'<'col-sm-12'tr>>",
+			buttons: [],
 			language: {
 				url: '/js/portuguese.datatable.json'
 			}
@@ -87,7 +122,8 @@ $(document).ready(function () {
 		$('.list-div').removeClass("d-none");
 	});
 
-	$(document).on('click', '#savebutton', function(){
+	$('#form-grade').on('submit', function(e) {
+		e.preventDefault();
 		$('#list').find('tbody tr').each(function(){
 			let obj={}, attendanceTd, gradeTd, recuperationTd;
 			obj.id=$(this).find("td:eq(0)").text();
@@ -113,29 +149,19 @@ $(document).ready(function () {
 			obj.grade=$(this).find(`td:eq(${gradeTd}) input`).val();
 			obj.recuperation_grade=$(this).find(`td:eq(${recuperationTd}) input`).val();
 
-			$.ajax({
+			 $.ajax({
 				data: obj,
 				url: '/grades/',
 				type: 'POST',
 				success:function(data) {
-					console.log(obj, data);
-					/*
-					let html = '';
-					if(data.errors) {
-						html = '<div class="alert alert-danger">' + data.errors + '</div>';
-					}
-					if(data.success) {
-						html = '<div class="alert alert-success">' + data.success + '</div>';
-					}
-					$('.form-result').html(html);
-					 */
+
 				}
 			});
 		});
 		$('#list').DataTable().ajax.reload();
 	});
 
-	$(document).on('change', '#grade', function() {
+	$(document).on('change', '.grade', function() {
 		let nextTd = $(this).parent().next().children('input');
 
 		if($(this).val() < 6 && $(this).val() !== '') {

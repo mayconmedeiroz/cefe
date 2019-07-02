@@ -3,9 +3,11 @@
 namespace CEFE;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Sport extends Model
 {
+    use SoftDeletes;
     /**
      * The attributes that should be hidden for arrays.
      *

@@ -170,7 +170,7 @@ class TeacherController extends Controller
      */
     public function destroy($id)
     {
-        $user = ClassTeacher::findOrFail($id);
+        $user = ClassTeacher::where('teacher_id', $id);
         $user->delete();
 
         $user = User::findOrFail($id);

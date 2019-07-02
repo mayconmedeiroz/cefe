@@ -53,7 +53,7 @@ class DatabaseSeeder extends Seeder
        ];
         User::insert($users);
 
-        /*$faker = Faker::create('pt_BR');
+        $faker = Faker::create('pt_BR');
 
         for($i = 12 ; $i <= 100 ; $i++){
             DB::table('users')->insert([
@@ -65,7 +65,7 @@ class DatabaseSeeder extends Seeder
                 'created_at' => NOW(),
                 'updated_at' => NOW(),
             ]);
-        }*/
+        }
     }
 
     private function CreateSports()
@@ -129,18 +129,15 @@ class DatabaseSeeder extends Seeder
         ];
         Student::insert($students);
 
-        /*$faker = Faker::create('pt_BR');
+        $faker = Faker::create('pt_BR');
 
         for($i = 12 ; $i <= 100; $i++){
             DB::table('students')->insert([
                 'user_id' => (1+$i),
-                'school_id' => $faker->numberBetween(1,3),
-                'class' => $faker->randomElement(['1151', '2151', '3251']),
-                'class_number' => $faker->numberBetween(1,30),
                 'created_at' => NOW(),
                 'updated_at' => NOW(),
             ]);
-        }*/
+        }
 
 
     }
@@ -187,9 +184,9 @@ class DatabaseSeeder extends Seeder
 
         StudentClass::insert($student_clasees);
 
-        /*$faker = Faker::create('pt_BR');
+        $faker = Faker::create('pt_BR');
 
-        for($i = 1 ; $i <= 93; $i++){
+        for($i = 5 ; $i <= 93; $i++){
             DB::table('student_classes')->insert([
                 'student_id' => ($i),
                 'sport_class_id' => $faker->numberBetween(1,7),
@@ -197,7 +194,7 @@ class DatabaseSeeder extends Seeder
                 'created_at' => NOW(),
                 'updated_at' => NOW(),
             ]);
-        }*/
+        }
     }
 
     private function CreateGrades()
@@ -234,6 +231,19 @@ class DatabaseSeeder extends Seeder
         ];
 
         StudentSchoolClass::insert($studentSchoolClass);
+
+        $faker = Faker::create('pt_BR');
+
+        for($i = 5 ; $i <= 93; $i++){
+            DB::table('student_school_classes')->insert([
+                'student_id' => ($i),
+                'school_class_id' => '1',
+                'class_number' => $faker->numberBetween(1,50),
+                'school_year' => NOW(),
+                'created_at' => NOW(),
+                'updated_at' => NOW(),
+            ]);
+        }
     }
 
     private function CreateEvaluations()

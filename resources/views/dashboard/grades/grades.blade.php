@@ -23,7 +23,7 @@
                 <div class="form-group">
                     <label for="sport_class">Turma:</label>
                     <select name="sport_class" id="sport_class" class="form-control" disabled required>
-                        <option value="" disabled selected hidden>Escolha uma Modalidade:</option>
+                        <option value="" disabled selected hidden>Escolha a Turma:</option>
                     </select>
                 </div>
             </div>
@@ -42,22 +42,26 @@
     </div>
 </div>
 <div class="list-div d-none p-4">
-    <div class="form-result"></div>
-    <table id="list" class="table table-striped table-bordered" style="width:100%">
-        <thead>
-            <tr>
-                <th width="10%">ID</th>
-                <th>Nome</th>
-                <th>Frequência</th>
-                <th>Nota</th>
-                <th>Nota de Recuperação</th>
-            </tr>
-        </thead>
-    </table>
+    <form id="form-grade" method="post">
+        <div class="form-result"></div>
+        <table id="list" class="table table-striped table-bordered" style="width:100%">
+            <button type="submit" class="btn btn-secondary"><i class="fas fa-plus"></i> Salvar Notas</button>
+            <thead>
+                <tr>
+                    <th width="10%">ID</th>
+                    <th>Nome</th>
+                    <th>Frequência</th>
+                    <th>Nota</th>
+                    <th>Nota de Recuperação</th>
+                </tr>
+            </thead>
+        </table>
+    </form>
 </div>
 @endsection
 
 @section('custom-js')
 <script src="{{ asset('js/datatables.min.js') }}"></script>
+<script src="{{ asset('js/jquery.inputmask.min.js') }}"></script>
 <script src="{{ asset('js/grades.js') }}"></script>
 @endsection

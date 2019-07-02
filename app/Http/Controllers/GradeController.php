@@ -77,17 +77,17 @@ class GradeController extends Controller
 
             return DataTables()->of($grades)
                 ->addColumn('grade', function($data){
-                    $input = '<input name="grade" id="grade" type="text" class="form-control" placeholder="Nota" value="'.$data->grade.'">';
+                    $input = '<input name="grade" type="text" class="form-control grade" placeholder="Nota" value="'.str_replace(".",",", $data->grade).'" required>';
                     return $input;
                 })
                 ->addColumn('attendance', function($data){
-                    $input = '<input name="attendance" id="attendance" type="text" class="form-control" placeholder="Frequência" value="'.$data->attendance.'">';
+                    $input = '<input name="attendance" type="text" class="form-control attendance" placeholder="Frequência" value="'.str_replace(".",",", $data->attendance).'" required>';
                     return $input;
                 })
                 ->addColumn('recuperation', function($data){
                     $disabled = NULL;
                     if($data->grade >= 6 || $data->grade == 0){$disabled = "disabled";};
-                    $input = '<input name="recuperation" id="recuperation" type="text" class="form-control" placeholder="Nota de Recuperação" value="'.$data->recuperation_grade.'"'.$disabled.'/>';
+                    $input = '<input name="recuperation" type="text" class="form-control recuperation" placeholder="Nota de Recuperação" value="'.str_replace(".",",", $data->recuperation_grade).'"'.$disabled.'/>';
                     return $input;
                 })
                 ->rawColumns(['recuperation', 'grade', 'attendance'])
