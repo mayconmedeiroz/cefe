@@ -60,15 +60,18 @@ Route::middleware(['auth'])->group(function () {
         Route::post('sport_classes/getData', 'SportClassController@getData')->name('sport_classes.getData');
         Route::get('sport_classes/getSportName/{id}/{classId}', 'SportClassController@getSportName');
 
-        Route::get('class/{id}', 'SportClassController@getSportClass')->name('class.index');
-        Route::post('class/{id}/getData', 'SportClassController@getSportClassData')->name('class.getData');
-        Route::post('class/getStudent/{query}', 'SportClassController@getStudent')->name('class.getStudent');
-
+        Route::get('class/{id}', 'ClassController@index')->name('class.index');
+        Route::delete('class/{id}/{sportId}', 'ClassController@destroy')->name('class.destroy');
+        Route::resource('class', 'ClassController');
+        Route::post('class/{id}/getData', 'ClassController@getData')->name('class.getData');
 
         Route::resource('grades', 'GradeController');
-        Route::post('grades/getData/{sportclass}/{evaluation}', 'GradeController@getData')->name('grades.getData');
+        Route::post('grades/getData/{sportClass}/{evaluation}', 'GradeController@getData')->name('grades.getData');
         Route::get('grades/getSportClasses/{id}', 'GradeController@getSportClasses');
         Route::get('grades/getEvaluationColumns/{id}', 'GradeController@getEvaluationColumns');
+        Route::get('grades/getLessonData/{sportClass}/{evaluation}', 'GradeController@getLessonData');
+        Route::post('grades/storeLesson/', 'GradeController@storeLesson');
 
+        Route::get('report_cards/', 'ReportCardController@index')->name('report_cards.index');
     });
 });

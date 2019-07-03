@@ -4,7 +4,7 @@ namespace CEFE;
 
 use Illuminate\Database\Eloquent\Model;
 
-class StudentGrade extends Model
+class SportClassLesson extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,6 +12,6 @@ class StudentGrade extends Model
      * @var array
      */
     protected $fillable = [
-        'student_id', 'evaluation_id', 'grade', 'school_year_id'
+        'sport_class_id', 'evaluation_id', 'planned_classes', 'classes_held'
     ];
 }

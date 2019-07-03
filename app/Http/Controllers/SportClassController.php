@@ -248,12 +248,6 @@ class SportClassController extends Controller
 
     public function getSportClass($id)
     {
-        $classes = DB::table('sport_classes')
-            ->where('sport_classes.id', $id)
-            ->select('sport_classes.name')
-            ->first();
-
-        return view('dashboard.classes.class')->with(compact('classes'));
     }
 
     public function getSportClassData($id)
@@ -284,7 +278,10 @@ class SportClassController extends Controller
         }
     }
 
-    public function getStudent($query) {
-
+    public function SportClassStudentdestroy($id)
+    {
+        StudentClass::where('sport_class_id', $id)->delete();
+        ClassTeacher::where('class_id', $id)->delete();
+        SportClass::where('id', $id)->delete();
     }
 }

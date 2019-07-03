@@ -22,10 +22,10 @@
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="sport">Modalidade:</label>
-                        <select name="sport" id="sport" class="form-control" disabled required>
-                            <option value="" disabled selected hidden>Escolha a Modalidade</option>
-                            @foreach(\CEFE\Sport::get() as $sport)
+                        <label for="school">Escola:</label>
+                        <select name="school" id="school" class="form-control" required>
+                            <option value="" disabled selected hidden>Escolha a Escola</option>
+                            @foreach(\CEFE\School::get() as $sport)
                                 <option value="{{$sport->id}}">{{$sport->name}}</option>
                             @endforeach
                         </select>
@@ -90,5 +90,5 @@
 @section('custom-js')
 <script src="{{ asset('js/datatables.min.js') }}"></script>
 <script src="{{ asset('js/jquery.inputmask.min.js') }}"></script>
-<script src="{{ asset('js/grades.js') }}"></script>
+<script src="{{ asset('js/report_cards.js') }}"></script>
 @endsection

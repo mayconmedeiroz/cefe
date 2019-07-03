@@ -17,12 +17,13 @@ class CreateStudentClassesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('student_id')->unsigned();
             $table->integer('sport_class_id')->unsigned();
-            $table->year('school_year');
+            $table->integer('school_year_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('student_id')->references('id')->on('students');
             $table->foreign('sport_class_id')->references('id')->on('sport_classes');
+            $table->foreign('school_year_id')->references('id')->on('school_years');
         });
     }
 
@@ -34,6 +35,7 @@ class CreateStudentClassesTable extends Migration
     public function down()
     {
         Schema::table('student_classes', function (Blueprint $table) {
+            $table->dropForeign('student_classes_school_years_id_foreign');
             $table->dropForeign('student_classes_student_id_id_foreign');
             $table->dropForeign('student_classes_sport_class_id_foreign');
         });

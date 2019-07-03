@@ -122,6 +122,12 @@
                 </a>
             </li>
             <li>
+                <a href="{{ url('/report_cards') }}" class="{{ Request::is('report_cards') ? 'menu-active' : '' }}">
+                    <i class="fas fa-user"></i>
+                    <span>Boletim</span>
+                </a>
+            </li>
+            <li>
                 <a href="#">
                     <i class="fas fa-cog"></i>
                     <span>Configuração</span>

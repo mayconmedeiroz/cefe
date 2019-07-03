@@ -59,20 +59,6 @@ $(document).ready(function () {
 		}
 	});
 
-	$(document).on('change', '#sport', function() {
-		let sportId = $(this).val();
-		if(sportId) {
-			$.ajax({
-				url: '/sport_classes/getSportName/'+sportId,
-				type: 'GET',
-				dataType: 'json',
-				success:function(data) {
-					$('#name').val(data);
-				}
-			});
-		}
-	});
-
 	$(document).on('click', '#newstudentclass', function(){
 		$('#form-result').html('');
 		$('#student-class-form')[0].reset();
@@ -83,27 +69,83 @@ $(document).ready(function () {
 
 	let userID;
 
+	let sport_class;
+	let school_class;
+
+	$(document).on('change', '#sport', function() {
+		let sportId = $(this).val();
+		if(sportId) {
+			$.ajax({
+				url: '/students/getSportClasses/'+sportId,
+				type: "GET",
+				dataType: "json",
+				success:function(data) {
+					$('#sport_class').empty().append('<option value="" disabled selected hidden>Escolha uma Turma:</option>');
+					$.each(data, function(key, value){
+						$('#sport_class').append(`<option value="${value.id}">${value.name}</option>`);
+					});
+					if ($('.edit') && sport_class) {
+						changeClass(sport_class);
+						sport_class = false;
+					}
+				}
+			});
+		}
+	});
+
+	$(document).on('change', '#school', function() {
+		let schoolId = $(this).val();
+		if(schoolId) {
+			$.ajax({
+				url: '/students/getSchoolClasses/'+schoolId,
+				type: "GET",
+				dataType: "json",
+				success:function(data) {
+					$('#school_class').empty().append('<option value="" disabled selected hidden>Escolha a Turma:</option>');
+					$.each(data, function(key, value){
+						$('#school_class').append(`<option value="${value.id}">${value.class}</option>`);
+					});
+					if ($('.edit') && school_class) {
+						changeSchoolClass(school_class);
+						school_class = false;
+					}
+				}
+			});
+		}
+	});
 	$(document).on('click', '.edit', function(){
 		userID = $(this).attr('id');
 		$('#form-result').html('');
 		$.ajax({
-			url:"/sport_classes/"+userID+"/edit",
+			url:"/students/"+userID+"/edit",
 			dataType:"json",
 			success:function(html){
-				$('#sport').val(html.data.sport_id);
+				$('#enrollment').val(html.data.enrollment);
 				$('#name').val(html.data.name);
-				$('#vacancies').val(html.data.vacancies);
-				$('#teachers').val(html.data.teachers_id.split(", "));
-				$('#weekday').val(html.data.weekday);
-				$('#start_time').val(html.data.start_time);
-				$('#end_time').val(html.data.end_time);
+				$('#email').val(html.data.email);
+				$('#password').val(html.data.password).attr('required', false);
+				$('#school').val(html.data.school_name).change();
+				school_class = html.data.class;
+				$('#class_number').val(html.data.class_number);
+				sport_class = html.data.sport_class;
+				$('#sport').val(html.data.sport_id).change();
+				$('#action').val('mod');
 				$('#hidden_id').val(html.data.id);
-				$('.modal-title').text('Modificar uma turma');
+				$('.modal-title').text('Modificar um aluno');
 				$('#action_button').val('Modificar');
 				$('#formModal').modal('show');
 			}
 		})
 	});
+
+
+	function changeClass(html){
+		$('#sport_class').val(html);
+	}
+
+	function changeSchoolClass(html){
+		$('#school_class').val(html);
+	}
 
 	$(document).on('click', '.delete', function(){
 		userID = $(this).attr('id');
@@ -112,13 +154,14 @@ $(document).ready(function () {
 	});
 
 	$('#confirmDelete').click(function(){
+		let sportId = window.location.href.split('/');
 		$.ajax({
 			method:'DELETE',
-			url:'/sport_classes/'+userID,
+			url:`/class/${userID}/${sportId[4]}`,
 			beforeSend:function(){
 				$('#confirmDelete').text('Excluindo...');
 			},
-			success:function(){
+			success:function(data){
 				setTimeout(function(){
 					$('#confirmModal').modal('hide');
 					$('#list').DataTable().ajax.reload();
@@ -129,7 +172,6 @@ $(document).ready(function () {
 
 	$('#student-class-form').on('submit', function(e) {
 		e.preventDefault();
-		$('#name').removeAttr('disabled');
 
 		if ($('#action_button').val() === 'Adicionar') {
 			let form_data = new FormData(this);
@@ -160,7 +202,7 @@ $(document).ready(function () {
 
 		if($('#action_button').val() === "Modificar") {
 			$.ajax({
-				url:'/sport_classes/update/',
+				url:'/students/update/',
 				method: 'POST',
 				data: new FormData(this),
 				contentType: false,
@@ -180,6 +222,5 @@ $(document).ready(function () {
 				}
 			});
 		}
-		$('#name').attr('disabled', 'disabled');
 	});
 });

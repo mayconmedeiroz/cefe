@@ -2,9 +2,10 @@
 
 namespace CEFE\Http\Controllers;
 
-use CEFE\Attendance;
+use CEFE\Absence;
 use CEFE\Evaluation;
 use CEFE\Recuperation;
+use CEFE\SportClassLesson;
 use CEFE\StudentGrade;
 use Validator;
 use Illuminate\Http\Request;
@@ -19,7 +20,6 @@ class GradeController extends Controller
             $sportClasses = DB::table('sport_classes')
                 ->select('sport_classes.id', 'sport_classes.name')
                 ->whereNull('sport_classes.deleted_at')
-                ->where('sport_classes.vacancies', '>', DB::raw('(SELECT COUNT(*) from `student_classes` WHERE `student_classes`.`sport_class_id` = `sport_classes`.`id`  AND `student_classes`.`deleted_at` IS NULL)'))
                 ->where('sport_classes.sport_id', $id)
                 ->get();
 
@@ -39,6 +39,17 @@ class GradeController extends Controller
         }
     }
 
+    public function getLessonData($sportClass, $evaluation)
+    {
+        if(request()->ajax()) {
+            $lesson = SportClassLesson::where('sport_class_id', $sportClass)
+                ->where('evaluation_id', $evaluation)
+                ->first();
+
+            return response()->json($lesson);
+        }
+    }
+
     public function validation($request)
     {
         $evaluation = Evaluation::FindOrFail($request->evaluation);
@@ -46,7 +57,7 @@ class GradeController extends Controller
             'id' => 'required|numeric',
             'grade' => 'required|numeric|between:0.00,10.00',
             'recuperation_grade' => 'nullable|numeric|between:0.00,10.00',
-            'attendance' => 'required_if:'.$evaluation->attendance.',==,1|numeric|between:0.00,100.00',
+            'attendance' => 'required_if:'.$evaluation->attendance.',==,1|numeric|between:0,99',
             'evaluation' => 'required|numeric',
         ]);
     }
@@ -65,29 +76,26 @@ class GradeController extends Controller
                     $join->on('student_grades.student_id', '=', 'students.id')
                         ->where('student_grades.evaluation_id', $evaluation);
                 })
-                ->leftJoin('attendances', function($join) use ($evaluation){
-                    $join->on('attendances.student_id', '=', 'students.id')
-                        ->where('attendances.evaluation_id', $evaluation);
-                })
+                ->leftJoin('absences', 'student_grades.id', '=', 'absences.student_grade_id')
                 ->leftJoin('recuperations', 'student_grades.id', '=', 'recuperations.student_grade_id')
-                ->select('students.id', 'users.name', 'student_grades.grade', 'attendances.attendance', 'recuperations.grade as recuperation_grade', DB::raw("(SELECT `sport_classes`.`name` FROM `sport_classes`  WHERE `student_classes`.`deleted_at` IS NULL AND `sport_classes`.`id` = `student_classes`.`sport_class_id`) AS `sport_class`"))
+                ->select('students.id', 'users.name', 'student_grades.grade', 'absences.absences', 'recuperations.grade as recuperation_grade', DB::raw("(SELECT `sport_classes`.`name` FROM `sport_classes`  WHERE `student_classes`.`deleted_at` IS NULL AND `sport_classes`.`id` = `student_classes`.`sport_class_id`) AS `sport_class`"))
                 ->whereNull('students.deleted_at')
                 ->where('student_classes.sport_class_id', $sportClass)
                 ->get();
 
             return DataTables()->of($grades)
                 ->addColumn('grade', function($data){
-                    $input = '<input name="grade" type="text" class="form-control grade" placeholder="Nota" value="'.str_replace(".",",", $data->grade).'" required>';
+                    $input = '<input name="grade" type="text" class="form-control grade" value="'.str_replace(".",",", $data->grade).'" required>';
                     return $input;
                 })
                 ->addColumn('attendance', function($data){
-                    $input = '<input name="attendance" type="text" class="form-control attendance" placeholder="Frequência" value="'.str_replace(".",",", $data->attendance).'" required>';
+                    $input = '<input name="attendance" type="text" class="form-control attendance" value="'.str_replace(".",",", $data->absences).'" required>';
                     return $input;
                 })
                 ->addColumn('recuperation', function($data){
                     $disabled = NULL;
                     if($data->grade >= 6 || $data->grade == 0){$disabled = "disabled";};
-                    $input = '<input name="recuperation" type="text" class="form-control recuperation" placeholder="Nota de Recuperação" value="'.str_replace(".",",", $data->recuperation_grade).'"'.$disabled.'/>';
+                    $input = '<input name="recuperation" type="text" class="form-control recuperation" value="'.str_replace(".",",", $data->recuperation_grade).'"'.$disabled.'/>';
                     return $input;
                 })
                 ->rawColumns(['recuperation', 'grade', 'attendance'])
@@ -136,6 +144,7 @@ class GradeController extends Controller
         $studentGrade = DB::table('student_grades')
             ->where('student_id', $request->id)
             ->where('evaluation_id', $request->evaluation)
+            ->where('school_year_id', $request->school_year)
             ->first();
 
         if($studentGrade) {
@@ -144,7 +153,11 @@ class GradeController extends Controller
                 'grade' => $request->grade
             ];
 
-            $gradeId = StudentGrade::where('student_id', $request->id)->where('evaluation_id', $request->evaluation)->first();
+            $gradeId = StudentGrade::where('student_id', $request->id)
+                ->where('evaluation_id', $request->evaluation)
+                ->where('school_year_id', $request->school_year)
+                ->first();
+
             $gradeId->update($studentGrade);
 
         } else {
@@ -152,34 +165,31 @@ class GradeController extends Controller
                 'student_id' => $request->id,
                 'evaluation_id' => $request->evaluation,
                 'grade' => $request->grade,
-                'school_year' => NOW(),
+                'school_year_id' => $request->school_year,
             ];
 
             $gradeId = StudentGrade::create($studentGrade);
         }
 
         if($evaluation->attendance) {
-            $attendance = DB::table('attendances')
-                ->where('student_id', $request->id)
-                ->where('evaluation_id', $request->evaluation)
+            $absences = DB::table('absences')
+                ->where('student_grade_id', $gradeId->id)
                 ->first();
 
-            if ($attendance) {
-                $attendance = [
-                    'attendance' => $request->attendance
+            if ($absences) {
+                $absences = [
+                    'absences' => $request->attendance
                 ];
 
-                Attendance::where('student_id', $request->id)->where('evaluation_id', $request->evaluation)->update($attendance);
+                Absence::where('student_grade_id', $gradeId->id)->update($absences);
 
             } else {
-                $attendance = [
-                    'student_id' => $request->id,
-                    'evaluation_id' => $request->evaluation,
-                    'attendance' => $request->attendance,
-                    'school_year' => NOW(),
+                $absences = [
+                    'student_grade_id' => $gradeId->id,
+                    'absences' => $request->attendance,
                 ];
 
-                Attendance::create($attendance);
+                Absence::create($absences);
             }
         }
 
@@ -202,6 +212,46 @@ class GradeController extends Controller
 
                 Recuperation::create($recuperationGrade);
             }
+        }
+
+        return response()->json(['success' => 'Notas cadastradas com sucesso.']);
+    }
+
+    public function storeLesson(Request $request)
+    {
+        $error = Validator::make($request->all(),[
+            'planned_classes' => 'required|numeric',
+            'classes_held' => 'required|numeric',
+        ]);
+
+        if($error->fails())
+        {
+            return response()->json(['errors' => $error->errors()->all()]);
+        }
+
+        $lessons = SportClassLesson::where('sport_class_id', $request->sport_class)
+                    ->where('evaluation_id', $request->evaluation)
+                    ->first();
+
+        if($lessons) {
+            $lessons = [
+                'planned_classes' => $request->planned_classes,
+                'classes_held' => $request->classes_held
+            ];
+
+            SportClassLesson::where('sport_class_id', $request->sport_class)
+                ->where('evaluation_id', $request->evaluation)
+                ->update($lessons);
+
+        } else {
+            $lessons = [
+                'sport_class_id' => $request->sport_class,
+                'evaluation_id' => $request->evaluation,
+                'planned_classes' => $request->planned_classes,
+                'classes_held' => $request->classes_held,
+            ];
+
+            SportClassLesson::create($lessons);
         }
 
         return response()->json(['success' => 'Notas cadastradas com sucesso.']);

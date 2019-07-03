@@ -18,11 +18,12 @@ class CreateStudentGradesTable extends Migration
             $table->integer('student_id')->unsigned();
             $table->integer('evaluation_id')->unsigned();
             $table->decimal('grade', 4, 2)->nullable();
-            $table->year('school_year');
+            $table->integer('school_year_id')->unsigned();
             $table->timestamps();
 
             $table->foreign('student_id')->references('id')->on('students');
             $table->foreign('evaluation_id')->references('id')->on('evaluations');
+            $table->foreign('school_year_id')->references('id')->on('school_years');
         });
     }
 
@@ -34,6 +35,7 @@ class CreateStudentGradesTable extends Migration
     public function down()
     {
         Schema::table('student_grades', function (Blueprint $table) {
+            $table->dropForeign('student_grades_school_years_id_foreign');
             $table->dropForeign('student_grades_student_id_foreign');
             $table->dropForeign('student_grades_evaluation_id_foreign');
         });

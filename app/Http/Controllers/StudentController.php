@@ -151,13 +151,6 @@ class StudentController extends Controller
 
         StudentClass::create($studentClass);
 
-        $grade = [
-            'student_id' => $studentId->id,
-            'school_year' => NOW()
-        ];
-
-        Grade::create($grade);
-
         return response()->json(['success' => 'Aluno adicionado com sucesso.']);
     }
 

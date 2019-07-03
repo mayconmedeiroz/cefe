@@ -13,6 +13,7 @@ use CEFE\Grade;
 use CEFE\SchoolClass;
 use CEFE\StudentSchoolClass;
 use CEFE\Evaluation;
+use CEFE\SchoolYear;
 use Faker\Factory as Faker;
 
 class DatabaseSeeder extends Seeder
@@ -25,6 +26,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->CreateUsers();
+        $this->CreateSchoolYear();
         $this->CreateSchools();
         $this->CreateSports();
         $this->CreateSportClasses();
@@ -176,10 +178,10 @@ class DatabaseSeeder extends Seeder
     private function CreateStudentClasses()
     {
         $student_clasees = [
-            ['student_id' => '1', 'sport_class_id' => '1', 'school_year' => NOW(), 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['student_id' => '2', 'sport_class_id' => '1', 'school_year' => NOW(), 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['student_id' => '3', 'sport_class_id' => '1', 'school_year' => NOW(), 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['student_id' => '4', 'sport_class_id' => '1', 'school_year' => NOW(), 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['student_id' => '1', 'sport_class_id' => '1', 'school_year_id' => '1', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['student_id' => '2', 'sport_class_id' => '1', 'school_year_id' => '1', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['student_id' => '3', 'sport_class_id' => '1', 'school_year_id' => '1', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['student_id' => '4', 'sport_class_id' => '1', 'school_year_id' => '1', 'created_at' => NOW(), 'updated_at' => NOW()],
         ];
 
         StudentClass::insert($student_clasees);
@@ -189,8 +191,8 @@ class DatabaseSeeder extends Seeder
         for($i = 5 ; $i <= 93; $i++){
             DB::table('student_classes')->insert([
                 'student_id' => ($i),
-                'sport_class_id' => $faker->numberBetween(1,7),
-                'school_year' => NOW(),
+                'sport_class_id' => $faker->numberBetween(2,8),
+                'school_year_id' => '1',
                 'created_at' => NOW(),
                 'updated_at' => NOW(),
             ]);
@@ -200,10 +202,10 @@ class DatabaseSeeder extends Seeder
     private function CreateGrades()
     {
         $grades = [
-            ['student_id' => '1', 'school_year' => NOW(), 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['student_id' => '2', 'school_year' => NOW(), 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['student_id' => '3', 'school_year' => NOW(), 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['student_id' => '4', 'school_year' => NOW(), 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['student_id' => '1', 'school_year_id' => '1', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['student_id' => '2', 'school_year_id' => '1', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['student_id' => '3', 'school_year_id' => '1', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['student_id' => '4', 'school_year_id' => '1', 'created_at' => NOW(), 'updated_at' => NOW()],
         ];
 
         Grade::insert($grades);
@@ -214,7 +216,7 @@ class DatabaseSeeder extends Seeder
             DB::table('student_classes')->insert([
                 'student_id' => ($i),
                 'sport_class_id' => $faker->numberBetween(1,7),
-                'school_year' => NOW(),
+                'school_year_id' => '1'
                 'created_at' => NOW(),
                 'updated_at' => NOW(),
             ]);
@@ -224,10 +226,10 @@ class DatabaseSeeder extends Seeder
     private function CreateStudentSchoolClasses()
     {
         $studentSchoolClass = [
-            ['student_id' => '1', 'school_class_id' => '1', 'class_number' => '13', 'school_year' => NOW(), 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['student_id' => '2', 'school_class_id' => '1', 'class_number' => '18', 'school_year' => NOW(), 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['student_id' => '3', 'school_class_id' => '1', 'class_number' => '14', 'school_year' => NOW(), 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['student_id' => '4', 'school_class_id' => '1', 'class_number' => '1', 'school_year' => NOW(), 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['student_id' => '1', 'school_class_id' => '1', 'class_number' => '13', 'school_year_id' => '1', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['student_id' => '2', 'school_class_id' => '1', 'class_number' => '18', 'school_year_id' => '1', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['student_id' => '3', 'school_class_id' => '1', 'class_number' => '14', 'school_year_id' => '1', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['student_id' => '4', 'school_class_id' => '1', 'class_number' => '1', 'school_year_id' => '1', 'created_at' => NOW(), 'updated_at' => NOW()],
         ];
 
         StudentSchoolClass::insert($studentSchoolClass);
@@ -239,7 +241,7 @@ class DatabaseSeeder extends Seeder
                 'student_id' => ($i),
                 'school_class_id' => '1',
                 'class_number' => $faker->numberBetween(1,50),
-                'school_year' => NOW(),
+                'school_year_id' => '1',
                 'created_at' => NOW(),
                 'updated_at' => NOW(),
             ]);
@@ -256,5 +258,14 @@ class DatabaseSeeder extends Seeder
         ];
 
         Evaluation::insert($evaluations);
+    }
+
+    private function CreateSchoolYear()
+    {
+        $school_year = [
+            ['school_year' => NOW(), 'created_at' => NOW(), 'updated_at' => NOW()],
+        ];
+
+        SchoolYear::insert($school_year);
     }
 }
