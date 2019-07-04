@@ -73,5 +73,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('grades/storeLesson/', 'GradeController@storeLesson');
 
         Route::get('report_cards/', 'ReportCardController@index')->name('report_cards.index');
+        Route::get('report_cards/getSchoolClasses/{schoolId}', 'ReportCardController@getSchoolClasses');
+        Route::get('report_cards/export/{evaluation}/{school}/{school_class_id}/{school_year}', 'ReportCardController@export')->name('report_cards.export');
     });
 });

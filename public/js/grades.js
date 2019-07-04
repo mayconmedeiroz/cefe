@@ -13,7 +13,7 @@ $(document).ready(function () {
 	$(document).on('change', '#school_year', function() {
 		$('.list-div').addClass("d-none");
 		$('#sport').removeAttr("disabled");
-		$('#sport_class, evaluation, #classes_held, #planned_classes').prop('disabled', true);
+		$('#sport_class, #evaluation, #classes_held, #planned_classes').prop('disabled', true);
 		$('#classes_held, #planned_classes').val('');
 		$('#sport_class option:first, #evaluation option:first, #sport option:first').prop('selected', true);
 	});

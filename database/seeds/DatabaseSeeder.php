@@ -239,7 +239,7 @@ class DatabaseSeeder extends Seeder
         for($i = 5 ; $i <= 93; $i++){
             DB::table('student_school_classes')->insert([
                 'student_id' => ($i),
-                'school_class_id' => '1',
+                'school_class_id' => $faker->numberBetween(1,22),
                 'class_number' => $faker->numberBetween(1,50),
                 'school_year_id' => '1',
                 'created_at' => NOW(),
