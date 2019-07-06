@@ -20,7 +20,7 @@ class ReportCardPerSchoolExport implements WithMultipleSheets
         $this->school_year = $school_year;
     }
 
-     /**
+    /**
      * @return array
      */
     public function sheets(): array

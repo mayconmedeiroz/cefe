@@ -115,7 +115,6 @@ class DatabaseSeeder extends Seeder
             ['school_id' => '1', 'class' => '3241', 'created_at' => NOW(), 'updated_at' => NOW()],
             ['school_id' => '1', 'class' => '3242', 'created_at' => NOW(), 'updated_at' => NOW()],
             ['school_id' => '1', 'class' => '3251', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['school_id' => '1', 'class' => '3232', 'created_at' => NOW(), 'updated_at' => NOW()],
             ['school_id' => '1', 'class' => '3111', 'created_at' => NOW(), 'updated_at' => NOW()],
         ];
         SchoolClass::insert($schoolClass);
@@ -239,7 +238,7 @@ class DatabaseSeeder extends Seeder
         for($i = 5 ; $i <= 93; $i++){
             DB::table('student_school_classes')->insert([
                 'student_id' => ($i),
-                'school_class_id' => $faker->numberBetween(1,22),
+                'school_class_id' => $faker->numberBetween(1,21),
                 'class_number' => $faker->numberBetween(1,50),
                 'school_year_id' => '1',
                 'created_at' => NOW(),
