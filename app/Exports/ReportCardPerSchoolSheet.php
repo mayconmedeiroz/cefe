@@ -2,17 +2,22 @@
 
 namespace CEFE\Exports;
 
-use CEFE\User;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithTitle;
 
-class UsersExport implements FromCollection, ShouldAutoSize, WithHeadings, WithTitle
+class ReportCardPerSchoolSheet implements FromCollection, ShouldAutoSize, WithHeadings, WithTitle
 {
 
-    public function __construct($evaluation, $school_id, $class, $school_year, $class_name)
+    private $evaluation;
+    private $school_id;
+    private $class;
+    private $school_year;
+    private $class_name;
+
+    public function __construct(int $evaluation, int $school_id, int $class, int $school_year, int $class_name)
     {
         $this->evaluation = $evaluation;
         $this->school_id = $school_id;
@@ -21,10 +26,14 @@ class UsersExport implements FromCollection, ShouldAutoSize, WithHeadings, WithT
         $this->class_name = $class_name;
     }
 
+    /**
+    * @return \Illuminate\Support\Collection
+    */
     public function collection()
     {
         $data = DB::table('students')
             ->select('users.name', 'school_classes.class', 'student_school_classes.class_number', 'student_grades.grade', 'absences.absences', 'recuperations.grade as recuperation_grade')
+            ->selectRaw('CASE WHEN `absences`.`absences`="0" THEN "0.0" ELSE `absences`.`absences` END AS absences')
             ->join('users', 'users.id', '=', 'students.user_id')
             ->leftJoin('student_school_classes', function($join){
                 $join->on('student_school_classes.student_id', '=', 'students.id')
@@ -60,6 +69,9 @@ class UsersExport implements FromCollection, ShouldAutoSize, WithHeadings, WithT
         ];
     }
 
+    /**
+     * @return string
+     */
     public function title(): string
     {
         return 'Turma ' . $this->class_name;
