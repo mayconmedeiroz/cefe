@@ -40,24 +40,24 @@ class DatabaseSeeder extends Seeder
     private function CreateUsers()
     {
         $users = [
-            ['enrollment' => '191000.40.10000', 'name' => 'Maycon Medeiros', 'email' => 'Maycon@admin.com', 'password' => Hash::make('123'), 'level' => '3', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['enrollment' => '191000.40.10001', 'name' => 'Andrey Dario', 'email' => 'Andrey@admin.com', 'password' => Hash::make('123'), 'level' => '3', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['enrollment' => '191000.40.10002', 'name' => 'Arthur Xavier', 'email' => 'Arthur@admin.com', 'password' => Hash::make('123'), 'level' => '3', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['enrollment' => '191000.40.10003', 'name' => 'Aluno', 'email' => 'user@user.com', 'password' => Hash::make('123'), 'level' => '1', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['enrollment' => '190210.45.10000', 'name' => 'Paulo de Aguiar', 'email' => 'futebol@cefe.com', 'password' => Hash::make('123'), 'level' => '2', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['enrollment' => '190210.45.10001', 'name' => 'Carolina Grego', 'email' => 'basquetebol@cefe.com', 'password' => Hash::make('123'), 'level' => '2', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['enrollment' => '190210.45.10002', 'name' => 'Sérgio Saraiva', 'email' => 'tenis@cefe.com', 'password' => Hash::make('123'), 'level' => '2', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['enrollment' => '190210.45.10003', 'name' => 'Vitória Flores', 'email' => 'nat1@cefe.com', 'password' => Hash::make('123'), 'level' => '2', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['enrollment' => '190210.45.10004', 'name' => 'Francisco Batista', 'email' => 'nat2@cefe.com', 'password' => Hash::make('123'), 'level' => '2', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['enrollment' => '190210.45.10005', 'name' => 'Allison Salazar', 'email' => 'handebol@cefe.com', 'password' => Hash::make('123'), 'level' => '2', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['enrollment' => '190210.45.10006', 'name' => 'Paulo Lovato	', 'email' => 'xadrez@cefe.com', 'password' => Hash::make('123'), 'level' => '2', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['enrollment' => '190210.45.10007', 'name' => 'Luciano Medina', 'email' => 'alongamento@cefe.com', 'password' => Hash::make('123'), 'level' => '2', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['enrollment' => '191000.40.1000', 'name' => 'Maycon Medeiros', 'email' => 'Maycon@admin.com', 'password' => Hash::make('123'), 'level' => '3', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['enrollment' => '191000.40.1001', 'name' => 'Andrey Dario', 'email' => 'Andrey@admin.com', 'password' => Hash::make('123'), 'level' => '3', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['enrollment' => '191000.40.1002', 'name' => 'Arthur Xavier', 'email' => 'Arthur@admin.com', 'password' => Hash::make('123'), 'level' => '3', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['enrollment' => '191000.40.1003', 'name' => 'Aluno', 'email' => 'user@user.com', 'password' => Hash::make('123'), 'level' => '1', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['enrollment' => '190210.45.1000', 'name' => 'Paulo de Aguiar', 'email' => 'futebol@cefe.com', 'password' => Hash::make('123'), 'level' => '2', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['enrollment' => '190210.45.1001', 'name' => 'Carolina Grego', 'email' => 'basquetebol@cefe.com', 'password' => Hash::make('123'), 'level' => '2', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['enrollment' => '190210.45.1002', 'name' => 'Sérgio Saraiva', 'email' => 'tenis@cefe.com', 'password' => Hash::make('123'), 'level' => '2', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['enrollment' => '190210.45.1003', 'name' => 'Vitória Flores', 'email' => 'nat1@cefe.com', 'password' => Hash::make('123'), 'level' => '2', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['enrollment' => '190210.45.1004', 'name' => 'Francisco Batista', 'email' => 'nat2@cefe.com', 'password' => Hash::make('123'), 'level' => '2', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['enrollment' => '190210.45.105', 'name' => 'Allison Salazar', 'email' => 'handebol@cefe.com', 'password' => Hash::make('123'), 'level' => '2', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['enrollment' => '190210.45.1006', 'name' => 'Paulo Lovato	', 'email' => 'xadrez@cefe.com', 'password' => Hash::make('123'), 'level' => '2', 'created_at' => NOW(), 'updated_at' => NOW()],
+            ['enrollment' => '190210.45.1007', 'name' => 'Luciano Medina', 'email' => 'alongamento@cefe.com', 'password' => Hash::make('123'), 'level' => '2', 'created_at' => NOW(), 'updated_at' => NOW()],
        ];
         User::insert($users);
 
         $faker = Faker::create('pt_BR');
 
-        for($i = 12 ; $i <= 100 ; $i++){
+        /*for($i = 12 ; $i <= 100 ; $i++){
             DB::table('users')->insert([
                 'enrollment' => '190210.45.'.(10000+$i),
                 'name' => $faker->firstName() . ' ' . $faker->lastName(),
@@ -68,6 +68,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => NOW(),
             ]);
         }
+        */
     }
 
     private function CreateSports()
@@ -130,7 +131,7 @@ class DatabaseSeeder extends Seeder
         ];
         Student::insert($students);
 
-        $faker = Faker::create('pt_BR');
+        /*$faker = Faker::create('pt_BR');
 
         for($i = 12 ; $i <= 100; $i++){
             DB::table('students')->insert([
@@ -139,7 +140,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => NOW(),
             ]);
         }
-
+    */
 
     }
 
@@ -185,7 +186,7 @@ class DatabaseSeeder extends Seeder
 
         StudentClass::insert($student_clasees);
 
-        $faker = Faker::create('pt_BR');
+        /*$faker = Faker::create('pt_BR');
 
         for($i = 5 ; $i <= 93; $i++){
             DB::table('student_classes')->insert([
@@ -196,6 +197,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => NOW(),
             ]);
         }
+        */
     }
 
     private function CreateGrades()
@@ -233,7 +235,7 @@ class DatabaseSeeder extends Seeder
 
         StudentSchoolClass::insert($studentSchoolClass);
 
-        $faker = Faker::create('pt_BR');
+        /*$faker = Faker::create('pt_BR');
 
         for($i = 5 ; $i <= 93; $i++){
             DB::table('student_school_classes')->insert([
@@ -245,6 +247,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => NOW(),
             ]);
         }
+        */
     }
 
     private function CreateEvaluations()

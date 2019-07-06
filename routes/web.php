@@ -75,5 +75,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('report_cards/', 'ReportCardController@index')->name('report_cards.index');
         Route::get('report_cards/getSchoolClasses/{schoolId}', 'ReportCardController@getSchoolClasses');
         Route::get('report_cards/export/{school_year}/{school}/{school_class}/{evaluation}', 'ReportCardController@export')->name('report_cards.export');
+
+        Route::resource('import_students', 'ImportStudentController');
     });
 });

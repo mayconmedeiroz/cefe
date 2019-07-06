@@ -72,7 +72,10 @@ class StudentController extends Controller
         {
             $users = DB::table('students')
                 ->join('users', 'users.id', '=', 'students.user_id')
-                ->join('student_school_classes', 'students.id', '=', 'student_school_classes.student_id')
+                ->leftJoin('student_school_classes', function($join){
+                    $join->on('student_school_classes.student_id', '=', 'students.id')
+                        ->whereNull('student_school_classes.deleted_at');
+                })
                 ->join('school_classes', 'student_school_classes.school_class_id', '=', 'school_classes.id')
                 ->join('schools', 'school_classes.school_id', '=', 'schools.id')
                 ->leftJoin('student_classes', function($join){

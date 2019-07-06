@@ -58,3 +58,10 @@ Breadcrumbs::for('report_cards.index', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Boletim');
 });
+
+
+// Dashboard > Importar Estudantes
+Breadcrumbs::for('import_students.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Importar Estudantes');
+});

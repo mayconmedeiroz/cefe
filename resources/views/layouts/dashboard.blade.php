@@ -128,6 +128,12 @@
                 </a>
             </li>
             <li>
+                <a href="{{ url('/import_students') }}" class="{{ Request::is('import_students') ? 'menu-active' : '' }}">
+                    <i class="fas fa-user"></i>
+                    <span>Importar Alunos</span>
+                </a>
+            </li>
+            <li>
                 <a href="#">
                     <i class="fas fa-cog"></i>
                     <span>Configuração</span>
