@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use CEFE\Exports\ReportCardExport;
 use CEFE\Exports\ReportCardPerSchoolExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Auth;
 
 class ReportCardController extends Controller
 {
@@ -24,7 +25,23 @@ class ReportCardController extends Controller
 
     public function index()
     {
-        return view('dashboard.reportcards.reportcards');
+        switch (Auth::user()->level) {
+        case 3:
+            $userId = Auth::user()->id;
+
+            $school = DB::table('users')
+                ->select('secretaries.school_id')
+                ->join('secretaries', function($join) use($userId) {
+                    $join->where('secretaries.secretary_id', $userId);
+                })
+                ->first();
+
+            return view('dashboard.secretary.report_cards.report_cards')->with(compact('school'));
+            break;
+        case 4:
+            return view('dashboard.admin.report_cards.report_cards');
+            break;
+        }
     }
 
     public function export($school_year, $school, $school_class, $evaluation)

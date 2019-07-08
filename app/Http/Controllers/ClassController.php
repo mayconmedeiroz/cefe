@@ -7,6 +7,7 @@ use CEFE\Sport;
 use CEFE\StudentClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
 class ClassController extends Controller
 {
@@ -18,15 +19,27 @@ class ClassController extends Controller
      */
     public function index($id)
     {
-        $sports = Sport::all();
-        $schools = School::all();
-        $classes = DB::table('sport_classes')
-            ->where('sport_classes.id', $id)
-            ->select('sport_classes.name')
-            ->first();
+        switch (Auth::user()->level) {
+            case 2:
+                $classes = DB::table('sport_classes')
+                    ->where('sport_classes.id', $id)
+                    ->select('sport_classes.name')
+                    ->first();
 
-        return view('dashboard.classes.class')->with(compact('classes', 'sports', 'schools'));
-    }
+                return view('dashboard.teacher.classes.class')->with(compact('classes'));
+                break;
+            case 4:
+                $sports = Sport::all();
+                $schools = School::all();
+                $classes = DB::table('sport_classes')
+                    ->where('sport_classes.id', $id)
+                    ->select('sport_classes.name')
+                    ->first();
+
+                return view('dashboard.admin.classes.class')->with(compact('classes', 'sports', 'schools'));
+                break;
+        }
+     }
 
     public function getData($id)
     {

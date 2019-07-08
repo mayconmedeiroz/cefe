@@ -18,7 +18,7 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        return view('dashboard.teachers.teachers');
+        return view('dashboard.admin.teachers.teachers');
     }
 
     public function getData()

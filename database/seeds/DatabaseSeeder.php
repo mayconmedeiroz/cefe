@@ -14,6 +14,7 @@ use CEFE\SchoolClass;
 use CEFE\StudentSchoolClass;
 use CEFE\Evaluation;
 use CEFE\SchoolYear;
+use CEFE\Secretary;
 use Faker\Factory as Faker;
 
 class DatabaseSeeder extends Seeder
@@ -54,6 +55,7 @@ class DatabaseSeeder extends Seeder
             ['enrollment' => '190210.45.1007', 'name' => 'Luciano Medina', 'email' => 'alongamento@cefe.com', 'password' => Hash::make('123'), 'level' => '2', 'created_at' => NOW(), 'updated_at' => NOW()],
        ];
         User::insert($users);
+
 
         $faker = Faker::create('pt_BR');
 
@@ -119,6 +121,13 @@ class DatabaseSeeder extends Seeder
             ['school_id' => '1', 'class' => '3111', 'created_at' => NOW(), 'updated_at' => NOW()],
         ];
         SchoolClass::insert($schoolClass);
+
+
+        $secretary = [
+            ['secretary_id' => 1, 'school_id' => 1, 'created_at' => NOW(), 'updated_at' => NOW()]
+        ];
+
+        Secretary::insert($secretary);
     }
 
     private function CreateStudents()

@@ -16,7 +16,7 @@ class StudentMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::user()->level >= 1) {
+        if(Auth::user()->level == 1) {
             return $next($request);
         } else {
             return redirect()->back();

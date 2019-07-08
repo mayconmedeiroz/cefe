@@ -48,6 +48,7 @@ class StudentImport implements ToCollection
                 StudentSchoolClass::create([
                     'student_id'        => $student->id,
                     'school_class_id'   => $school_class->id,
+                    'class_number'      => $row[4],
                     'school_year_id'    => $this->school_year
                 ]);
 
@@ -69,6 +70,7 @@ class StudentImport implements ToCollection
                 StudentSchoolClass::create([
                     'student_id'        => $student,
                     'school_class_id'   => $school_class->id,
+                    'class_number'      => $row[4],
                     'school_year_id'    => $this->school_year
                 ]);
             }

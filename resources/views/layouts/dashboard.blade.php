@@ -84,51 +84,51 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-            @if  (Auth::user()->level === 3)
-            <li id="menu-1">
-                <a href="{{ url('/sport_classes') }}" aria-controls="submenu-1" class="{{ Request::is('sport_classes') ? 'menu-active' : '' }}">
+            @if  (Auth::user()->level == 4)
+            <li>
+                <a href="{{ url('admin/sport_classes') }}" aria-controls="submenu-1" class="{{ Request::is('admin/sport_classes') ? 'menu-active' : '' }}">
                     <i class="fas fa-user"></i>
                     <span>Gerenciar Turmas</span>
                 </a>
             </li>
             <li>
-                <a href="{{ url('/students') }}" class="{{ Request::is('students') ? 'menu-active' : '' }}">
+                <a href="{{ url('admin/students') }}" class="{{ Request::is('admin/students') ? 'menu-active' : '' }}">
                     <i class="fas fa-user"></i>
                     <span>Gerenciar Alunos</span>
                 </a>
             </li>
             <li>
-                <a href="{{ url('/grades') }}" class="{{ Request::is('grades') ? 'menu-active' : '' }}">
+                <a href="{{ url('admin/grades') }}" class="{{ Request::is('admin/grades') ? 'menu-active' : '' }}">
                     <i class="fas fa-user"></i>
                     <span>Lançamento de Notas</span>
                 </a>
             </li>
             <li>
-                <a href="{{ url('/sports') }}" class="{{ Request::is('sports') ? 'menu-active' : '' }}">
+                <a href="{{ url('admin/sports') }}" class="{{ Request::is('admin/sports') ? 'menu-active' : '' }}">
                     <i class="fas fa-user"></i>
                     <span>Gerenciar Modalidades</span>
                 </a>
             </li>
             <li>
-                <a href="{{ url('/teachers') }}" class="{{ Request::is('teachers') ? 'menu-active' : '' }}">
+                <a href="{{ url('admin/teachers') }}" class="{{ Request::is('admin/teachers') ? 'menu-active' : '' }}">
                     <i class="fas fa-user"></i>
                     <span>Gerenciar Professores</span>
                 </a>
             </li>
             <li>
-                <a href="{{ url('/employees') }}" class="{{ Request::is('employees') ? 'menu-active' : '' }}">
+                <a href="{{ url('admin/employees') }}" class="{{ Request::is('admin/employees') ? 'menu-active' : '' }}">
                     <i class="fas fa-user"></i>
                     <span>Gerenciar Funcionários</span>
                 </a>
             </li>
             <li>
-                <a href="{{ url('/report_cards') }}" class="{{ Request::is('report_cards') ? 'menu-active' : '' }}">
+                <a href="{{ url('admin/report_cards') }}" class="{{ Request::is('admin/report_cards') ? 'menu-active' : '' }}">
                     <i class="fas fa-user"></i>
                     <span>Boletim</span>
                 </a>
             </li>
             <li>
-                <a href="{{ url('/import_students') }}" class="{{ Request::is('import_students') ? 'menu-active' : '' }}">
+                <a href="{{ url('admin/import_students') }}" class="{{ Request::is('admin/import_students') ? 'menu-active' : '' }}">
                     <i class="fas fa-user"></i>
                     <span>Importar Alunos</span>
                 </a>
@@ -140,11 +140,45 @@
                 </a>
             </li>
             @endif
+            @if  (Auth::user()->level == 3)
+                <li>
+                    <a href="{{ url('secretary/students') }}" class="{{ Request::is('secretary/students') ? 'menu-active' : '' }}">
+                        <i class="fas fa-user"></i>
+                        <span>Gerenciar Alunos</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url('secretary/report_cards') }}" class="{{ Request::is('secretary/report_cards') ? 'menu-active' : '' }}">
+                        <i class="fas fa-user"></i>
+                        <span>Boletim</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url('secretary/import_students') }}" class="{{ Request::is('secretary/import_students') ? 'menu-active' : '' }}">
+                        <i class="fas fa-user"></i>
+                        <span>Importar Alunos</span>
+                    </a>
+                </li>
+            @endif
+            @if  (Auth::user()->level == 2)
+                <li>
+                    <a href="{{ url('teacher/sport_classes') }}" aria-controls="submenu-1" class="{{ Request::is('teacher/sport_classes') ? 'menu-active' : '' }}">
+                        <i class="fas fa-user"></i>
+                        <span>Gerenciar Turmas</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url('teacher/grades') }}" class="{{ Request::is('teacher/grades') ? 'menu-active' : '' }}">
+                        <i class="fas fa-user"></i>
+                        <span>Lançamento de Notas</span>
+                    </a>
+                </li>
+            @endif
         </ul>
     </div>
     <div class="w-100">
         <nav class="page-breadcrumb" aria-label="breadcrumb">
-            {!! html_entity_decode(Breadcrumbs::render(Request::route()->getName(), Request::is('class/*') ? $classes->name : '')) !!}
+            {!! html_entity_decode(Breadcrumbs::render(Request::route()->getName(), Request::is('*/class/*') ? $classes->name : '')) !!}
         </nav>
         <div class="m-4">
             <h5 class="mb-4">{{ $title }}</h5>

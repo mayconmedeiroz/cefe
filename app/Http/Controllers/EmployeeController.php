@@ -17,7 +17,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return view('dashboard.employees.employees');
+        return view('dashboard.admin.employees.employees');
     }
 
     public function getData()

@@ -10,6 +10,7 @@ use CEFE\StudentGrade;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
 class GradeController extends Controller
 {
@@ -110,7 +111,24 @@ class GradeController extends Controller
      */
     public function index()
     {
-        return view('dashboard.grades.grades');
+        switch (Auth::user()->level) {
+            case 2:
+                $userId = Auth::user()->id;
+
+                $sportClasses = DB::table('sport_classes')
+                    ->join('class_teachers', function($join) use($userId) {
+                        $join->on('class_teachers.class_id', '=', 'sport_classes.id')
+                            ->where('class_teachers.teacher_id', $userId)
+                            ->whereNull('class_teachers.deleted_at');
+                    })
+                    ->get();
+
+                return view('dashboard.teacher.grades.grades')->with(compact('sportClasses'));
+                break;
+            case 4:
+                return view('dashboard.admin.grades.grades');
+                break;
+        }
     }
 
     /**

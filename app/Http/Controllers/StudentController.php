@@ -63,7 +63,7 @@ class StudentController extends Controller
     {
         $sports = Sport::all();
         $schools = School::all();
-        return view('dashboard.students.students')->with(compact('schools', 'sports'));
+        return view('dashboard.admin.students.students')->with(compact('schools', 'sports'));
     }
 
     public function getData()

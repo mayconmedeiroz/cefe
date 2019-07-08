@@ -16,7 +16,7 @@ class EmployeeMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::user()->level >= 3) {
+        if(Auth::user()->level == 4) {
             return $next($request);
         } else {
             return redirect()->back();

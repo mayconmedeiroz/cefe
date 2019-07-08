@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
 use DataTables;
+use Auth;
 
 class SportClassController extends Controller
 {
@@ -33,18 +34,26 @@ class SportClassController extends Controller
      */
     public function index()
     {
-        $sports = Sport::all();
-        $teachers = DB::table('users')
-            ->select('users.id', 'users.name')
-            ->where('users.level', 2)
-            ->get();
-        return view('dashboard.classes.classes')->with(compact('sports', 'teachers'));
+        switch (Auth::user()->level) {
+            case 2:
+                return view('dashboard.teacher.classes.classes');
+                break;
+            case 4:
+                $sports = Sport::all();
+                $teachers = DB::table('users')
+                    ->select('users.id', 'users.name')
+                    ->where('users.level', 2)
+                    ->get();
+                return view('dashboard.admin.classes.classes')->with(compact('sports', 'teachers'));
+                break;
+        }
     }
 
     public function getData()
     {
         if(request()->ajax())
         {
+            if (Auth::user()->level == 4) {
             $classes = DB::table('sport_classes')
                 ->leftJoin('class_teachers', function($join){
                     $join->on('class_teachers.class_id', '=', 'sport_classes.id')
@@ -62,12 +71,34 @@ class SportClassController extends Controller
                 ->whereNull('sport_classes.deleted_at')
                 ->groupBy('class_teachers.class_id')
                 ->get();
+            } else {
+                $classes = DB::table('sport_classes')
+                    ->join('class_teachers', function($join){
+                        $join->on('class_teachers.class_id', '=', 'sport_classes.id')
+                            ->where('class_teachers.teacher_id', Auth::user()->id)
+                            ->whereNull('class_teachers.deleted_at');
+                    })
+                    ->join('users', function($join){
+                        $join->on('users.id', '=', 'class_teachers.teacher_id')
+                            ->whereNull('users.deleted_at');
+                    })
+                    ->join('sports', 'sport_classes.sport_id', '=', 'sports.id')
+                    ->select('sport_classes.id', 'sports.name AS sport_name', 'sport_classes.name')
+                    ->selectRaw('CONCAT(CASE `sport_classes`.`weekday` WHEN 0 THEN "Domingo" WHEN 1 THEN "Segunda-feira" WHEN 2 THEN "Terça-feira" WHEN 3 THEN "Quarta-feira" WHEN 4 THEN "Quinta-feira" WHEN 5 THEN "Sexta-feira" WHEN 6 THEN "Sábado" END, ", ", DATE_FORMAT(`sport_classes`.`start_time`, "%H:%i"), "-", DATE_FORMAT(`sport_classes`.`end_time`, "%H:%i")) AS `sport_time`')
+                    ->selectRaw('`sport_classes`.`vacancies` - (SELECT COUNT(*) from `student_classes` WHERE `student_classes`.`sport_class_id` = `sport_classes`.`id`  AND `student_classes`.`deleted_at` IS NULL) AS vacancies')
+                    ->whereNull('sport_classes.deleted_at')
+                    ->groupBy('class_teachers.class_id')
+                    ->get();
+            }
 
             return DataTables()->of($classes)
                 ->addColumn('action', function($data){
-                    $button = '<a href="/class/'.$data->id.'" class="view btn btn-secondary btn-sm"><i class="fas fa-eye"></i></a>';
-                    $button .= '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm mx-lg-1"><i class="fas fa-edit"></i></button>';
-                    $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>';
+                    $button = '<a href="/teacher/class/'.$data->id.'" class="view btn btn-secondary btn-sm"><i class="fas fa-eye"></i></a>';
+                    if(Auth::user()->level == 4){
+                        $button = '<a href="/admin/class/'.$data->id.'" class="view btn btn-secondary btn-sm"><i class="fas fa-eye"></i></a>';
+                        $button .= '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm mx-lg-1"><i class="fas fa-edit"></i></button>';
+                        $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>';
+                    }
                     return $button;
                 })
                 ->rawColumns(['action'])

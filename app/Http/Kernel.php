@@ -62,6 +62,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'student' => \CEFE\Http\Middleware\StudentMiddleware::class,
         'teacher' => \CEFE\Http\Middleware\TeacherMiddleware::class,
+        'secretary' => \CEFE\Http\Middleware\SecretaryMiddleware::class,
         'employee' => \CEFE\Http\Middleware\EmployeeMiddleware::class,
     ];
 

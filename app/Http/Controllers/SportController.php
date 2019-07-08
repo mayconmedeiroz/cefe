@@ -27,7 +27,7 @@ class SportController extends Controller
      */
     public function index()
     {
-        return view('dashboard.sports.sports');
+        return view('dashboard.admin.sports.sports');
     }
 
     public function getData()

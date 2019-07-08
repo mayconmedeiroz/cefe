@@ -4,7 +4,9 @@ namespace CEFE\Http\Controllers;
 
 use Illuminate\Http\Request;
 use CEFE\Imports\StudentImport;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use Auth;
 
 class ImportStudentController extends Controller
 {
@@ -15,17 +17,22 @@ class ImportStudentController extends Controller
      */
     public function index()
     {
-        return view('dashboard.importstudents.importstudents');
-    }
+        switch (Auth::user()->level) {
+            case 3:
+                $userId = Auth::user()->id;
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+                $school = DB::table('users')
+                    ->select('secretaries.school_id')
+                    ->join('secretaries', function($join) use($userId) {
+                        $join->where('secretaries.secretary_id', $userId);
+                    })
+                    ->first();
+                return view('dashboard.secretary.students.import_students')->with(compact('school'));
+                break;
+            case 4:
+                return view('dashboard.admin.students.import_students');
+                break;
+        }
     }
 
     /**
@@ -38,50 +45,5 @@ class ImportStudentController extends Controller
     {
         Excel::import(new StudentImport($request->school_year, $request->school), $request->file('import_students'));
         return response()->json(['success' => "Usuários importados com sucesso."]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }
