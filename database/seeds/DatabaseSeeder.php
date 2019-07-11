@@ -116,9 +116,7 @@ class DatabaseSeeder extends Seeder
             ['school_id' => '1', 'class' => '3231', 'created_at' => NOW(), 'updated_at' => NOW()],
             ['school_id' => '1', 'class' => '3232', 'created_at' => NOW(), 'updated_at' => NOW()],
             ['school_id' => '1', 'class' => '3241', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['school_id' => '1', 'class' => '3242', 'created_at' => NOW(), 'updated_at' => NOW()],
             ['school_id' => '1', 'class' => '3251', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['school_id' => '1', 'class' => '3111', 'created_at' => NOW(), 'updated_at' => NOW()],
         ];
         SchoolClass::insert($schoolClass);
 

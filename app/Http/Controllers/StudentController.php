@@ -16,6 +16,7 @@ use CEFE\Sport;
 use CEFE\Grade;
 use CEFE\StudentClass;
 use CEFE\StudentSchoolClass;
+use Auth;
 
 class StudentController extends Controller
 {
@@ -63,31 +64,80 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $sports = Sport::all();
-        $schools = School::all();
-        return view('dashboard.admin.students.students')->with(compact('schools', 'sports'));
+        switch (Auth::user()->level) {
+            case 3:
+                $userId = Auth::user()->id;
+
+                $school = DB::table('users')
+                    ->select('secretaries.school_id')
+                    ->join('secretaries', function($join) use($userId) {
+                        $join->where('secretaries.secretary_id', $userId);
+                    })
+                    ->first();
+
+                return view('dashboard.secretary.students.students')->with(compact('school'));
+                break;
+            case 4:
+                $teachers = DB::table('users');
+                $sports = Sport::all();
+                $schools = School::all();
+                return view('dashboard.admin.students.students')->with(compact('schools', 'sports'));
+                break;
+        }
     }
 
     public function getData()
     {
         if(request()->ajax())
         {
-            $users = DB::table('students')
-                ->join('users', 'users.id', '=', 'students.user_id')
-                ->leftJoin('student_school_classes', function($join){
-                    $join->on('student_school_classes.student_id', '=', 'students.id')
-                        ->whereNull('student_school_classes.deleted_at');
-                })
-                ->join('school_classes', 'student_school_classes.school_class_id', '=', 'school_classes.id')
-                ->join('schools', 'school_classes.school_id', '=', 'schools.id')
-                ->leftJoin('student_classes', function($join){
-                    $join->on('student_classes.student_id', '=', 'students.id')
-                         ->whereNull('student_classes.deleted_at');
-                })
-                ->leftJoin('sport_classes', 'sport_classes.id', '=', 'student_classes.sport_class_id')
-                ->select('students.id', 'users.enrollment', 'users.name', 'schools.acronym', 'school_classes.class', 'student_school_classes.class_number', DB::raw("(SELECT `sport_classes`.`name` FROM `sport_classes`  WHERE `student_classes`.`deleted_at` IS NULL AND `sport_classes`.`id` = `student_classes`.`sport_class_id`) AS `sport_class`"))
-                ->whereNull('students.deleted_at')
-                ->get();
+            $userId = Auth::user()->level;
+            if ($userId == 4) {
+                $users = DB::table('students')
+                    ->join('users', 'users.id', '=', 'students.user_id')
+                    ->leftJoin('student_school_classes', function($join){
+                        $join->on('student_school_classes.student_id', '=', 'students.id')
+                            ->whereNull('student_school_classes.deleted_at');
+                    })
+                    ->join('school_classes', 'student_school_classes.school_class_id', '=', 'school_classes.id')
+                    ->join('schools', 'school_classes.school_id', '=', 'schools.id')
+                    ->leftJoin('student_classes', function($join){
+                        $join->on('student_classes.student_id', '=', 'students.id')
+                            ->whereNull('student_classes.deleted_at');
+                    })
+                    ->leftJoin('sport_classes', 'sport_classes.id', '=', 'student_classes.sport_class_id')
+                    ->select('students.id', 'users.enrollment', 'users.name', 'schools.acronym', 'school_classes.class', 'student_school_classes.class_number', DB::raw("(SELECT `sport_classes`.`name` FROM `sport_classes`  WHERE `student_classes`.`deleted_at` IS NULL AND `sport_classes`.`id` = `student_classes`.`sport_class_id`) AS `sport_class`"))
+                    ->whereNull('students.deleted_at')
+                    ->get();
+            } else {
+                $userId = Auth::user()->id;
+
+                $school = DB::table('users')
+                    ->select('secretaries.school_id')
+                    ->join('secretaries', function($join) use($userId) {
+                        $join->where('secretaries.secretary_id', $userId);
+                    })
+                    ->first();
+
+                $users = DB::table('students')
+                    ->join('users', 'users.id', '=', 'students.user_id')
+                    ->leftJoin('student_school_classes', function($join){
+                        $join->on('student_school_classes.student_id', '=', 'students.id')
+                            ->whereNull('student_school_classes.deleted_at');
+                    })
+                    ->join('school_classes', 'student_school_classes.school_class_id', '=', 'school_classes.id')
+                    ->join('schools', function($join) use($school){
+                        $join->on('school_classes.school_id', '=', 'schools.id')
+                            ->where('schools.id', $school->school_id);
+                    })
+                    ->leftJoin('student_classes', function($join){
+                        $join->on('student_classes.student_id', '=', 'students.id')
+                            ->whereNull('student_classes.deleted_at');
+                    })
+                    ->leftJoin('sport_classes', 'sport_classes.id', '=', 'student_classes.sport_class_id')
+                    ->select('students.id', 'users.enrollment', 'users.name', 'school_classes.class', 'student_school_classes.class_number', DB::raw("(SELECT `sport_classes`.`name` FROM `sport_classes`  WHERE `student_classes`.`deleted_at` IS NULL AND `sport_classes`.`id` = `student_classes`.`sport_class_id`) AS `sport_class`"))
+                    ->whereNull('students.deleted_at')
+                    ->get();
+            }
 
             return DataTables()->of($users)
                 ->addColumn('action', function($data){

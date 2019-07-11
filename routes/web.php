@@ -60,6 +60,12 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('secretary/import_students/', 'ImportStudentController@index')->name('import_students.index');
         Route::post('secretary/import_students/', 'ImportStudentController@store');
+
+        Route::resource('secretary/students', 'StudentController');
+        Route::post('secretary/students/update', 'StudentController@update')->name('students.update');
+        Route::post('secretary/students/getData', 'StudentController@getData')->name('students.getData');
+        Route::get('secretary/students/getSportClasses/{id}', 'StudentController@getSportClasses');
+        Route::get('secretary/students/getSchoolClasses/{id}', 'StudentController@getSchoolClasses');
     });
 
     //Routes available to employee
