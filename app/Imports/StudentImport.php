@@ -36,7 +36,6 @@ class StudentImport implements ToCollection
                     ->update([
                         'name'              => mb_convert_case(mb_strtolower($row[0], "UTF-8"), MB_CASE_TITLE, "UTF-8"),
                         'enrollment'        => $row[1],
-                        'updated_at'        => \Carbon\Carbon::now(),
                     ]);
 
                 $student = DB::table('students')
@@ -58,7 +57,6 @@ class StudentImport implements ToCollection
                     'enrollment'        => $row[1],
                     'password'          => Hash::make($row[2]),
                     'created_at'        => \Carbon\Carbon::now(),
-                    'updated_at'        => \Carbon\Carbon::now(),
                 ]);
 
                 $student = DB::table('students')->insertGetId([

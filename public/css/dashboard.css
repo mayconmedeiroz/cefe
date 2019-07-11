@@ -605,3 +605,33 @@ input:focus, .btn:focus, .pagination a:focus, select {
     color: #212529;
     display: block;
 }
+
+.form-first, .form-first-login-title {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.form-first-login-title {
+    background: url("../img/background.jpg");
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    padding: 70px 15px 74px 15px;
+}
+
+.form-first-login-title span {
+    font-family: Poppins;
+    font-weight: bold;
+    font-size: 30pt;
+    color: #fff;
+    text-transform: uppercase;
+    line-height: 1.2;
+    text-align: center;
+}

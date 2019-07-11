@@ -52,7 +52,7 @@
                     @csrf
                     <h1 class="py-5">Login</h1>
                     <div class="form-group">
-                        <input placeholder="Email" id="email" type="text" value="{{ old('email') }}" class="form-control" name="email" required autocomplete="email" autofocus>
+                        <input placeholder="Email" id="login" type="text" value="{{ old('email') }}" class="form-control" name="login" required autocomplete="email" autofocus>
                     </div>
                     <div class="form-group">
                         <input id="password" type="password" class="form-control" name="password" required autocomplete="current-password" placeholder="Senha">
@@ -96,7 +96,7 @@
                     @csrf
                     <h1 class="py-5">Primeiro Acesso</h1>
                     <div class="form-group">
-                        <input placeholder="Matrícula" id="enrollment" type="text" value="{{ old('enrollment') }}" class="form-control" name="enrollment" required autocomplete="email" autofocus>
+                        <input placeholder="Matrícula" id="login" type="text" value="{{ old('enrollment') }}" class="form-control" name="login" required autocomplete="email" autofocus>
                     </div>
                     <div class="form-group">
                         <input id="password" type="password" class="form-control" name="password" required autocomplete="current-password" placeholder="Senha">

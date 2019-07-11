@@ -202,7 +202,7 @@ $(document).ready(function () {
 	$(document).on('change', '.grade', function() {
 		let nextTd = $(this).parent().next().children('input');
 
-		if($(this).val() < 6 && $(this).val() !== '') {
+		if($(this).val() < 6 && $(this).val() != '') {
 			$(nextTd).prop('disabled', false);
 		} else {
 			$(nextTd).prop('disabled', true);

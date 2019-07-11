@@ -86,7 +86,7 @@
             </li>
             @if  (Auth::user()->level == 4)
             <li>
-                <a href="{{ url('admin/sport_classes') }}" aria-controls="submenu-1" class="{{ Request::is('admin/sport_classes') ? 'menu-active' : '' }}">
+                <a href="{{ url('admin/sport_classes') }}" class="{{ Request::is('admin/sport_classes') ? 'menu-active' : '' }}">
                     <i class="fas fa-user"></i>
                     <span>Gerenciar Turmas</span>
                 </a>
@@ -162,7 +162,7 @@
             @endif
             @if  (Auth::user()->level == 2)
                 <li>
-                    <a href="{{ url('teacher/sport_classes') }}" aria-controls="submenu-1" class="{{ Request::is('teacher/sport_classes') ? 'menu-active' : '' }}">
+                    <a href="{{ url('teacher/sport_classes') }}" class="{{ Request::is('teacher/sport_classes') ? 'menu-active' : '' }}">
                         <i class="fas fa-user"></i>
                         <span>Gerenciar Turmas</span>
                     </a>
@@ -171,6 +171,20 @@
                     <a href="{{ url('teacher/grades') }}" class="{{ Request::is('teacher/grades') ? 'menu-active' : '' }}">
                         <i class="fas fa-user"></i>
                         <span>Lançamento de Notas</span>
+                    </a>
+                </li>
+            @endif
+            @if  (Auth::user()->level == 1)
+                <li>
+                    <a href="{{ url('student/enroll') }}" class="{{ Request::is('student/enroll') ? 'menu-active' : '' }}">
+                        <i class="fas fa-user"></i>
+                        <span>Inscrever-se em uma modalidade</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url('student/enroll') }}" class="{{ Request::is('student/enroll') ? 'menu-active' : '' }}">
+                        <i class="fas fa-user"></i>
+                        <span>Solicitar mudança de modalidade</span>
                     </a>
                 </li>
             @endif

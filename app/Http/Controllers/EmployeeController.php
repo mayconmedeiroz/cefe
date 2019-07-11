@@ -26,7 +26,7 @@ class EmployeeController extends Controller
         {
             $teachers = DB::table('users')
                 ->select('users.id', 'users.name')
-                ->where('users.level', '3')
+                ->where('users.level', '4')
                 ->whereNull('users.deleted_at')
                 ->get();
 
@@ -82,7 +82,7 @@ class EmployeeController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'level' => '3',
+            'level' => '4',
         ];
 
         User::create($user);

@@ -4,7 +4,7 @@ $(document).ready(function () {
 		serverSide: true,
 		autoWidth: false,
 		ajax: {
-			url: window.location.href + '/admin/getData',
+			url: window.location.href + '/getData',
 			type: 'POST'
 		},
 		lengthMenu: [ [10, 25, 50, 100, -1], [10, 25, 50, 100, 'Todos'] ],

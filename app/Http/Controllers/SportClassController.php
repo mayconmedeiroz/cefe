@@ -162,7 +162,7 @@ class SportClassController extends Controller
 
         if($error->fails())
         {
-            return response()->json(['errors' => "Falha na solicitação, tente novamente!"]);
+            return response()->json(['errors' => $error->errors()->all()]);
         }
 
         $sport_class = [
@@ -271,45 +271,6 @@ class SportClassController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        StudentClass::where('sport_class_id', $id)->delete();
-        ClassTeacher::where('class_id', $id)->delete();
-        SportClass::where('id', $id)->delete();
-    }
-
-    public function getSportClass($id)
-    {
-    }
-
-    public function getSportClassData($id)
-    {
-        if(request()->ajax())
-        {
-            $classes = DB::table('students')
-                ->join('users', 'users.id', '=', 'students.user_id')
-                ->join('student_school_classes', 'students.id', '=', 'student_school_classes.student_id')
-                ->join('school_classes', 'student_school_classes.school_class_id', '=', 'school_classes.id')
-                ->join('schools', 'school_classes.school_id', '=', 'schools.id')
-                ->join('student_classes', function($join){
-                    $join->on('student_classes.student_id', '=', 'students.id')
-                        ->whereNull('student_classes.deleted_at');
-                })
-                ->select('students.id', 'users.name', 'school_classes.class', 'student_school_classes.class_number', 'schools.acronym')
-                ->where('student_classes.sport_class_id', $id)
-                ->get();
-
-            return DataTables()->of($classes)
-                ->addColumn('action', function($data){
-                    $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm mx-lg-1"><i class="fas fa-edit"></i></button>';
-                    $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>';
-                    return $button;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-        }
-    }
-
-    public function SportClassStudentdestroy($id)
     {
         StudentClass::where('sport_class_id', $id)->delete();
         ClassTeacher::where('class_id', $id)->delete();

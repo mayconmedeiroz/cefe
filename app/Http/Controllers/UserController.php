@@ -5,7 +5,6 @@ namespace CEFE\Http\Controllers;
 use CEFE\SportClass;
 use CEFE\Student;
 use CEFE\StudentClass;
-use CEFE\StudentSchoolClass;
 use CEFE\User;
 use Illuminate\Http\Request;
 use Auth;
@@ -131,7 +130,22 @@ class UserController extends Controller
     {
         switch (Auth::user()->level) {
             case 1:
-                return view('dashboard.student');
+                if(Auth::user()->updated_at == NULL)
+                {
+                    return view('dashboard.first_login');
+                } else {
+                    $userId = Auth::user()->id;
+
+                    $sportClasses = DB::table('sport_classes')
+                        ->join('student_classes', function($join) use($userId) {
+                            $join->on('student_classes.sport_class_id', '=', 'sport_classes.id')
+                                ->where('student_classes.student_id', $userId)
+                                ->whereNull('student_classes.deleted_at');
+                        })
+                        ->get();
+
+                    return view('dashboard.student')->with(compact('sportClasses'));
+                }
                 break;
             case 2:
                 $userId = Auth::user()->id;
@@ -193,5 +207,30 @@ class UserController extends Controller
 
     public function profile(){
         return view('dashboard.users.profile');
+    }
+
+    public function firstLogin(Request $request){
+        if(!Auth::user()->updated_at)
+        {
+            $error = Validator::make($request->all(), [
+                'email' => 'required|email|unique:users',
+                'password' => 'required',
+                'confirmation-password' => 'required|same:password'
+            ]);
+
+            if($error->fails())
+            {
+                return response()->json(['errors' => "Falha na solicitação, tente novamente!"]);
+            }
+
+            User::findOrFail(Auth::user()->id)->update([
+                'email' => $request->email,
+                'password' => Hash::make($request->password)
+            ]);
+
+            return response()->json(['success' => "Tudo certo! Você será redirecionado para a página inicial."]);
+        }
+
+        return Redirect::back();
     }
 }

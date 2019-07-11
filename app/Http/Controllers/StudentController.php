@@ -2,6 +2,8 @@
 
 namespace CEFE\Http\Controllers;
 
+use CEFE\SchoolClass;
+use CEFE\SchoolYear;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
@@ -122,37 +124,31 @@ class StudentController extends Controller
             return response()->json(['errors' => 'Falha na solicitação, tente novamente!']);
         }
 
-        $user = [
+        $userId = User::create([
             'enrollment' => $request->enrollment,
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-        ];
+        ]);
 
-        $userId = User::create($user);
-
-        $student = [
+        $studentId = Student::create([
             'user_id' => $userId->id,
-        ];
+        ]);
 
-        $studentId = Student::create($student);
+        $school_year = SchoolYear::where('school_year', NOW())->first();
 
-        $studentSchoolClass = [
+        StudentSchoolClass::create([
             'student_id' => $studentId->id,
             'school_class_id' => $request->school_class,
             'class_number' => $request->class_number,
-            'school_year' => NOW(),
-        ];
+            'school_year_id' => $school_year->id,
+        ]);
 
-        StudentSchoolClass::create($studentSchoolClass);
-
-        $studentClass = [
+        StudentClass::create([
             'student_id' => $studentId->id,
             'sport_class_id' => $request->sport_class,
-            'school_year' => NOW()
-        ];
-
-        StudentClass::create($studentClass);
+            'school_year_id' => $school_year->id
+        ]);
 
         return response()->json(['success' => 'Aluno adicionado com sucesso.']);
     }
@@ -225,6 +221,7 @@ class StudentController extends Controller
 
         User::whereId($request->hidden_id)->update($user);
 
+
         $studentSchoolClass = [
             'school_class_id' => $request->school_class,
             'class_number' => $request->class_number,
@@ -235,6 +232,7 @@ class StudentController extends Controller
         StudentSchoolClass::where('student_id', $student_id->id)->update($studentSchoolClass);
 
         $studentClass = StudentClass::where('student_id', $student_id->id)->first();
+        $school_year = SchoolYear::where('school_year', NOW())->first();
 
         if(!$studentClass || !($studentClass->sport_class_id == $request->sport_class))
         {
@@ -245,7 +243,7 @@ class StudentController extends Controller
             $newStudentClass = [
                 'student_id' => $student_id->id,
                 'sport_class_id' => $request->sport_class,
-                'school_year' => NOW()
+                'school_year_id' => $school_year->id
             ];
 
             StudentClass::create($newStudentClass);
@@ -264,6 +262,12 @@ class StudentController extends Controller
     {
         $student = Student::findOrFail($id);
         $student->delete();
+
+        $studentClass = StudentClass::where('student_id', $student->user_id);
+        $studentClass->delete();
+
+        $schoolClass = StudentSchoolClass::where('student_id', $student->user_id);
+        $schoolClass->delete();
 
         $user = User::findOrFail($student->user_id);
         $user->delete();

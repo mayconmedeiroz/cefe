@@ -1,4 +1,5 @@
 <?php
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,15 +22,14 @@ Route::middleware(['auth'])->group(function () {
     //Routes available to all auth users
     Route::get('dashboard', 'UserController@dashboard')->name('dashboard');
     Route::get('profile', 'UserController@profile')->name('profile');
+
     Route::post('updateAvatar', 'UserController@updateAvatar');
     Route::post('updateUser', 'UserController@updateUser');
     Route::post('changePassword', 'UserController@changePassword');
 
-
-
     //Routes available to student
     Route::middleware(['student'])->group(function () {
-
+        Route::post('/students/first_login', 'UserController@firstLogin');
     });
 
     //Routes available to teacher
