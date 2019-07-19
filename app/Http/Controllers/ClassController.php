@@ -44,16 +44,15 @@ class ClassController extends Controller
     public function getData($id)
     {
         if (request()->ajax()) {
-            $classes = DB::table('students')
-                ->join('users', 'users.id', '=', 'students.user_id')
-                ->join('student_school_classes', 'students.id', '=', 'student_school_classes.student_id')
+            $classes = DB::table('users')
+                ->join('student_school_classes', 'users.id', '=', 'student_school_classes.student_id')
                 ->join('school_classes', 'student_school_classes.school_class_id', '=', 'school_classes.id')
                 ->join('schools', 'school_classes.school_id', '=', 'schools.id')
                 ->join('student_classes', function ($join) {
-                    $join->on('student_classes.student_id', '=', 'students.id')
+                    $join->on('student_classes.student_id', '=', 'users.id')
                         ->whereNull('student_classes.deleted_at');
                 })
-                ->select('students.id', 'users.name', 'school_classes.class', 'student_school_classes.class_number', 'schools.acronym')
+                ->select('users.id', 'users.name', 'school_classes.class', 'student_school_classes.class_number', 'schools.acronym')
                 ->where('student_classes.sport_class_id', $id)
                 ->get();
 

@@ -67,22 +67,20 @@ class GradeController extends Controller
     {
         if(request()->ajax())
         {
-            $grades = DB::table('students')
-                ->join('users', 'users.id', '=', 'students.user_id')
+            $grades = DB::table('users')
                 ->leftJoin('student_classes', function($join){
-                    $join->on('student_classes.student_id', '=', 'students.id')
+                    $join->on('student_classes.student_id', '=', 'users.id')
                         ->whereNull('student_classes.deleted_at');
                 })
                 ->leftJoin('student_grades', function($join) use ($evaluation){
-                    $join->on('student_grades.student_id', '=', 'students.id')
+                    $join->on('student_grades.student_id', '=', 'users.id')
                         ->where('student_grades.evaluation_id', $evaluation);
                 })
                 ->leftJoin('absences', 'student_grades.id', '=', 'absences.student_grade_id')
                 ->leftJoin('recuperations', 'student_grades.id', '=', 'recuperations.student_grade_id')
-                ->select('students.id', 'users.name', 'student_grades.grade', 'absences.absences', 'recuperations.grade as recuperation_grade', DB::raw("(SELECT `sport_classes`.`name` FROM `sport_classes`  WHERE `student_classes`.`deleted_at` IS NULL AND `sport_classes`.`id` = `student_classes`.`sport_class_id`) AS `sport_class`"))
-                ->whereNull('students.deleted_at')
-                ->where('student_classes.sport_class_id', $sportClass)
-                ->get();
+                ->select('users.id', 'users.name', 'student_grades.grade', 'absences.absences', 'recuperations.grade as recuperation_grade', DB::raw("(SELECT `sport_classes`.`name` FROM `sport_classes`  WHERE `student_classes`.`deleted_at` IS NULL AND `sport_classes`.`id` = `student_classes`.`sport_class_id`) AS `sport_class`"))
+                ->whereNull('users.deleted_at')
+                ->where('student_classes.sport_class_id', $sportClass);
 
             return DataTables()->of($grades)
                 ->addColumn('grade', function($data){
@@ -242,10 +240,8 @@ class GradeController extends Controller
             'classes_held' => 'required|numeric',
         ]);
 
-        if($error->fails())
-        {
+        if ($error->fails())
             return response()->json(['errors' => $error->errors()->all()]);
-        }
 
         $lessons = SportClassLesson::where('sport_class_id', $request->sport_class)
                     ->where('evaluation_id', $request->evaluation)

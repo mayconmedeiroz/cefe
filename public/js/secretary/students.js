@@ -66,7 +66,7 @@ $(document).ready(function () {
 		let schoolId = $(this).val();
 		if (schoolId) {
 			$.ajax({
-				url: '/secretary/students/getSchoolClasses/' + schoolId,
+				url: '/secretary/students/getSchoolClasses/'+schoolId,
 				type: "GET",
 				dataType: "json",
 				success: function (data) {
@@ -88,7 +88,7 @@ $(document).ready(function () {
 		$('#form-result').html('');
 		$('#sport-form')[0].reset();
 		$('.modal-title').text('Adicionar um novo aluno');
-		$('#action').val('add');
+		$('#action').val('secadd');
 		$('#action_button').val('Adicionar');
 		$('#password').attr('required', true);
 		$('#formModal').modal('show');
@@ -110,7 +110,7 @@ $(document).ready(function () {
 				$('#school').val(html.data.school_name).change();
 				school_class = html.data.class;
 				$('#class_number').val(html.data.class_number);
-				$('#action').val('mod');
+				$('#action').val('secmod');
 				$('#hidden_id').val(html.data.id);
 				$('.modal-title').text('Modificar um aluno');
 				$('#action_button').val('Modificar');

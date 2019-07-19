@@ -21,7 +21,7 @@ class CreateStudentGradesTable extends Migration
             $table->integer('school_year_id')->unsigned();
             $table->timestamps();
 
-            $table->foreign('student_id')->references('id')->on('students');
+            $table->foreign('student_id')->references('id')->on('users');
             $table->foreign('evaluation_id')->references('id')->on('evaluations');
             $table->foreign('school_year_id')->references('id')->on('school_years');
         });

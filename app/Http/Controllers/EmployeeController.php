@@ -3,7 +3,6 @@
 namespace CEFE\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use CEFE\User;
 use Validator;
 use Hash;
@@ -22,15 +21,11 @@ class EmployeeController extends Controller
 
     public function getData()
     {
-        if(request()->ajax())
+        if(Request()->ajax())
         {
-            $teachers = DB::table('users')
-                ->select('users.id', 'users.name')
-                ->where('users.level', '4')
-                ->whereNull('users.deleted_at')
-                ->get();
+            $employees = User::where('level', '4');
 
-            return DataTables()->of($teachers)
+            return DataTables()->of($employees)
                 ->addColumn('action', function($data){
                     $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm mr-lg-2"><i class="fas fa-edit"></i></button>';
                     $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>';
@@ -70,24 +65,22 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        $error = $this->validation($request);
+        if(Request()->ajax()) {
+            $error = $this->validation($request);
 
-        if($error->fails())
-        {
-            return response()->json(['errors' => "Falha na solicitação, tente novamente!"]);
+            if ($this->validation($request)->fails())
+                return response()->json(['errors' => $error->errors()->all()]);
+
+            User::create([
+                'enrollment' => $request->enrollment,
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'level' => '4',
+            ]);
+
+            return response()->json(['success' => 'Funcionário adicionado com sucesso.']);
         }
-
-        $user = [
-            'enrollment' => $request->enrollment,
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'level' => '4',
-        ];
-
-        User::create($user);
-
-        return response()->json(['success' => 'Funcionário adicionado com sucesso.']);
     }
 
     /**
@@ -109,13 +102,10 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-        if(request()->ajax())
+        if(Request()->ajax())
         {
-            $data = DB::table('users')
-                ->select('users.id', 'users.name', 'users.enrollment', 'users.email')
-                ->where('users.id', $id)
-                ->whereNull('users.deleted_at')
-                ->first();
+            $data = User::findOrFail($id)->first(['id', 'name', 'enrollment', 'email']);
+
             return response()->json(['data' => $data]);
         }
     }
@@ -131,10 +121,8 @@ class EmployeeController extends Controller
     {
         $error = $this->validation($request);
 
-        if($error->fails())
-        {
+        if ($this->validation($request)->fails())
             return response()->json(['errors' => $error->errors()->all()]);
-        }
 
         $user = [
             'enrollment' => $request->enrollment,
@@ -148,7 +136,7 @@ class EmployeeController extends Controller
 
         User::whereId($request->hidden_id)->update($user);
 
-        return response()->json(['success' => 'Funcionário atualizada com sucesso.']);
+        return response()->json(['success' => 'Funcionário atualizado com sucesso.']);
     }
 
     /**
@@ -159,7 +147,6 @@ class EmployeeController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
+        User::findOrFail($id)->delete();
     }
 }

@@ -9,9 +9,9 @@
     <table id="list" class="table table-striped table-bordered" style="width:100%">
         <thead>
             <tr>
-                <th width="10%">ID</th>
+                <th style="width:10%">ID</th>
                 <th>Nome</th>
-                <th width="64px">Ação</th>
+                <th style="width:64px">Ação</th>
             </tr>
         </thead>
     </table>

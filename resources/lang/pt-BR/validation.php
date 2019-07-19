@@ -144,6 +144,15 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'enrollment' => 'matrícula',
+        'name' => 'nome',
+        'password' => 'senha',
+        'school' => 'escola',
+        'sport_class' => 'modalidade',
+        'school_class' => 'turma',
+        'class_number' => 'número',
+
+    ],
 
 ];

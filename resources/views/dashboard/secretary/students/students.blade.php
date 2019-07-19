@@ -54,7 +54,7 @@
                         <label for="password" class="control-label mb-0">Senha: </label>
                         <input name="password" id="password" type="password" class="form-control" required/>
                     </div>
-                    <input type="hidden" id="school" value="{{$school->school_id}}"/>
+                    <input type="hidden" name="school" id="school" value="{{$school->school_id}}"/>
                     <div class="form-group">
                         <label for="school_class" class="control-label mb-0">Turma: </label>
                         <select name="school_class" id="school_class" class="form-control" required>

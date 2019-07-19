@@ -31,13 +31,12 @@ class ReportCardPerSchoolSheet implements FromCollection, ShouldAutoSize, WithHe
     */
     public function collection()
     {
-        $data = DB::table('students')
+        $data = DB::table('users')
             ->select('users.name', 'school_classes.class', 'student_school_classes.class_number', 'student_grades.grade', 'recuperations.grade as recuperation_grade')
             ->selectRaw('CASE WHEN `absences`.`absences`="0" THEN "0.0" ELSE `absences`.`absences` END AS absences')
             ->selectRaw('CONCAT(100 - ROUND(((`absences`.`absences` * 100) / `sport_class_lessons`.`classes_held`), 2), "%") AS attendance')
-            ->join('users', 'users.id', '=', 'students.user_id')
             ->leftJoin('student_school_classes', function($join){
-                $join->on('student_school_classes.student_id', '=', 'students.id')
+                $join->on('student_school_classes.student_id', '=', 'users.id')
                     ->whereNull('student_school_classes.deleted_at');
             })
             ->join('school_classes', function($join){
@@ -46,12 +45,12 @@ class ReportCardPerSchoolSheet implements FromCollection, ShouldAutoSize, WithHe
                     ->where('school_classes.id', $this->class);
             })
             ->leftJoin('student_grades', function($join){
-                $join->on('student_grades.student_id', '=', 'students.id')
+                $join->on('student_grades.student_id', '=', 'users.id')
                     ->where('student_grades.evaluation_id', $this->evaluation)
                     ->where('student_grades.school_year_id', $this->school_year);
             })
             ->leftJoin('student_classes', function($join){
-                $join->on('student_classes.student_id', '=', 'students.id')
+                $join->on('student_classes.student_id', '=', 'users.id')
                     ->whereNull('student_classes.deleted_at');
             })
             ->leftJoin('sport_class_lessons', function($join){

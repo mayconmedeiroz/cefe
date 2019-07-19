@@ -21,12 +21,11 @@ class ImportStudentController extends Controller
             case 3:
                 $userId = Auth::user()->id;
 
-                $school = DB::table('users')
+                $school = DB::table('secretaries')
                     ->select('secretaries.school_id')
-                    ->join('secretaries', function($join) use($userId) {
-                        $join->where('secretaries.secretary_id', $userId);
-                    })
+                    ->where('secretaries.secretary_id', $userId)
                     ->first();
+
                 return view('dashboard.secretary.students.import_students')->with(compact('school'));
                 break;
             case 4:

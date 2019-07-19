@@ -32,23 +32,19 @@ class StudentImport implements ToCollection
 
             if ($user) {
                 DB::table('users')
-                    ->where('id', $user->id)
-                    ->update([
-                        'name'              => mb_convert_case(mb_strtolower($row[0], "UTF-8"), MB_CASE_TITLE, "UTF-8"),
-                        'enrollment'        => $row[1],
-                    ]);
+                ->where('id', $user->id)
+                ->update([
+                    'name'              => mb_convert_case(mb_strtolower($row[0], "UTF-8"), MB_CASE_TITLE, "UTF-8"),
+                    'enrollment'        => $row[1],
+                ]);
 
-                $student = DB::table('students')
-                    ->where('user_id', $user->id)
-                    ->first();
-
-                StudentSchoolClass::where('student_id', $student->id)->delete();
+                StudentSchoolClass::where('student_id', $user->id)->delete();
 
                 StudentSchoolClass::create([
-                    'student_id'        => $student->id,
+                    'student_id'        => $user->id,
                     'school_class_id'   => $school_class->id,
                     'class_number'      => $row[4],
-                    'school_year_id'    => $this->school_year
+                    'school_year_id'    => $this->school_year,
                 ]);
 
             } else {
@@ -59,17 +55,11 @@ class StudentImport implements ToCollection
                     'created_at'        => \Carbon\Carbon::now(),
                 ]);
 
-                $student = DB::table('students')->insertGetId([
-                    'user_id'           => $userId,
-                    'created_at'        => \Carbon\Carbon::now(),
-                    'updated_at'        => \Carbon\Carbon::now(),
-                ]);
-
                 StudentSchoolClass::create([
-                    'student_id'        => $student,
+                    'student_id'        => $userId,
                     'school_class_id'   => $school_class->id,
                     'class_number'      => $row[4],
-                    'school_year_id'    => $this->school_year
+                    'school_year_id'    => $this->school_year,
                 ]);
             }
         }

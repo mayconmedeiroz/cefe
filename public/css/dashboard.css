@@ -635,3 +635,7 @@ input:focus, .btn:focus, .pagination a:focus, select {
     line-height: 1.2;
     text-align: center;
 }
+
+#form-result p {
+    margin-bottom: 0;
+}

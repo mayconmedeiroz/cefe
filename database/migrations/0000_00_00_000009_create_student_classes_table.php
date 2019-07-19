@@ -21,7 +21,7 @@ class CreateStudentClassesTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('student_id')->references('id')->on('students');
+            $table->foreign('student_id')->references('id')->on('users');
             $table->foreign('sport_class_id')->references('id')->on('sport_classes');
             $table->foreign('school_year_id')->references('id')->on('school_years');
         });

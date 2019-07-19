@@ -33,8 +33,7 @@ class TeacherController extends Controller
                 ->where('users.level', '2')
                 ->whereNull('users.deleted_at')
                 ->whereNull('class_teachers.deleted_at')
-                ->groupBy('users.id')
-                ->get();
+                ->groupBy('users.id');
 
             return DataTables()->of($teachers)
                 ->addColumn('action', function($data){
@@ -78,20 +77,16 @@ class TeacherController extends Controller
     {
         $error = $this->validation($request);
 
-        if($error->fails())
-        {
-            return response()->json(['errors' => "Falha na solicitação, tente novamente!"]);
-        }
+        if ($this->validation($request)->fails())
+            return response()->json(['errors' => $error->errors()->all()]);
 
-        $user = [
+        User::create([
             'enrollment' => $request->enrollment,
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'level' => '2',
-        ];
-
-        User::create($user);
+        ]);
 
         return response()->json(['success' => 'Professor adicionado com sucesso.']);
     }
@@ -142,10 +137,8 @@ class TeacherController extends Controller
     {
         $error = $this->validation($request);
 
-        if($error->fails())
-        {
+        if ($this->validation($request)->fails())
             return response()->json(['errors' => $error->errors()->all()]);
-        }
 
         $user = [
             'enrollment' => $request->enrollment,
@@ -157,7 +150,7 @@ class TeacherController extends Controller
             $user['password'] = Hash::make($request->password);
         }
 
-        User::whereId($request->hidden_id)->update($user);
+        User::findOrFail($request->hidden_id)->update($user);
 
         return response()->json(['success' => 'Professor atualizada com sucesso.']);
     }
@@ -170,10 +163,7 @@ class TeacherController extends Controller
      */
     public function destroy($id)
     {
-        $user = ClassTeacher::where('teacher_id', $id);
-        $user->delete();
-
-        $user = User::findOrFail($id);
-        $user->delete();
+        ClassTeacher::where('teacher_id', $id)->delete();
+        User::findOrFail($id)->delete();
     }
 }

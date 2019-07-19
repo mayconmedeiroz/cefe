@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use CEFE\Exports\ReportCardExport;
 use CEFE\Exports\ReportCardPerSchoolExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Console\Command;
 use Auth;
 
 class ReportCardController extends Controller
@@ -29,11 +30,9 @@ class ReportCardController extends Controller
         case 3:
             $userId = Auth::user()->id;
 
-            $school = DB::table('users')
+            $school = DB::table('secretaries')
                 ->select('secretaries.school_id')
-                ->join('secretaries', function($join) use($userId) {
-                    $join->where('secretaries.secretary_id', $userId);
-                })
+                ->where('secretaries.secretary_id', $userId)
                 ->first();
 
             return view('dashboard.secretary.report_cards.report_cards')->with(compact('school'));

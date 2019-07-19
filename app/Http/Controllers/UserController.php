@@ -162,11 +162,9 @@ class UserController extends Controller
             case 3:
                 $userId = Auth::user()->id;
 
-                $school = DB::table('users')
+                $school = DB::table('secretaries')
                     ->select('secretaries.school_id')
-                    ->join('secretaries', function($join) use($userId) {
-                        $join->where('secretaries.secretary_id', $userId);
-                    })
+                    ->where('secretaries.secretary_id', $userId)
                     ->first();
 
                 $student = DB::table('school_classes')
@@ -178,12 +176,12 @@ class UserController extends Controller
                     ->count();
 
                 $studentClass = DB::table('student_classes')
-                    ->join('students', function($join){
-                        $join->on('students.id', '=', 'student_classes.student_id')
-                            ->whereNull('students.deleted_at');
+                    ->join('users', function($join){
+                        $join->on('users.id', '=', 'student_classes.student_id')
+                            ->whereNull('users.deleted_at');
                     })
                     ->join('student_school_classes', function($join){
-                        $join->on('student_school_classes.student_id', '=', 'students.id')
+                        $join->on('student_school_classes.student_id', '=', 'users.id')
                             ->whereNull('student_school_classes.deleted_at');
                     })
                     ->join('school_classes', function($join) use($school){
@@ -195,7 +193,7 @@ class UserController extends Controller
                 return view('dashboard.secretary')->with(compact('student', 'studentClass'));
                 break;
             case 4:
-                $student = Student::count();
+                $student = User::where('level', 1)->count();
                 $studentClass = StudentClass::count();
                 $teachers = User::where('level', 2)->count();
                 $sportClass = SportClass::count();

@@ -154,10 +154,10 @@ $(document).ready(function () {
 	});
 
 	$('#confirmDelete').click(function(){
-		let sportId = window.location.href.split('/');
+		let sportId = window.location.href.split('/').slice(-1).pop();
 		$.ajax({
 			method:'DELETE',
-			url:`/admin/class/${userID}/${sportId[-1]}`,
+			url:`/admin/class/${userID}/${sportId}`,
 			beforeSend:function(){
 				$('#confirmDelete').text('Excluindo...');
 			},

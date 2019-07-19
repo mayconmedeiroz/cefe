@@ -59,19 +59,20 @@ $(document).ready(function () {
     $(document).on('click', '#newemployee', function(){
 		$('#form-result').html('');
 		$('#employee-form')[0].reset();
-		$('.modal-title').text('Adicionar uma nova modalidade');
+		$('.modal-title').text('Adicionar uma novo funcionário');
 		$('#action_button').val('Adicionar');
 		$('#formModal').modal('show');
 		$('#password').attr('required', true);
+		$('#action').val('add');
 	});
 
-	let userID;
+	let employeeID;
 
 	$(document).on('click', '.edit', function(){
-		userID = $(this).attr('id');
+		employeeID = $(this).attr('id');
 		$('#form-result').html('');
 		$.ajax({
-			url:"/admin/employees/"+userID+"/edit",
+			url:"/admin/employees/"+employeeID+"/edit",
 			dataType:"json",
 			success:function(html){
 				$('#enrollment').val(html.data.enrollment);
@@ -80,7 +81,7 @@ $(document).ready(function () {
 				$('#password').val(html.data.password).attr('required', false);
 				$('#action').val('mod');
 				$('#hidden_id').val(html.data.id);
-				$('.modal-title').text('Modificar um aluno');
+				$('.modal-title').text('Modificar um funcionário');
 				$('#action_button').val('Modificar');
 				$('#formModal').modal('show');
 			}
@@ -88,7 +89,7 @@ $(document).ready(function () {
 	});
 
 	$(document).on('click', '.delete', function(){
-		userID = $(this).attr('id');
+		employeeID = $(this).attr('id');
 		$('#confirmDelete').text('Confirmar');
 		$('#confirmModal').modal('show');
 	});
@@ -96,7 +97,7 @@ $(document).ready(function () {
 	$('#confirmDelete').click(function(){
 		$.ajax({
 			method:'DELETE',
-			url:'/admin/employees/'+userID,
+			url:'/admin/employees/'+employeeID,
 			beforeSend:function(){
 				$('#confirmDelete').text('Excluindo...');
 			},
@@ -121,16 +122,7 @@ $(document).ready(function () {
 				processData: false,
 				dataType: "json",
 				success: function (data) {
-					let html = '';
-					if (data.errors) {
-						html = '<div class="alert alert-danger">' + data.errors + '</div>';
-					}
-					if (data.success) {
-						html = '<div class="alert alert-success">' + data.success + '</div>';
-							$('#employee-form')[0].reset();
-						$('#list').DataTable().ajax.reload();
-					}
-					$('#form-result').html(html);
+					displayMessages(data);
 				}
 			});
 		}
@@ -145,17 +137,27 @@ $(document).ready(function () {
 				processData: false,
 				dataType: "json",
 				success:function(data) {
-					let html = '';
-					if(data.errors) {
-						html = '<div class="alert alert-danger">' + data.errors + '</div>';
-					}
-					if(data.success) {
-						html = '<div class="alert alert-success">' + data.success + '</div>';
-						$('#list').DataTable().ajax.reload();
-					}
-					$('#form-result').html(html);
+					displayMessages(data);
 				}
 			});
 		}
 	});
+
+	function displayMessages(data) {
+		let html = '';
+		if (data.errors) {
+			html = '<div class="alert alert-danger">';
+			for(let count = 0; count < data.errors.length; count++) {
+				html += '<p>' + data.errors[count] + '</p>';
+			}
+			html += '</div>';
+		}
+		if(data.success)
+		{
+			html = '<div class="alert alert-success">' + data.success + '</div>';
+			($('#action_button').val() === "Adicionar") ? $('#employee-form')[0].reset() : '';
+			$('#list').DataTable().ajax.reload();
+		}
+		$('#form-result').html(html);
+	}
 });
