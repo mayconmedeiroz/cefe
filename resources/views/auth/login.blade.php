@@ -41,18 +41,18 @@
         <div id="login" class="col-md-6 bg-light">
             <div class="d-table w-100 mx-auto container-right">
                 <form class="d-table-cell align-middle" method="POST" action="{{ route('login') }}">
-                    @if ($errors->has('email') or $errors->has('password'))
+                    @if ($errors->has('email') or $errors->has('password') or $errors->has('enrollment'))
                     <div class="alert alert-danger w-75 mx-auto d-block fade show" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        O endereço de email ou a senha que você inseriu não é válido. Tente novamente.
+                        O endereço de email/matrícula ou a senha que você inseriu não é válido. Tente novamente.
                     </div>
                     @endif
                     @csrf
                     <h1 class="py-5">Login</h1>
                     <div class="form-group">
-                        <input placeholder="Email" id="login" type="text" value="{{ old('email') }}" class="form-control" name="login" required autocomplete="email" autofocus>
+                        <input placeholder="Email ou Matrícula" id="login" type="text" value="{{ old('email') }}" class="form-control" name="login" required autocomplete="email" autofocus>
                     </div>
                     <div class="form-group">
                         <input id="password" type="password" class="form-control" name="password" required autocomplete="current-password" placeholder="Senha">
@@ -64,7 +64,7 @@
                 </form>
             </div>
             <hr class="mx-5"/>
-            <p class="text-center">Primeiro acesso? <a class="first-login-div" href="#">clique aqui</a></p>
+            <p class="text-center">Primeiro acesso? <a class="" href="#">clique aqui</a></p>
         </div>
         <div id="forget-password" class="col-md-6 bg-light d-none d-sm-none">
             <div class="d-table w-100 mx-auto container-right">
@@ -80,35 +80,7 @@
                 </form>
             </div>
             <hr class="mx-5"/>
-            <p class="text-center">Primeiro acesso? <a class="first-login-div" href="#">clique aqui</a></p>
-        </div>
-        <div id="first-login" class="col-md-6 bg-light d-none d-sm-none">
-            <div class="d-table w-100 mx-auto container-right">
-                <form class="d-table-cell align-middle" method="POST" action="{{ route('login') }}">
-                    @if ($errors->has('email') or $errors->has('password'))
-                        <div class="alert alert-danger w-75 mx-auto d-block fade show" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            A matrícula ou a senha que você inseriu não é válida. Tente novamente.
-                        </div>
-                    @endif
-                    @csrf
-                    <h1 class="py-5">Primeiro Acesso</h1>
-                    <div class="form-group">
-                        <input placeholder="Matrícula" id="login" type="text" value="{{ old('enrollment') }}" class="form-control" name="login" required autocomplete="email" autofocus>
-                    </div>
-                    <div class="form-group">
-                        <input id="password" type="password" class="form-control" name="password" required autocomplete="current-password" placeholder="Senha">
-                    </div>
-                    <div class="form-group button-group">
-                        <a class="forget-pass-div" href="#">Esqueci a senha</a>
-                        <button type="submit" class="btn btn-primary float-sm-right">Acessar</button>
-                    </div>
-                </form>
-            </div>
-            <hr class="mx-5"/>
-            <p class="text-center">Já fez o primeiro acesso? <a class="login-div" href="#">clique aqui</a></p>
+            <p class="text-center">Primeiro acesso? <a class="" href="#">clique aqui</a></p>
         </div>
     </div>
 </div>

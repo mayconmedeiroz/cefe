@@ -64,3 +64,9 @@ Breadcrumbs::for('import_students.index', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Importar Estudantes');
 });
+
+// Dashboard > Gerenciar Notícias
+Breadcrumbs::for('blog.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Gerenciar Notícias');
+});

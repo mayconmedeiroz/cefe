@@ -133,6 +133,12 @@
                     <span>Importar Alunos</span>
                 </a>
             </li>
+                <li>
+                    <a href="{{ url('admin/blog') }}" class="{{ Request::is('admin/blog') ? 'menu-active' : '' }}">
+                        <i class="fas fa-user"></i>
+                        <span>Gerenciar Notícias</span>
+                    </a>
+                </li>
             <li>
                 <a href="#">
                     <i class="fas fa-cog"></i>
