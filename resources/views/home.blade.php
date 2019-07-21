@@ -19,7 +19,8 @@
     </div>
     @endforeach
 </div>
-<div class="site-section">
+
+<div class="site-section" style="{{ ($sliders == "[]") ? 'padding-top:8em' : '' }}">
     <div class="container">
         <div class="row mb-5 justify-content-center text-center">
             <div class="col-lg-6 mb-5">
@@ -53,6 +54,7 @@
 @endsection
 
 @section('content-down')
+@if($posts != "[]")
 <div class="news-updates">
     <div class="container">
         <div class="row d-flex justify-content-center">
@@ -93,4 +95,6 @@
         </div>
     </div>
 </div>
+@endif
+
 @endsection

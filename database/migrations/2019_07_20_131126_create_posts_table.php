@@ -19,7 +19,6 @@ class CreatePostsTable extends Migration
             $table->string('image', '30');
             $table->string('title', '60');
             $table->text('body');
-            $table->boolean('is_published');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

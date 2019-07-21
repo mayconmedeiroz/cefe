@@ -8,7 +8,6 @@
         <link rel="stylesheet" href="/fonts/icomoon/style.css">
         <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('/css/global/owl.carousel.min.css') }}">
-        <link rel="stylesheet" href="/fonts/flaticon/font/flaticon.css">
         <link rel="stylesheet" href="{{ asset('/css/global/aos.css') }}">
         <link rel="stylesheet" href="{{ asset('/css/all.min.css') }}">
         <link rel="stylesheet" href="{{ asset('/css/global/style.css') }}">
@@ -41,9 +40,6 @@
                                     </li>
                                     <li class="{{ Request::is('blog*') ? 'active' : '' }}">
                                         <a href="/blog" class="nav-link text-left">Notícias</a>
-                                    </li>
-                                    <li class="{{ Request::is('events') ? 'active' : '' }}">
-                                        <a href="/events" class="nav-link text-left">Eventos</a>
                                     </li>
                                     <li class="{{ Request::is('contact') ? 'active' : '' }}">
                                         <a href="/contact" class="nav-link text-left">Contato</a>

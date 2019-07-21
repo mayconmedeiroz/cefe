@@ -20,6 +20,22 @@ class BlogController extends Controller
         return view('dashboard.admin.blog.blog');
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexHome()
+    {
+        $posts = DB::table('blog_posts')
+            ->join('users', 'users.id', '=', 'blog_posts.user_id')
+            ->select('blog_posts.id', 'users.name', 'blog_posts.title', 'blog_posts.created_at', 'blog_posts.image')
+            ->orderBy('id','desc')
+            ->paginate('9');
+
+        return view('blog')->with(compact('posts'));
+    }
+
     public function validation($request)
     {
         return Validator::make($request->all(), [

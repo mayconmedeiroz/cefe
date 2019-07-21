@@ -33,8 +33,7 @@ class HomeController extends Controller
             ->get();
 
         $posts = DB::table('blog_posts')
-            ->join('users', 'users.id', '=', 'blog_posts.user_id')
-            ->select('blog_posts.id', 'users.name', 'blog_posts.title', 'blog_posts.created_at', 'blog_posts.image')
+            ->select('blog_posts.id', 'blog_posts.title', 'blog_posts.created_at', 'blog_posts.image')
             ->orderBy('id','desc')
             ->limit('4')
             ->get();
@@ -42,5 +41,13 @@ class HomeController extends Controller
         return view('home')->with(compact('sliders', 'sportClasses', 'posts'));
     }
 
+    public function about()
+    {
+        return view('about');
+    }
 
+    public function contact()
+    {
+        return view('contact');
+    }
 }

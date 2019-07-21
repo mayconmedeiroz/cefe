@@ -795,6 +795,29 @@ body, h1, h2, h3, h4, h5,
     padding-top: 7rem;
     text-align: center; }
 
+.ftco-subscribe-1 {
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  position: relative; }
+.ftco-subscribe-1:before {
+  position: absolute;
+  content: "";
+  background: #183661;
+  opacity: .7;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; }
+.ftco-subscribe-1 > .container {
+  position: relative;
+  z-index: 2; }
+.ftco-subscribe-1 > .container h2, .ftco-subscribe-1 > .container p {
+  color: #fff; }
+.ftco-subscribe-1 .form-control {
+  height: auto !important; }
+
 #loader {
   position: fixed;
   width: 96px;

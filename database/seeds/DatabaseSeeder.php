@@ -1,21 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use CEFE\User;
-use CEFE\Sport;
-use CEFE\Student;
-use CEFE\School;
-use CEFE\Teacher;
-use CEFE\SportClass;
-use CEFE\ClassTeacher;
-use CEFE\StudentClass;
-use CEFE\Grade;
-use CEFE\SchoolClass;
-use CEFE\StudentSchoolClass;
-use CEFE\Evaluation;
-use CEFE\SchoolYear;
-use CEFE\Secretary;
-use Faker\Factory as Faker;
 
 class DatabaseSeeder extends Seeder
 {
@@ -38,6 +23,8 @@ class DatabaseSeeder extends Seeder
             StudentClassesTableSeeder::class,
             EvaluationsTableSeeder::class,
             SecretariesTableSeeder::class,
+            BlogSeeder::class,
+            HomepageSliderSeeder::class,
         ]);
     }
 }

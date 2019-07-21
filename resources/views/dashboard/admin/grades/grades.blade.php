@@ -9,7 +9,7 @@
     <div class="form">
         <div class="form-body">
             <div class="row">
-                <div class="col-4">
+                <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                         <label for="school_year">Ano Letivo:</label>
                         <select name="school_year" id="school_year" class="form-control" required>
@@ -20,7 +20,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                         <label for="sport">Modalidade:</label>
                         <select name="sport" id="sport" class="form-control" disabled required>
@@ -31,7 +31,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                         <label for="sport_class">Turma:</label>
                         <select name="sport_class" id="sport_class" class="form-control" disabled required>
@@ -39,10 +39,7 @@
                         </select>
                     </div>
                 </div>
-
-            </div>
-            <div class="row">
-                <div class="col-4">
+                <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                         <label for="evaluation">Avaliação:</label>
                         <select name="evaluation" id="evaluation" class="form-control" disabled required>
@@ -53,14 +50,13 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                         <label for="planned_classes">Aulas Previstas:</label>
                         <input type="text" name="planned_classes" id="planned_classes" class="form-control" disabled required/>
-
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                         <label for="classes_held">Aulas Realizadas:</label>
                         <input type="text" name="classes_held" id="classes_held" class="form-control" disabled required/>

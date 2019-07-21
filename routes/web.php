@@ -12,10 +12,14 @@
 */
 
 Route::get('/', 'HomeController@index')->name('index');
+Route::get('blog/{id}', 'BlogController@show')->name('sports.show');
+Route::get('blog', 'BlogController@indexHome')->name('blog');
+Route::get('contact', 'HomeController@contact')->name('contact');
+Route::get('about', 'HomeController@about')->name('about');
+
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
-Route::get('blog/{id}', 'BlogController@show')->name('sports.show');
 
 Route::middleware(['auth'])->group(function () {
 
