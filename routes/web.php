@@ -32,24 +32,28 @@ Route::middleware(['auth'])->group(function () {
     Route::post('changePassword', 'UserController@changePassword');
 
     //Routes available to student
-    Route::prefix('student')->middleware(['student'])->group(function () {
+    Route::name('student.')->prefix('student')->middleware(['student'])->group(function () {
         Route::post('first_login', 'UserController@firstLogin');
+        Route::resource('enroll', 'EnrollController');
+        Route::get('report_card', 'ReportCardController@studentReportCardIndex')->name('studentReportCardIndex');
+        Route::get('getStudentReportCard', 'ReportCardController@getStudentReportCard');
+        Route::get('request_exchange', 'EnrollController@requestExchange')->name('request_exchange');
     });
 
     //Routes available to teacher
-    Route::prefix('teacher')->middleware(['teacher'])->group(function () {
+    Route::name('teacher.')->prefix('teacher')->middleware(['teacher'])->group(function () {
         Route::resource('sport_classes', 'SportClassController');
-        Route::post('sport_classes/update', 'SportClassController@update')->name('sport_classes.update');
-        Route::post('sport_classes/getData', 'SportClassController@getData')->name('sport_classes.getData');
+        Route::post('sport_classes/update', 'SportClassController@update');
+        Route::post('sport_classes/getData', 'SportClassController@getData');
         Route::get('sport_classes/getSportName/{id}/{classId}', 'SportClassController@getSportName');
 
-        Route::resource('class', 'ClassController');
         Route::get('class/{id}', 'ClassController@index')->name('class.index');
-        Route::delete('class/{id}/{sportId}', 'ClassController@destroy')->name('class.destroy');
-        Route::post('class/{id}/getData', 'ClassController@getData')->name('class.getData');
+        Route::resource('class', 'ClassController');
+        Route::delete('class/{id}/{sportId}', 'ClassController@destroy');
+        Route::post('class/{id}/getData', 'ClassController@getData');
 
         Route::resource('grades', 'GradeController');
-        Route::post('grades/getData/{sportClass}/{evaluation}', 'GradeController@getData')->name('grades.getData');
+        Route::post('grades/getData/{sportClass}/{evaluation}', 'GradeController@getData');
         Route::get('grades/getSportClasses/{id}', 'GradeController@getSportClasses');
         Route::get('grades/getEvaluationColumns/{id}', 'GradeController@getEvaluationColumns');
         Route::get('grades/getLessonData/{sportClass}/{evaluation}', 'GradeController@getLessonData');
@@ -57,53 +61,53 @@ Route::middleware(['auth'])->group(function () {
     });
 
     //Routes available to secretary
-    Route::prefix('secretary')->middleware(['secretary'])->group(function () {
+    Route::name('secretary.')->prefix('secretary')->middleware(['secretary'])->group(function () {
         Route::get('report_cards', 'ReportCardController@index')->name('report_cards.index');
         Route::get('report_cards/getSchoolClasses/{schoolId}', 'ReportCardController@getSchoolClasses');
-        Route::get('report_cards/export/{school_year}/{school}/{school_class}/{evaluation}', 'ReportCardController@export')->name('report_cards.export');
+        Route::get('report_cards/export/{school_year}/{school}/{school_class}/{evaluation}', 'ReportCardController@export');
 
         Route::get('import_students', 'ImportStudentController@index')->name('import_students.index');
         Route::post('import_students', 'ImportStudentController@store');
 
         Route::resource('students', 'StudentController');
-        Route::post('students/update', 'StudentController@update')->name('students.update');
-        Route::post('students/getData', 'StudentController@getData')->name('students.getData');
+        Route::post('students/update', 'StudentController@update');
+        Route::post('students/getData', 'StudentController@getData');
         Route::get('students/getSportClasses/{id}', 'StudentController@getSportClasses');
         Route::get('students/getSchoolClasses/{id}', 'StudentController@getSchoolClasses');
     });
 
     //Routes available to employee
-    Route::prefix('admin')->middleware(['employee'])->group(function () {
+    Route::name('employee.')->prefix('admin')->middleware(['employee'])->group(function () {
         Route::resource('sports', 'SportController');
-        Route::post('sports/update', 'SportController@update')->name('sports.update');
-        Route::post('sports/getData', 'SportController@getData')->name('sports.getData');
+        Route::post('sports/update', 'SportController@update');
+        Route::post('sports/getData', 'SportController@getData');
 
         Route::resource('students', 'StudentController');
-        Route::post('students/update', 'StudentController@update')->name('students.update');
-        Route::post('students/getData', 'StudentController@getData')->name('students.getData');
+        Route::post('students/update', 'StudentController@update');
+        Route::post('students/getData', 'StudentController@getData');
         Route::get('students/getSportClasses/{SportId}', 'StudentController@getSportClasses');
         Route::get('students/getSchoolClasses/{SchoolId}', 'StudentController@getSchoolClasses');
 
         Route::resource('teachers', 'TeacherController');
-        Route::post('teachers/getData', 'TeacherController@getData')->name('teachers.getData');
-        Route::post('teachers/update', 'TeacherController@update')->name('teachers.update');
+        Route::post('teachers/getData', 'TeacherController@getData');
+        Route::post('teachers/update', 'TeacherController@update');
 
         Route::resource('employees', 'EmployeeController');
-        Route::post('employees/getData', 'EmployeeController@getData')->name('employees.getData');
-        Route::post('employees/update', 'EmployeeController@update')->name('employees.update');
+        Route::post('employees/getData', 'EmployeeController@getData');
+        Route::post('employees/update', 'EmployeeController@update');
 
         Route::resource('sport_classes', 'SportClassController');
-        Route::post('sport_classes/update', 'SportClassController@update')->name('sport_classes.update');
-        Route::post('sport_classes/getData', 'SportClassController@getData')->name('sport_classes.getData');
+        Route::post('sport_classes/update', 'SportClassController@update');
+        Route::post('sport_classes/getData', 'SportClassController@getData');
         Route::get('sport_classes/getSportName/{id}/{classId}', 'SportClassController@getSportName');
 
         Route::get('class/{id}', 'ClassController@index')->name('class.index');
-        Route::delete('class/{id}/{sportId}', 'ClassController@destroy')->name('class.destroy');
         Route::resource('class', 'ClassController');
-        Route::post('class/{id}/getData', 'ClassController@getData')->name('class.getData');
+        Route::delete('class/{id}/{sportId}', 'ClassController@destroy');
+        Route::post('class/{id}/getData', 'ClassController@getData');
 
         Route::resource('grades', 'GradeController');
-        Route::post('grades/getData/{sportClass}/{evaluation}', 'GradeController@getData')->name('grades.getData');
+        Route::post('grades/getData/{sportClass}/{evaluation}', 'GradeController@getData');
         Route::get('grades/getSportClasses/{id}', 'GradeController@getSportClasses');
         Route::get('grades/getEvaluationColumns/{id}', 'GradeController@getEvaluationColumns');
         Route::get('grades/getLessonData/{sportClass}/{evaluation}', 'GradeController@getLessonData');
@@ -111,14 +115,14 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('report_cards', 'ReportCardController@index')->name('report_cards.index');
         Route::get('report_cards/getSchoolClasses/{schoolId}', 'ReportCardController@getSchoolClasses');
-        Route::get('report_cards/export/{school_year}/{school}/{school_class}/{evaluation}', 'ReportCardController@export')->name('report_cards.export');
+        Route::get('report_cards/export/{school_year}/{school}/{school_class}/{evaluation}', 'ReportCardController@export');
 
         Route::get('import_students', 'ImportStudentController@index')->name('import_students.index');
         Route::post('import_students', 'ImportStudentController@store');
 
         Route::resource('blog', 'BlogController');
-        Route::post('blog/update', 'BlogController@update')->name('sports.update');
-        Route::post('blog/getData', 'BlogController@getData')->name('sports.getData');
-        Route::post('blog/uploadImage', 'BlogController@uploadImage')->name('sports.uploadImage');
+        Route::post('blog/update', 'BlogController@update');
+        Route::post('blog/getData', 'BlogController@getData');
+        Route::post('blog/uploadImage', 'BlogController@uploadImage');
     });
 });

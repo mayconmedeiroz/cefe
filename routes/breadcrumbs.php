@@ -8,65 +8,119 @@ Breadcrumbs::for('dashboard', function ($trail) {
 // Dashboard > Meu Perfil
 Breadcrumbs::for('profile', function ($trail) {
     $trail->parent('dashboard');
-    $trail->push('Meu Perfil', route('profile'));
+    $trail->push('Meu Perfil');
 });
 
-// Dashboard > Gerenciar Turmas
-Breadcrumbs::for('sport_classes.index', function ($trail) {
+// Dashboard > Funcionário > Gerenciar Turmas
+Breadcrumbs::for('employee.sport_classes.index', function ($trail) {
     $trail->parent('dashboard');
-    $trail->push('Gerenciar Turmas', route('sport_classes.index'));
+    $trail->push('Gerenciar Turmas', route('employee.sport_classes.index'));
 });
 
-// Dashboard > Gerenciar Alunos
-Breadcrumbs::for('students.index', function ($trail) {
+// Dashboard > Funcionário > Gerenciar Alunos
+Breadcrumbs::for('employee.students.index', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Gerenciar Alunos');
 });
 
-// Dashboard > Gerenciar Modalidades
-Breadcrumbs::for('sports.index', function ($trail) {
+// Dashboard > Funcionário > Gerenciar Modalidades
+Breadcrumbs::for('employee.sports.index', function ($trail) {
     $trail->parent('dashboard');
-    $trail->push('Gerenciar Modalidades', route('sports.index'));
+    $trail->push('Gerenciar Modalidades');
 });
 
-// Dashboard > Gerenciar Professores
-Breadcrumbs::for('teachers.index', function ($trail) {
+// Dashboard > Funcionário > Gerenciar Professores
+Breadcrumbs::for('employee.teachers.index', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Gerenciar Professores');
 });
 
-// Dashboard > Gerenciar Funcionários
-Breadcrumbs::for('employees.index', function ($trail) {
+// Dashboard > Funcionário > Gerenciar Funcionários
+Breadcrumbs::for('employee.employees.index', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Gerenciar Funcionários');
 });
 
-// Dashboard > Gerenciar Turmas > Turma {id}
-Breadcrumbs::for('class.index', function ($trail, $classes) {
+// Dashboard > Funcionário > Gerenciar Turmas > Turma {id}
+Breadcrumbs::for('employee.class.index', function ($trail, $classes) {
     $trail->parent('sport_classes.index');
     $trail->push('Turma ' . $classes);
 });
 
-// Dashboard > Lançamento de Notas
-Breadcrumbs::for('grades.index', function ($trail) {
+// Dashboard > Funcionário > Lançamento de Notas
+Breadcrumbs::for('employee.grades.index', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Lançamento de Notas');
 });
 
-// Dashboard > Boletim
-Breadcrumbs::for('report_cards.index', function ($trail) {
+// Dashboard > Funcionário > Boletim
+Breadcrumbs::for('employee.report_cards.index', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Boletim');
 });
 
-// Dashboard > Importar Estudantes
-Breadcrumbs::for('import_students.index', function ($trail) {
+// Dashboard > Funcionário > Importar Estudantes
+Breadcrumbs::for('employee.import_students.index', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Importar Estudantes');
 });
 
-// Dashboard > Gerenciar Notícias
-Breadcrumbs::for('blog.index', function ($trail) {
+// Dashboard > Funcionário > Gerenciar Notícias
+Breadcrumbs::for('employee.blog.index', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Gerenciar Notícias');
+});
+
+// Dashboard > Secretaria > Gerenciar Alunos
+Breadcrumbs::for('secretary.students.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Gerenciar Alunos');
+});
+
+// Dashboard > Secretaria > Boletim
+Breadcrumbs::for('secretary.report_cards.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Boletim');
+});
+
+// Dashboard > Secretaria > Importar Estudantes
+Breadcrumbs::for('secretary.import_students.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Importar Estudantes');
+});
+
+// Dashboard > Professor > Gerenciar Turmas
+Breadcrumbs::for('teacher.sport_classes.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Gerenciar Turmas', route('teacher.sport_classes.index'));
+});
+
+// Dashboard > Professor > Gerenciar Turmas > Turma {id}
+Breadcrumbs::for('teacher.class.index', function ($trail, $classes) {
+    $trail->parent('teacher.sport_classes.index');
+    $trail->push('Turma ' . $classes);
+});
+
+// Dashboard > Professor > Lançamento de Notas
+Breadcrumbs::for('teacher.grades.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Lançamento de Notas');
+});
+
+// Dashboard > Estudante > Inscrever-se em uma modalidade
+Breadcrumbs::for('student.enroll.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Inscrever-se em uma modalidade');
+});
+
+// Dashboard > Estudante > Boletim
+Breadcrumbs::for('student.studentReportCardIndex', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Boletim');
+});
+
+// Dashboard > Estudante > Solicitar troca de modalidade
+Breadcrumbs::for('student.request_exchange', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Solicitar troca de modalidade');
 });

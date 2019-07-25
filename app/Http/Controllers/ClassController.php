@@ -25,7 +25,6 @@ class ClassController extends Controller
                     ->where('sport_classes.id', $id)
                     ->select('sport_classes.name')
                     ->first();
-
                 return view('dashboard.teacher.classes.class')->with(compact('classes'));
                 break;
             case 4:
@@ -53,8 +52,7 @@ class ClassController extends Controller
                         ->whereNull('student_classes.deleted_at');
                 })
                 ->select('users.id', 'users.name', 'school_classes.class', 'student_school_classes.class_number', 'schools.acronym')
-                ->where('student_classes.sport_class_id', $id)
-                ->get();
+                ->where('student_classes.sport_class_id', $id);
 
             return DataTables()->of($classes)
                 ->addColumn('action', function ($data) {

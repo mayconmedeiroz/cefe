@@ -300,4 +300,15 @@ class StudentController extends Controller
         StudentSchoolClass::where('student_id', $id)->delete();
         User::findOrFail($id)->delete();
     }
+
+    public static function hasSportClass()
+    {
+        return DB::table('users')
+            ->join('student_classes', function($join){
+                $join->on('student_classes.student_id', '=', 'users.id')
+                    ->whereNull('student_classes.deleted_at');
+            })
+            ->where('users.id', Auth::user()->id)
+            ->count();
+    }
 }

@@ -62,7 +62,7 @@
 
         @yield('content')
 
-        <div class="section-bg style-1" style="background-image: url('{{ asset('img/global/about_1.jpg') }}');">
+        <div class="section-bg style-1" style="background-image: url('{{ asset('img/global/bg_1.jpg') }}');">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-4 col-md-6 mb-5 mb-lg-0">

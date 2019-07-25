@@ -157,6 +157,7 @@ class UserController extends Controller
                             ->whereNull('class_teachers.deleted_at');
                     })
                     ->get();
+
                 return view('dashboard.teacher')->with(compact('sportClasses'));
                 break;
             case 3:
@@ -193,6 +194,7 @@ class UserController extends Controller
                 return view('dashboard.secretary')->with(compact('student', 'studentClass'));
                 break;
             case 4:
+
                 $student = User::where('level', 1)->count();
                 $studentClass = StudentClass::count();
                 $teachers = User::where('level', 2)->count();

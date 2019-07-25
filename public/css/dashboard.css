@@ -639,3 +639,33 @@ input:focus, .btn:focus, .pagination a:focus, select {
 #form-result p {
     margin-bottom: 0;
 }
+
+.course-1-item {
+    background-color: #FFFFFF;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1); }
+.course-1-item figure {
+    position: relative; }
+.course-1-item .category {
+    background-color: #db1430;
+    padding: 20px; }
+.course-1-item .category h3 {
+    color: #fff;
+    font-size: 20px;
+    margin-bottom: 0; }
+.course-1-item .course-1-content {
+    padding: 20px 40px;
+    text-align: center; }
+.course-1-item .course-1-content h2 {
+    margin: 0 0 30px 0;
+    font-size: 18px;
+    color: #000; }
+.course-1-item .course-1-content .desc {
+    font-size: 13px; }
+
+.btn-red, .btn-red:hover, .btn-red:active, .btn-red:focus {
+    background-color: #db1430 !important;
+    border-color: #db1430 !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
