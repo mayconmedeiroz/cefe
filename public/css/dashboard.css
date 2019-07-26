@@ -2,7 +2,8 @@
     GLOBAL
 *****************************/
 
-html, body {
+html,
+body {
   height: 100%;
   font-family: 'Poppins', sans-serif;
   font-weight: 300;
@@ -58,7 +59,8 @@ html, body {
   border-style: none;
 }
 
-.nav-user:hover, .nav-user.show {
+.nav-user:hover,
+.nav-user.show {
   background-color: #2d2c3d;
 }
 
@@ -155,7 +157,8 @@ html, body {
   font-weight: 400;
 }
 
-.dropdown-user-menu li a:hover i, .dropdown-user-menu li a:hover > span > span > span {
+.dropdown-user-menu li a:hover i,
+.dropdown-user-menu li a:hover > span > span > span {
   color: #db1430 !important;
 }
 
@@ -238,6 +241,7 @@ html, body {
   position: absolute;
   right: 1.7rem;
 }
+
 .sidebar [aria-expanded="true"] {
   color: #9ca1c3;
 }
@@ -250,7 +254,9 @@ html, body {
   margin-left: -255px;
 }
 
-.sidebar [aria-expanded="true"], .sidebar > ul > li > a:hover, .menu-sub-active {
+.sidebar [aria-expanded="true"],
+.sidebar > ul > li > a:hover,
+.menu-sub-active {
   color: #9ca1c3;
   background: #2f2e3c;
 }
@@ -274,7 +280,8 @@ html, body {
   margin: 0;
 }
 
-.page-breadcrumb ol, .page-breadcrumb ol a {
+.page-breadcrumb ol,
+.page-breadcrumb ol a {
   color: #888;
 }
 
@@ -286,7 +293,10 @@ html, body {
     PÁGINA ADICIONAR
 *****************************/
 
-.form, .list-div, .profile, .calendar-div {
+.form,
+.list-div,
+.profile,
+.calendar-div {
   box-shadow: 0 0 13px 0 rgba(82,63,105,0.05);
   background-color: #fff;
   margin-bottom: 20px;
@@ -330,7 +340,10 @@ html, body {
   font-size: 0.9rem;
 }
 
-input:focus, .btn:focus, .pagination a:focus, select {
+input:focus,
+.btn:focus,
+.pagination a:focus,
+select {
   outline: none;
   box-shadow: none !important;
 }
@@ -513,7 +526,8 @@ input:focus, .btn:focus, .pagination a:focus, select {
   font-weight: bold;
 }
 
-.tile-stats .tile-num, .tile-stats h3, .tile-stats p {
+.tile-stats .tile-num,
+.tile-stats h3, .tile-stats p {
   position: relative;
   color: #fff;
   z-index: 5;
@@ -533,7 +547,12 @@ input:focus, .btn:focus, .pagination a:focus, select {
     DASHBOARD CALENDAR
 *****************************/
 
-.calendar th, .calendar td, .calendar thead, .calendar tbody, .calendar .fc-row, .calendar .fc-content {
+.calendar th,
+.calendar td,
+.calendar thead,
+.calendar tbody,
+.calendar .fc-row,
+.calendar .fc-content {
   border-color: #EBEDF2;
 }
 

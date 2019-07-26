@@ -2,7 +2,8 @@
     GLOBAL
 *****************************/
 
-html, body {
+html,
+body {
   font-family: 'Poppins';
   font-weight: 300;
   font-size: 14px;
@@ -66,7 +67,8 @@ html, body {
 
 }
 
-.button-group .btn:focus, .container-right input:focus {
+.button-group .btn:focus,
+.container-right input:focus {
   outline: none;
   box-shadow: none !important;
 }
