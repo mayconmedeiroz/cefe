@@ -109,7 +109,6 @@
         <script src="{{ asset('/js/global/jquery-migrate-3.1.0.min.js')}}"></script>
         <script src="{{ asset('/js/bootstrap.bundle.min.js')}}"></script>
         <script src="{{ asset('/js/global/owl.carousel.min.js')}}"></script>
-        <script src="{{ asset('/js/global/jquery.stellar.min.js')}}"></script>
         <script src="{{ asset('/js/global/jquery.easing.1.3.js')}}"></script>
         <script src="{{ asset('/js/global/aos.js')}}"></script>
         <script src="{{ asset('/js/global/jquery.sticky.js')}}"></script>
