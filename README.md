@@ -8,29 +8,29 @@ Essas instruções farão com que você tenha uma cópia do projeto em execuçã
 
 ### Pré-requisitos
 
-* PHP >= 7.1.3
-* BCMath PHP Extension
-* Ctype PHP Extension
-* JSON PHP Extension
-* Mbstring PHP Extension
-* OpenSSL PHP Extension
-* PDO PHP Extension
-* Tokenizer PHP Extension
-* XML PHP Extension
+*   PHP >= 7.1.3
+*   BCMath PHP Extension
+*   Ctype PHP Extension
+*   JSON PHP Extension
+*   Mbstring PHP Extension
+*   OpenSSL PHP Extension
+*   PDO PHP Extension
+*   Tokenizer PHP Extension
+*   XML PHP Extension
 
 ### Instalação
 
-* Clone o repositório
+*   Clone o repositório
 ```sh
 git clone https://github.com/mayconmedeiroz/cefe
 ```
-* Execute `composer install` para ambiente de `desenvolvedor` ou `composer install --optimize-autoloader --no-dev` para ambiente de   `produção` e instale os pacotes do Laravel
+*   Execute `composer install` para ambiente de `desenvolvedor` ou `composer install --optimize-autoloader --no-dev` para ambiente de   `produção` e instale os pacotes do Laravel
 
-* Copie o arquivo `.env.example` e renomeie-o para `.env`
+*   Copie o arquivo `.env.example` e renomeie-o para `.env`
 
-* Gere `APP_KEY` usando `php artisan key:generate`
+*   Gere `APP_KEY` usando `php artisan key:generate`
 
-* Edite a configuração de conexão do banco de dados no arquivo .env, por exemplo.
+*   Edite a configuração de conexão do banco de dados no arquivo .env, por exemplo.
 ```sh
 DB_HOST=db
 DB_PORT=3306
@@ -39,13 +39,12 @@ DB_USERNAME=root
 DB_PASSWORD=senhadousuario
 ```
 
-* Migre seu banco de dados com `php artisan migrate`
+*   Migre seu banco de dados com `php artisan migrate`
 
-* Semeie seu banco de dados com `php artisan db:seed`
+*   Semeie seu banco de dados com `php artisan db:seed`
 
-* Inicie com `php artisan serve`
+*   Inicie com `php artisan serve`
 
-
-## License
+##License
 
 Este projeto está licenciado sob a licença MIT - consulte o arquivo [LICENSE](LICENSE) para obter detalhes
