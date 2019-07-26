@@ -38,7 +38,6 @@ DB_DATABASE=projeto-cefe
 DB_USERNAME=root
 DB_PASSWORD=senhadousuario
 ```
-
 *   Migre seu banco de dados com `php artisan migrate`
 
 *   Semeie seu banco de dados com `php artisan db:seed`
