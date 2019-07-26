@@ -118,7 +118,7 @@ body {
   font-weight: 300;
 }
 
-.dropdown-user-menu{
+.dropdown-user-menu {
   padding: 20px;
   margin: 0;
   list-style: none;
@@ -197,7 +197,7 @@ body {
   padding: 10px 40px;
 }
 
-.sidebar ul ul a:hover{
+.sidebar ul ul a:hover {
   background-color: #2f2e3c;
 }
 
@@ -217,9 +217,9 @@ body {
   vertical-align: middle;
   text-transform: uppercase;
   color: #464b66;
-  font-size: .77rem;
+  font-size: 0.77rem;
   font-weight: 500;
-  letter-spacing: .3px;
+  letter-spacing: 0.3px;
 }
 
 .sidebar a i {
@@ -234,7 +234,7 @@ body {
   position: relative;
 }
 
-.sidebar [data-toggle="collapse"]:before {
+.sidebar [data-toggle="collapse"]::before {
   content: "\f0d7";
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
@@ -246,7 +246,7 @@ body {
   color: #9ca1c3;
 }
 
-.sidebar [aria-expanded="true"]:before {
+.sidebar [aria-expanded="true"]::before {
   content: "\f0d8";
 }
 
@@ -285,7 +285,7 @@ body {
   color: #888;
 }
 
-.breadcrumb-item+.breadcrumb-item::before {
+.breadcrumb-item + .breadcrumb-item::before {
   content: "-";
 }
 
@@ -303,7 +303,7 @@ body {
   border-radius: 4px;
 }
 
-.form-title{
+.form-title {
   display: flex;
   padding: 0 25px;
   border-bottom: 1px solid #ebedf2;
@@ -360,7 +360,7 @@ select {
 }
 
 .form-footer button {
-  padding: .65rem 1rem;
+  padding: 0.65rem 1rem;
 }
 
 /*****************************
@@ -380,7 +380,7 @@ select {
   text-align: center;
 }
 
-.list-div  td a {
+.list-div td a {
   color: #fff !important;
 }
 
@@ -527,7 +527,8 @@ select {
 }
 
 .tile-stats .tile-num,
-.tile-stats h3, .tile-stats p {
+.tile-stats h3,
+.tile-stats p {
   position: relative;
   color: #fff;
   z-index: 5;
@@ -576,7 +577,8 @@ select {
   background: #F7F8FA;
 }
 
-.calendar button:focus, .calendar button:active {
+.calendar button:focus,
+.calendar button:active {
   border: 1px solid #DB1430 !important;
   background: #DB1430 !important;
   color: #FFF;
@@ -625,7 +627,8 @@ select {
   display: block;
 }
 
-.form-first, .form-first-login-title {
+.form-first,
+.form-first-login-title {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
