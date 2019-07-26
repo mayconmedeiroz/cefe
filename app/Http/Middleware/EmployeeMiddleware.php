@@ -18,8 +18,7 @@ class EmployeeMiddleware
     {
         if(Auth::user()->level == 4) {
             return $next($request);
-        } else {
-            return redirect()->back();
         }
+        abort(404);
     }
 }

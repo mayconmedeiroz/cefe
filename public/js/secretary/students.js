@@ -62,6 +62,10 @@ $(document).ready(function () {
 
 	let school_class;
 
+	function changeSchoolClass(html){
+		$('#school_class').val(html);
+	}
+
 	$(document).on('change', '#school', function() {
 		let schoolId = $(this).val();
 		if (schoolId) {
@@ -118,10 +122,6 @@ $(document).ready(function () {
 			}
 		})
 	});
-
-	function changeSchoolClass(html){
-		$('#school_class').val(html);
-	}
 
 	$(document).on('click', '.delete', function(){
 		userID = $(this).attr('id');

@@ -18,8 +18,7 @@ class SecretaryMiddleware
     {
         if(Auth::user()->level == 3) {
             return $next($request);
-        } else {
-            return redirect()->back();
         }
+        abort(404);
     }
 }

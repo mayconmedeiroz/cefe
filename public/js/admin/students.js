@@ -64,6 +64,14 @@ $(document).ready(function () {
 	let sport_class;
 	let school_class;
 
+	function changeClass(html){
+		$('#sport_class').val(html);
+	}
+
+	function changeSchoolClass(html){
+		$('#school_class').val(html);
+	}
+
 	$(document).on('change', '#sport', function() {
 		let sportId = $(this).val();
 		if(sportId) {
@@ -141,14 +149,6 @@ $(document).ready(function () {
 			}
 		})
 	});
-
-	function changeClass(html){
-		$('#sport_class').val(html);
-	}
-
-    function changeSchoolClass(html){
-        $('#school_class').val(html);
-    }
 
 	$(document).on('click', '.delete', function(){
 		userID = $(this).attr('id');

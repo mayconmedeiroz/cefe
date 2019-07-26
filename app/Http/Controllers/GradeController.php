@@ -7,7 +7,7 @@ use CEFE\Evaluation;
 use CEFE\Recuperation;
 use CEFE\SportClassLesson;
 use CEFE\StudentGrade;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Auth;

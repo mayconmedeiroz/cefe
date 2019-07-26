@@ -182,27 +182,6 @@ body, h1, h2, h3, h4, h5,
 .overlap-to-top {
   margin-top: -150px; }
 
-.ul-check {
-  margin-bottom: 50px; }
-  .ul-check li {
-    position: relative;
-    padding-left: 35px;
-    margin-bottom: 15px;
-    line-height: 1.5; }
-    .ul-check li:before {
-      left: 0;
-      font-size: 20px;
-      top: -.3rem;
-      font-family: "icomoon";
-      content: "\e5ca";
-      position: absolute; }
-  .ul-check.white li:before {
-    color: #fff; }
-  .ul-check.success li:before {
-    color: #8bc34a; }
-  .ul-check.primary li:before {
-    color: #db1430; }
-
 .select-wrap, .wrap-icon {
   position: relative; }
   .select-wrap .icon, .wrap-icon .icon {

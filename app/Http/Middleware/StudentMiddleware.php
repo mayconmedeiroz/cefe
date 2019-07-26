@@ -18,8 +18,7 @@ class StudentMiddleware
     {
         if(Auth::user()->level == 1) {
             return $next($request);
-        } else {
-            return redirect()->back();
         }
+        abort(404);
     }
 }
