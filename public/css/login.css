@@ -66,16 +66,16 @@ body {
   padding: 0 1.25rem;
 }
 
-.button-group .btn:focus,
-.container-right input:focus {
-  outline: none;
-  box-shadow: none !important;
-}
-
 .button-group .btn {
   display: inline-block;
   padding: 12px 10px;
   width: 126px;
+}
+
+.button-group .btn:focus,
+.container-right input:focus {
+  outline: none;
+  box-shadow: none !important;
 }
 
 .button-group a {

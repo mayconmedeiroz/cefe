@@ -65,7 +65,7 @@ body {
 }
 
 .nav-user .dropdown-toggle::after {
-  display:none;
+  display: none;
 }
 
 .dropdown-user-inner {
@@ -76,12 +76,12 @@ body {
   margin: 0;
   border: 0;
   border-radius: 0;
-  box-shadow: 0 0 15px 1px rgba(69,65,78,0.2);
+  box-shadow: 0 0 15px 1px rgba(69, 65, 78, 0.2);
 }
 
 .dropdown-user-header {
   padding: 20px 20px;
-  box-shadow: 1px 34px 52px -19px rgba(68,62,84,0.03);
+  box-shadow: 1px 34px 52px -19px rgba(68, 62, 84, 0.03);
 }
 
 .dropdown-user-photo {
@@ -297,7 +297,7 @@ body {
 .list-div,
 .profile,
 .calendar-div {
-  box-shadow: 0 0 13px 0 rgba(82,63,105,0.05);
+  box-shadow: 0 0 13px 0 rgba(82, 63, 105, 0.05);
   background-color: #fff;
   margin-bottom: 20px;
   border-radius: 4px;
@@ -349,7 +349,7 @@ select {
 }
 
 .form-body .form-control {
-  padding: .65rem 1rem;
+  padding: 0.65rem 1rem;
   height: calc(1.5em + 1.3rem + 2px);
   font-size: 0.9rem;
 }
@@ -397,6 +397,7 @@ select {
   transition: bottom 0.15s linear;
   width: 100%;
 }
+
 .edit-picture {
   position: relative;
   left: 50%;
@@ -415,9 +416,9 @@ select {
   vertical-align: middle;
   border: 4px solid #f2f3f8;
   overflow: hidden;
-  width:150px;
-  height:150px;
-  margin-right:25px;
+  width: 150px;
+  height: 150px;
+  margin-right: 25px;
 }
 
 .profile-pic img {
@@ -443,6 +444,7 @@ select {
   .sidebar {
     margin-left: -255px;
   }
+
   .sidebar.toggled {
     margin-left: 0;
   }
@@ -452,9 +454,11 @@ select {
   .main-topbar {
     height: 70px;
   }
+
   .sidebar {
     min-height: calc(100vh - 70px);
   }
+
   .nav-user > a {
     padding: 15px 0 14px;
   }
@@ -464,14 +468,17 @@ select {
   .main-topbar {
     height: 60px;
   }
+
   .sidebar {
     position: absolute;
     z-index: 10;
     min-height: calc(100vh - 60px);
   }
+
   .nav-user > a {
     padding: 10px 0 9px;
   }
+
   .logo span {
     display: none;
   }
@@ -490,11 +497,11 @@ select {
 }
 
 .tile-hoki {
-  background: #67809F;
+  background: #67809f;
 }
 
 .tile-purple {
-  background: #8E44AD;
+  background: #8e44ad;
 }
 
 .tile-stats {
@@ -535,10 +542,12 @@ select {
   margin: 0;
   padding: 0;
 }
+
 .tile-stats h3 {
   font-size: 18px;
   margin-top: 5px;
 }
+
 .tile-stats p {
   font-size: 11px;
   margin-top: 5px;
@@ -554,13 +563,13 @@ select {
 .calendar tbody,
 .calendar .fc-row,
 .calendar .fc-content {
-  border-color: #EBEDF2;
+  border-color: #ebedf2;
 }
 
 .calendar .fc-button {
   color: #A7ABC3;
   background: transparent;
-  border: 1px solid #EBEDF2;
+  border: 1px solid #ebedf2;
   text-shadow: none !important;
   box-shadow: none !important;
   outline: none !important;
@@ -574,14 +583,14 @@ select {
 }
 
 .calendar button:hover {
-  background: #F7F8FA;
+  background: #f7f8fa;
 }
 
 .calendar button:focus,
 .calendar button:active {
-  border: 1px solid #DB1430 !important;
-  background: #DB1430 !important;
-  color: #FFF;
+  border: 1px solid #db1430 !important;
+  background: #db1430 !important;
+  color: #fff;
 }
 
 .calendar .fc-day-header {
@@ -599,7 +608,7 @@ select {
 }
 
 .calendar .fc-title {
-  color: #6C7293;
+  color: #6c7293;
   font-size: 0.9rem;
   font-weight: 400;
 }
