@@ -14,4 +14,9 @@ class Absence extends Model
     protected $fillable = [
         'student_grade_id', 'absences'
     ];
+
+    public function studentGrade()
+    {
+        return $this->belongsTo('CEFE\StudentGrade');
+    }
 }

@@ -21,12 +21,11 @@ class EmployeeController extends Controller
 
     public function getData()
     {
-        if(Request()->ajax())
-        {
+        if (Request()->ajax()) {
             $employees = User::where('level', '4');
 
             return DataTables()->of($employees)
-                ->addColumn('action', function($data){
+                ->addColumn('action', function ($data) {
                     $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm mr-lg-2"><i class="fas fa-edit"></i></button>';
                     $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>';
                     return $button;
@@ -40,9 +39,9 @@ class EmployeeController extends Controller
     {
         $id = $request->hidden_id;
         return Validator::make($request->all(), [
-            'enrollment' => 'required|max:20|unique:users,enrollment,' . $id,
+            'enrollment' => 'required|max:20|unique:users,enrollment,'.$id,
             'name' => 'required|max:64',
-            'email' => 'required|email|max:50|unique:users,email,' . $id,
+            'email' => 'required|email|max:50|unique:users,email,'.$id,
             'password' => 'required_if:action,==,add|max:60',
         ]);
     }
@@ -65,22 +64,21 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        if(Request()->ajax()) {
-            $error = $this->validation($request);
+        $error = $this->validation($request);
 
-            if ($this->validation($request)->fails())
-                return response()->json(['errors' => $error->errors()->all()]);
-
-            User::create([
-                'enrollment' => $request->enrollment,
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'level' => '4',
-            ]);
-
-            return response()->json(['success' => 'Funcionário adicionado com sucesso.']);
+        if ($this->validation($request)->fails()) {
+            return response()->json(['errors' => $error->errors()->all()]);
         }
+
+        User::create([
+            'enrollment' => $request->enrollment,
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'level' => '4',
+        ]);
+
+        return response()->json(['success' => 'Funcionário adicionado com sucesso.']);
     }
 
     /**
@@ -102,12 +100,9 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-        if(Request()->ajax())
-        {
-            $data = User::findOrFail($id)->first(['id', 'name', 'enrollment', 'email']);
+        $data = User::findOrFail($id, ['id', 'name', 'enrollment', 'email']);
 
-            return response()->json(['data' => $data]);
-        }
+        return response()->json($data);
     }
 
     /**
@@ -134,7 +129,7 @@ class EmployeeController extends Controller
             $user['password'] = Hash::make($request->password);
         }
 
-        User::whereId($request->hidden_id)->update($user);
+        User::FindOrFail($request->hidden_id)->update($user);
 
         return response()->json(['success' => 'Funcionário atualizado com sucesso.']);
     }

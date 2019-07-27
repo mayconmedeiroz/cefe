@@ -2,12 +2,12 @@
 
 namespace CEFE\Http\Controllers;
 
+use CEFE\User;
 use CEFE\ClassTeacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use CEFE\User;
-use Validator;
-use Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 class TeacherController extends Controller
 {
@@ -77,8 +77,9 @@ class TeacherController extends Controller
     {
         $error = $this->validation($request);
 
-        if ($this->validation($request)->fails())
+        if ($this->validation($request)->fails()) {
             return response()->json(['errors' => $error->errors()->all()]);
+        }
 
         User::create([
             'enrollment' => $request->enrollment,
@@ -110,27 +111,15 @@ class TeacherController extends Controller
      */
     public function edit($id)
     {
-        if(request()->ajax())
-        {
-            $data = DB::table('users')
-                ->leftJoin('class_teachers', 'users.id', '=', 'class_teachers.teacher_id')
-                ->leftJoin('sport_classes', 'class_teachers.class_id', '=', 'sport_classes.id')
-                ->select('users.id', 'users.name', 'users.enrollment', 'users.email')
-                ->selectRaw('GROUP_CONCAT(`sport_classes`.`name` ORDER BY `sport_classes`.`name` ASC SEPARATOR ", ") AS `sport_class_name`')
-                ->where('users.id', $id)
-                ->whereNull('users.deleted_at')
-                ->whereNull('class_teachers.deleted_at')
-                ->groupBy('class_teachers.teacher_id')
-                ->first();
-            return response()->json(['data' => $data]);
-        }
+        $data = User::findOrFail($id, ['users.id', 'users.name', 'users.enrollment', 'users.email']);
+
+        return response()->json($data);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)

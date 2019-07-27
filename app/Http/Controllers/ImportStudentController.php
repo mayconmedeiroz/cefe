@@ -2,11 +2,11 @@
 
 namespace CEFE\Http\Controllers;
 
+use CEFE\Secretary;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use CEFE\Imports\StudentImport;
-use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
-use Auth;
 
 class ImportStudentController extends Controller
 {
@@ -19,12 +19,8 @@ class ImportStudentController extends Controller
     {
         switch (Auth::user()->level) {
             case 3:
-                $userId = Auth::user()->id;
 
-                $school = DB::table('secretaries')
-                    ->select('secretaries.school_id')
-                    ->where('secretaries.secretary_id', $userId)
-                    ->first();
+                $school = Secretary::findOrFail(Auth::user()->id, ['school_id']);
 
                 return view('dashboard.secretary.students.import_students')->with(compact('school'));
                 break;

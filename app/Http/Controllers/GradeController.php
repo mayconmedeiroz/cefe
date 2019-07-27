@@ -5,6 +5,7 @@ namespace CEFE\Http\Controllers;
 use CEFE\Absence;
 use CEFE\Evaluation;
 use CEFE\Recuperation;
+use CEFE\SportClass;
 use CEFE\SportClassLesson;
 use CEFE\StudentGrade;
 use Illuminate\Support\Facades\Validator;
@@ -17,38 +18,26 @@ class GradeController extends Controller
 
     public function getSportClasses($id)
     {
-        if(request()->ajax()) {
-            $sportClasses = DB::table('sport_classes')
-                ->select('sport_classes.id', 'sport_classes.name')
-                ->whereNull('sport_classes.deleted_at')
-                ->where('sport_classes.sport_id', $id)
-                ->get();
+        $sportClasses = SportClass::where('sport_classes.sport_id', $id)
+            ->get(['sport_classes.id', 'sport_classes.name']);
 
-            return response()->json($sportClasses);
-        }
+        return response()->json($sportClasses);
     }
 
     public function getEvaluationColumns($id)
     {
-        if(request()->ajax()) {
-            $evaluationColumns = DB::table('evaluations')
-                ->select('evaluations.attendance', 'evaluations.recuperation')
-                ->where('evaluations.id', $id)
-                ->first();
+        $evaluationColumns = Evaluation::findOrFail($id, ['evaluations.attendance', 'evaluations.recuperation']);
 
-            return response()->json($evaluationColumns);
-        }
+        return response()->json($evaluationColumns);
     }
 
     public function getLessonData($sportClass, $evaluation)
     {
-        if(request()->ajax()) {
-            $lesson = SportClassLesson::where('sport_class_id', $sportClass)
-                ->where('evaluation_id', $evaluation)
-                ->first();
+        $lesson = SportClassLesson::where('sport_class_id', $sportClass)
+            ->where('evaluation_id', $evaluation)
+            ->first();
 
-            return response()->json($lesson);
-        }
+        return response()->json($lesson);
     }
 
     public function validation($request)

@@ -11,6 +11,12 @@
 |
 */
 
+Route::get('test', function () {
+    $user = CEFE\Secretary::findOrFail(Auth::user()->id, ['school_id']);
+
+    echo $user;
+});
+
 Route::get('/', 'HomeController@index')->name('index');
 Route::get('blog/{id}', 'BlogController@show')->name('sports.show');
 Route::get('blog', 'BlogController@indexHome')->name('blog');

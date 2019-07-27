@@ -3,37 +3,30 @@
 namespace CEFE\Http\Controllers;
 
 use CEFE\Evaluation;
+use CEFE\SchoolClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use CEFE\Exports\ReportCardExport;
 use CEFE\Exports\ReportCardPerSchoolExport;
 use Maatwebsite\Excel\Facades\Excel;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class ReportCardController extends Controller
 {
     public function getSchoolClasses($id)
     {
-        if (request()->ajax()) {
-            $sportClasses = DB::table('school_classes')
-                ->select('school_classes.id', 'school_classes.class')
-                ->where('school_classes.school_id', $id)
-                ->get();
+        $sportClasses = SchoolClass::where('school_classes.school_id', $id)
+            ->get(['school_classes.id', 'school_classes.class']);
 
-            return response()->json($sportClasses);
-        }
+        return response()->json($sportClasses);
     }
 
     public function index()
     {
         switch (Auth::user()->level) {
             case 3:
-                $userId = Auth::user()->id;
 
-                $school = DB::table('secretaries')
-                    ->select('secretaries.school_id')
-                    ->where('secretaries.secretary_id', $userId)
-                    ->first();
+                $school = Secretary::findOrFail(Auth::user()->id, ['school_id']);
 
                 return view('dashboard.secretary.report_cards.report_cards')->with(compact('school'));
                 break;

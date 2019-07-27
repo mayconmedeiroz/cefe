@@ -26,4 +26,25 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function classTeachers()
+    {
+        return $this->belongsToMany('CEFE\SportClass', 'class_teachers', 'teacher_id', 'class_id');
+    }
+
+    public function secretary()
+    {
+        return $this->hasMany('CEFE\Secretary', 'secretary_id');
+    }
+
+    public function studentSchoolClass()
+    {
+        return $this->belongsToMany('CEFE\SchoolClass', 'student_school_classes', 'student_id');
+    }
+
+    public function studentClass()
+    {
+        return $this->belongsToMany('CEFE\SportClass', 'student_classes', 'student_id');
+    }
+
 }

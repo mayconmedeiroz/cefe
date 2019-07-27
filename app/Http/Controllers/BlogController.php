@@ -5,7 +5,6 @@ namespace CEFE\Http\Controllers;
 use CEFE\BlogPost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class BlogController extends Controller
@@ -27,10 +26,8 @@ class BlogController extends Controller
      */
     public function indexHome()
     {
-        $posts = DB::table('blog_posts')
-            ->join('users', 'users.id', '=', 'blog_posts.user_id')
-            ->select('blog_posts.id', 'users.name', 'blog_posts.title', 'blog_posts.created_at', 'blog_posts.image')
-            ->orderBy('id','desc')
+        $posts = BlogPost::select(['id', 'title', 'created_at', 'image'])
+            ->orderByDesc('id')
             ->paginate('9');
 
         return view('blog')->with(compact('posts'));
@@ -48,9 +45,7 @@ class BlogController extends Controller
     public function getData()
     {
         if (request()->ajax()) {
-            $posts = DB::table('blog_posts')
-                ->join('users', 'users.id', '=', 'blog_posts.user_id')
-                ->select('blog_posts.id', 'users.name', 'blog_posts.title');
+            $posts = BlogPost::with('user:id,name')->get(['id', 'title', 'user_id']);
 
             return DataTables()->of($posts)
                 ->addColumn('action', function ($data) {
@@ -118,10 +113,7 @@ class BlogController extends Controller
      */
     public function show($id)
     {
-        $post = BlogPost::findOrFail($id)
-            ->select('blog_posts.id', 'blog_posts.title', 'blog_posts.body', 'blog_posts.created_at')
-            ->whereId($id)
-            ->first();
+        $post = BlogPost::findOrFail($id, ['blog_posts.id', 'blog_posts.title', 'blog_posts.body', 'blog_posts.created_at']);
 
         return view('news-single')->with(compact('post'));
     }
@@ -134,10 +126,7 @@ class BlogController extends Controller
      */
     public function edit($id)
     {
-        $post = DB::table('blog_posts')
-        ->select('blog_posts.id', 'blog_posts.title', 'blog_posts.body')
-        ->where('blog_posts.id', $id)
-        ->first();
+        $post = BlogPost::findOrFail($id, ['blog_posts.id', 'blog_posts.title', 'blog_posts.body']);
 
         return response()->json($post);
     }

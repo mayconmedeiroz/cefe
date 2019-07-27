@@ -4,6 +4,7 @@ namespace CEFE\Http\Controllers;
 
 use CEFE\School;
 use CEFE\Sport;
+use CEFE\SportClass;
 use CEFE\StudentClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,10 +22,8 @@ class ClassController extends Controller
     {
         switch (Auth::user()->level) {
             case 2:
-                $classes = DB::table('sport_classes')
-                    ->where('sport_classes.id', $id)
-                    ->select('sport_classes.name')
-                    ->first();
+                $classes = SportClass::findOrFail($id, ['name']);
+
                 return view('dashboard.teacher.classes.class')->with(compact('classes'));
                 break;
             case 4:
@@ -129,6 +128,8 @@ class ClassController extends Controller
      */
     public function destroy($id, $sportId)
     {
-        StudentClass::where('student_id', $id)->where('sport_class_id', $sportId)->delete();
+        StudentClass::where('student_id', $id)
+            ->where('sport_class_id', $sportId)
+            ->delete();
     }
 }

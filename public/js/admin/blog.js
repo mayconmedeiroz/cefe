@@ -11,7 +11,7 @@ $(document).ready(function () {
 		columns: [
 			{data: 'id', name: 'id'},
 			{data: 'title', name: 'title'},
-			{data: 'name', name: 'name'},
+			{data: 'user.name', name: 'user.name'},
 			{data: 'action', name: 'action', orderable: false, searchable: false},
 		],
 		dom: "<'row'<'col-sm-12 mb-3'B>>" +

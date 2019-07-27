@@ -14,4 +14,9 @@ class SchoolClass extends Model
     protected $fillable = [
         'school_id', 'class',
     ];
+
+    public function school()
+    {
+        return $this->belongsTo('CEFE\School');
+    }
 }

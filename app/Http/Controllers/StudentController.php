@@ -187,6 +187,7 @@ class StudentController extends Controller
                 'school_year_id' => $school_year->id
             ]);
         }
+
         return response()->json(['success' => 'Aluno adicionado com sucesso.']);
     }
 
@@ -209,27 +210,25 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-        if(request()->ajax())
-        {
-            $data = DB::table('users')
-                ->leftJoin('student_school_classes', function($join){
-                    $join->on('users.id', '=', 'student_school_classes.student_id')
-                        ->whereNull('student_school_classes.deleted_at');
-                })
-                ->join('school_classes', 'student_school_classes.school_class_id', '=', 'school_classes.id')
-                ->join('schools', 'school_classes.school_id', '=', 'schools.id')
-                ->leftJoin('student_classes', function($join){
-                    $join->on('student_classes.student_id', '=', 'users.id')
-                        ->whereNull('student_classes.deleted_at');
-                })
-                ->leftJoin('sport_classes', 'sport_classes.id', '=', 'student_classes.sport_class_id')
-                ->leftJoin('sports', 'sports.id', '=', 'sport_classes.sport_id')
-                ->select('users.id', 'users.enrollment', 'users.name', 'users.email', 'school_classes.id as class', 'student_school_classes.class_number', 'schools.id as school_name', 'sport_classes.id as sport_class', 'sports.id as sport_id')
-                ->where('users.id', $id)
-                ->first();
+        $data = DB::table('users')
+            ->leftJoin('student_school_classes', function($join){
+                $join->on('users.id', '=', 'student_school_classes.student_id')
+                    ->whereNull('student_school_classes.deleted_at');
+            })
+            ->join('school_classes', 'student_school_classes.school_class_id', '=', 'school_classes.id')
+            ->join('schools', 'school_classes.school_id', '=', 'schools.id')
+            ->leftJoin('student_classes', function($join){
+                $join->on('student_classes.student_id', '=', 'users.id')
+                    ->whereNull('student_classes.deleted_at');
+            })
+            ->leftJoin('sport_classes', 'sport_classes.id', '=', 'student_classes.sport_class_id')
+            ->leftJoin('sports', 'sports.id', '=', 'sport_classes.sport_id')
+            ->select('users.id', 'users.enrollment', 'users.name', 'users.email', 'school_classes.id as class', 'student_school_classes.class_number', 'schools.id as school_name', 'sport_classes.id as sport_class', 'sports.id as sport_id')
+            ->where('users.id', $id)
+            ->first();
 
-            return response()->json(['data' => $data]);
-        }
+        return response()->json(['data' => $data]);
+
     }
 
     /**
@@ -256,7 +255,7 @@ class StudentController extends Controller
             $user['password'] = Hash::make($request->password);
         }
 
-        User::whereId($request->hidden_id)->update($user);
+        User::findOrFail($request->hidden_id)->update($user);
 
         StudentSchoolClass::where('student_id', $request->hidden_id)->delete();
         $school_year = SchoolYear::where('school_year', NOW())->first();
@@ -301,7 +300,7 @@ class StudentController extends Controller
         User::findOrFail($id)->delete();
     }
 
-    public static function hasSportClass()
+    public function hasSportClass()
     {
         return DB::table('users')
             ->join('student_classes', function($join){

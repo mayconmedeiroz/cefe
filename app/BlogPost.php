@@ -14,4 +14,9 @@ class BlogPost extends Model
     protected $fillable = [
         'user_id', 'image', 'title', 'body', 'is_published'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('CEFE\User');
+    }
 }

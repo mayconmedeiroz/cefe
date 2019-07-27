@@ -1,4 +1,4 @@
-# Centro Esportivo da FAETEC
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e79426a03ca34f7a8d076e5ecf328570)](https://www.codacy.com?utm_sourcCentro Esportivo da FAETEC
 
 Projeto que visa melhorar o funcionamento do CEFE.
 
@@ -43,6 +43,6 @@ DB_PASSWORD=senhadousuario
 *   Semeie seu banco de dados com `php artisan db:seed`
 *   Inicie com `php artisan serve`
 
-##License
+## License
 
 Este projeto está licenciado sob a licença MIT - consulte o arquivo [LICENSE](LICENSE) para obter detalhes

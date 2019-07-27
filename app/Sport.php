@@ -16,4 +16,9 @@ class Sport extends Model
     protected $fillable = [
         'name', 'acronym',
     ];
+
+    public function sportClasses()
+    {
+        return $this->hasMany('CEFE\SportClass');
+    }
 }
