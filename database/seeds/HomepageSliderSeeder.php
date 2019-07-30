@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use CEFE\HomepageSlider;
+use Illuminate\Database\Seeder;
 
 class HomepageSliderSeeder extends Seeder
 {
@@ -16,7 +16,7 @@ class HomepageSliderSeeder extends Seeder
             ['title' => 'Primeiro Slide', 'image' => 'default.jpg', 'created_at' => NOW(), 'updated_at' => NOW()],
             ['title' => 'Segundo Slide', 'image' => 'default.jpg', 'created_at' => NOW(), 'updated_at' => NOW()],
             ['title' => 'Terceiro Slide', 'image' => 'default.jpg', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ]);
+        ]);
 
         // factory(HomepageSlider::class, 10)->create();
     }

@@ -43,7 +43,7 @@ Breadcrumbs::for('employee.employees.index', function ($trail) {
 
 // Dashboard > Funcionário > Gerenciar Turmas > Turma {id}
 Breadcrumbs::for('employee.class.index', function ($trail, $classes) {
-    $trail->parent('sport_classes.index');
+    $trail->parent('employee.sport_classes.index');
     $trail->push('Turma ' . $classes);
 });
 

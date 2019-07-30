@@ -6,22 +6,24 @@
 @endphp
 
 @section('content')
-<div class="site-section ftco-subscribe-1 site-blocks-cover bg-light pb-4" style="background-image: url('{{ asset('img/global/bg_1.jpg') }}');padding-top: 8em;">
+    <div class="site-section ftco-subscribe-1 site-blocks-cover bg-light pb-4"
+         style="background-image: url('{{ asset('img/global/bg_1.jpg') }}');padding-top: 8em;">
         <div class="container">
-          <div class="row align-items-end">
-            <div class="col-lg-7">
-              <h2 class="mb-0">{{ $post->title }}</h2>
-              <p>{{ strftime("%d de %B de %Y", strtotime($post->created_at)) }}</p>
+            <div class="row align-items-end">
+                <div class="col-lg-7">
+                    <h2 class="mb-0">{{ $post->title }}</h2>
+                    <p>{{ strftime("%d de %B de %Y", strtotime($post->created_at)) }}</p>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
+    </div>
+
     <div class="custom-breadcrumns border-bottom">
-      <div class="container">
-        <a href="{{ route('index') }}">Home</a>
-        <span class="mx-3 icon-keyboard_arrow_right"></span>
-        <span class="current">Notícias</span>
-      </div>
+        <div class="container">
+            <a href="{{ route('index') }}">Home</a>
+            <span class="mx-3 fas fa-caret-right"></span>
+            <span class="current">Notícias</span>
+        </div>
     </div>
 
     <div class="site-section">
@@ -38,6 +40,6 @@
 @section('custom-js')
     <script>
         $('img').addClass('img-fluid');
-        $('.post-content p, .post-content span').css('font-family','Muli');
+        $('.post-content p, .post-content span').css('font-family', 'Muli');
     </script>
 @endsection

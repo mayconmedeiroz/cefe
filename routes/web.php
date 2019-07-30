@@ -12,9 +12,18 @@
 */
 
 Route::get('test', function () {
-    $user = CEFE\Secretary::findOrFail(Auth::user()->id, ['school_id']);
+    $test = CEFE\User::with(['studentSchoolClass' => function ($query) {
 
-    echo $user;
+            $query->select('class');
+
+        }, 'studentClass' => function ($query) {
+
+            $query->where('sport_class_id', 1);
+
+        }])
+        ->get();
+
+    echo $test;
 });
 
 Route::get('/', 'HomeController@index')->name('index');

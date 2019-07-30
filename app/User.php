@@ -39,12 +39,17 @@ class User extends Authenticatable
 
     public function studentSchoolClass()
     {
-        return $this->belongsToMany('CEFE\SchoolClass', 'student_school_classes', 'student_id');
+        return $this->belongsToMany('CEFE\SchoolClass', 'student_school_classes', 'student_id')->withPivot(['class_number', 'school_year_id']);
     }
 
     public function studentClass()
     {
-        return $this->belongsToMany('CEFE\SportClass', 'student_classes', 'student_id');
+        return $this->belongsToMany('CEFE\SportClass', 'student_classes', 'student_id')->withPivot('school_year_id');
+    }
+
+    public function studentSchool()
+    {
+        return $this->hasManyThrough('CEFE\School', 'CEFE\StudentClass');
     }
 
 }

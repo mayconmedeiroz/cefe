@@ -8,7 +8,7 @@ use CEFE\SportClass;
 use CEFE\StudentClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class ClassController extends Controller
 {
@@ -29,10 +29,7 @@ class ClassController extends Controller
             case 4:
                 $sports = Sport::all();
                 $schools = School::all();
-                $classes = DB::table('sport_classes')
-                    ->where('sport_classes.id', $id)
-                    ->select('sport_classes.name')
-                    ->first();
+                $classes = SportClass::findOrFail($id, ['name']);
 
                 return view('dashboard.admin.classes.class')->with(compact('classes', 'sports', 'schools'));
                 break;
