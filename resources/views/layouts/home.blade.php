@@ -39,9 +39,6 @@
                             <li class="{{ Request::is('blog*') ? 'active' : '' }}">
                                 <a href="/blog" class="nav-link text-left">Notícias</a>
                             </li>
-                            <li class="{{ Request::is('contact') ? 'active' : '' }}">
-                                <a href="/contact" class="nav-link text-left">Contato</a>
-                            </li>
                             <li class="{{ Request::is('about') ? 'active' : '' }}">
                                 <a href="/about" class="nav-link text-left">Sobre Nós</a>
                             </li>
