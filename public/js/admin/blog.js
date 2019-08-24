@@ -153,7 +153,9 @@ $(document).ready(function () {
 					}
 					if (data.success) {
 						html = '<div class="alert alert-success">' + data.success + '</div>';
+                        $('#summernote').summernote('code', '');
 						$('#post-form')[0].reset();
+                        $('#list').DataTable().ajax.reload();
 					}
 					$('#form-result').html(html);
 				}

@@ -2,10 +2,10 @@
 
 namespace CEFE\Http\Controllers;
 
-use Illuminate\Http\Request;
 use CEFE\User;
-use Validator;
-use Hash;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 class EmployeeController extends Controller
 {
@@ -66,9 +66,8 @@ class EmployeeController extends Controller
     {
         $error = $this->validation($request);
 
-        if ($this->validation($request)->fails()) {
+        if ($this->validation($request)->fails())
             return response()->json(['errors' => $error->errors()->all()]);
-        }
 
         User::create([
             'enrollment' => $request->enrollment,

@@ -11,21 +11,6 @@
 |
 */
 
-Route::get('test', function () {
-    $test = CEFE\User::with(['studentSchoolClass' => function ($query) {
-
-            $query->select('class');
-
-        }, 'studentClass' => function ($query) {
-
-            $query->where('sport_class_id', 1);
-
-        }])
-        ->get();
-
-    echo $test;
-});
-
 Route::get('/', 'HomeController@index')->name('index');
 Route::get('blog/{id}', 'BlogController@show')->name('sports.show');
 Route::get('blog', 'BlogController@indexHome')->name('blog');

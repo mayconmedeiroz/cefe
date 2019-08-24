@@ -73,10 +73,10 @@ $(document).ready(function () {
 		$.ajax({
 			url:"/admin/sports/"+userID+"/edit",
 			dataType:"json",
-			success:function(html){
-				$('#name').val(html.data.name);
-				$('#acronym').val(html.data.acronym);
-				$('#hidden_id').val(html.data.id);
+			success:function(data){
+				$('#name').val(data.name);
+				$('#acronym').val(data.acronym);
+				$('#hidden_id').val(data.id);
 				$('.modal-title').text('Modificar uma modalidade');
 				$('#action_button').val('Modificar');
 				$('#formModal').modal('show');

@@ -75,13 +75,13 @@ $(document).ready(function () {
 		$.ajax({
 			url:"/admin/teachers/"+userID+"/edit",
 			dataType:"json",
-			success:function(html){
-				$('#enrollment').val(html.data.enrollment);
-				$('#name').val(html.data.name);
-				$('#email').val(html.data.email);
-				$('#password').val(html.data.password).attr('required', false);
+			success:function(data){
+				$('#enrollment').val(data.enrollment);
+				$('#name').val(data.name);
+				$('#email').val(data.email);
+				$('#password').val(data.password).attr('required', false);
 				$('#action').val('mod');
-				$('#hidden_id').val(html.data.id);
+				$('#hidden_id').val(data.id);
 				$('.modal-title').text('Modificar um aluno');
 				$('#action_button').val('Modificar');
 				$('#formModal').modal('show');

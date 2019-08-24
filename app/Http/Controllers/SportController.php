@@ -2,13 +2,12 @@
 
 namespace CEFE\Http\Controllers;
 
-use Illuminate\Http\Request;
 use CEFE\Sport;
 use CEFE\SportClass;
 use CEFE\StudentClass;
 use CEFE\ClassTeacher;
-use Validator;
-use DataTables;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class SportController extends Controller
 {
@@ -66,16 +65,13 @@ class SportController extends Controller
         $error = $this->validation($request);
 
         if($error->fails())
-        {
             return response()->json(['errors' => "Falha na solicitação, tente novamente!"]);
-        }
 
-        $result = [
+        Sport::create([
             'name'    => $request->name,
             'acronym' => $request->acronym
-        ];
+        ]);
 
-        Sport::create($result);
         return response()->json(['success' => 'Modalidade adicionada com sucesso.']);
     }
 
@@ -98,11 +94,8 @@ class SportController extends Controller
      */
     public function edit($id)
     {
-        if(request()->ajax())
-        {
-            $data = Sport::findOrFail($id);
-            return response()->json(['data' => $data]);
-        }
+        $data = Sport::findOrFail($id);
+        return response()->json($data);
     }
 
     /**
@@ -117,16 +110,13 @@ class SportController extends Controller
         $error = $this->validation($request);
 
         if($error->fails())
-        {
             return response()->json(['errors' => "Falha na solicitação, tente novamente!"]);
-        }
 
-        $result = [
+        Sport::findOrFail($request->hidden_id)->update([
             'name'    => $request->name,
             'acronym' => $request->acronym
-        ];
+        ]);
 
-        Sport::whereId($request->hidden_id)->update($result);
         return response()->json(['success' => 'Modalidade atualizada com sucesso.']);
     }
 
@@ -139,13 +129,13 @@ class SportController extends Controller
     public function destroy($id)
     {
         $sportClasses = SportClass::where('sport_id', $id)->get();
+
         foreach ($sportClasses as $sportClass) {
             StudentClass::where('sport_class_id', $sportClass->id)->delete();
             ClassTeacher::where('class_id', $sportClass->id)->delete();
-            SportClass::findOrFail($sportClass->id)->delete();
+            $sportClass->delete();
         }
 
         Sport::findOrFail($id)->delete();
-
     }
 }

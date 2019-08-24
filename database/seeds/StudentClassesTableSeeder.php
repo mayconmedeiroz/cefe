@@ -13,9 +13,6 @@ class StudentClassesTableSeeder extends Seeder
     public function run()
     {
         StudentClass::insert([
-            ['student_id' => '1', 'sport_class_id' => '1', 'school_year_id' => '1', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['student_id' => '2', 'sport_class_id' => '1', 'school_year_id' => '1', 'created_at' => NOW(), 'updated_at' => NOW()],
-            ['student_id' => '3', 'sport_class_id' => '1', 'school_year_id' => '1', 'created_at' => NOW(), 'updated_at' => NOW()],
             ['student_id' => '4', 'sport_class_id' => '1', 'school_year_id' => '1', 'created_at' => NOW(), 'updated_at' => NOW()],
         ]);
     }

@@ -2,12 +2,12 @@
 
 namespace CEFE\Imports;
 
+use CEFE\User;
+use CEFE\StudentSchoolClass;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Illuminate\Support\Collection;
-use CEFE\User;
 use Illuminate\Support\Facades\DB;
-use Hash;
-use CEFE\StudentSchoolClass;
+use Illuminate\Support\Facades\Hash;
 
 class StudentImport implements ToCollection
 {

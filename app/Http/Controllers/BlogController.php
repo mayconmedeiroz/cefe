@@ -19,11 +19,6 @@ class BlogController extends Controller
         return view('dashboard.admin.blog.blog');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function indexHome()
     {
         $posts = BlogPost::select(['id', 'title', 'created_at', 'image'])
