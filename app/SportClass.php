@@ -17,4 +17,9 @@ class SportClass extends Model
     protected $fillable = [
         'sport_id', 'name', 'weekday','start_time', 'end_time', 'vacancies'
     ];
+
+    public function sport()
+    {
+        return $this->belongsTo('CEFE\Sport');
+    }
 }

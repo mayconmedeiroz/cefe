@@ -17,5 +17,4 @@ class StudentClass extends Model
     protected $fillable = [
         'student_id', 'sport_class_id', 'school_year_id'
     ];
-
 }

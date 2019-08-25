@@ -12,10 +12,10 @@ $(document).ready(function () {
 			{data: "id", name: "id"},
 			{data: "enrollment", name: "enrollment"},
 			{data: "name", name: "name"},
-			{data: "acronym", name: "acronym"},
-			{data: "class", name: "class"},
-			{data: "class_number", name: "class_number"},
-			{data: "sport_class", name: "sport_class"},
+			{data: "student_school_class[0].school.acronym", name: "acronym"},
+			{data: "student_school_class[0].class", name: "class"},
+			{data: "student_school_class[0].pivot.class_number", name: "class_number"},
+			{data: "student_class[0].name", name: "sport_class"},
 			{data: "action", name: "action", orderable: false, searchable: false},
 		],
 		dom: "<'row'<'col-sm-12 mb-3'B>>" +
@@ -131,18 +131,18 @@ $(document).ready(function () {
 		$.ajax({
 			url:"/admin/students/"+userID+"/edit",
 			dataType:"json",
-			success:function(html){
-				$('#enrollment').val(html.data.enrollment);
-				$('#name').val(html.data.name);
-				$('#email').val(html.data.email);
-				$('#password').val(html.data.password).attr('required', false);
-				$('#school').val(html.data.school_name).change();
-				school_class = html.data.class;
-                $('#class_number').val(html.data.class_number);
-				sport_class = html.data.sport_class;
-				$('#sport').val(html.data.sport_id).change();
+			success:function(data){
+				$('#enrollment').val(data.enrollment);
+				$('#name').val(data.name);
+				$('#email').val(data.email);
+				$('#password').attr('required', false);
+				$('#school').val(data.student_school_class[0].school.id).change();
+				school_class = data.student_school_class[0].id;
+                $('#class_number').val(data.student_school_class[0].pivot.class_number);
+				$('#sport').val(data.student_class[0].sport.id).change();
+                sport_class = data.student_class[0].id;
 				$('#action').val('mod');
-				$('#hidden_id').val(html.data.id);
+				$('#hidden_id').val(data.id);
 				$('.modal-title').text('Modificar um aluno');
 				$('#action_button').val('Modificar');
 				$('#formModal').modal('show');

@@ -12,9 +12,9 @@ $(document).ready(function () {
 			{data: "id", name: "id"},
 			{data: "enrollment", name: "enrollment"},
 			{data: "name", name: "name"},
-			{data: "class", name: "class"},
-			{data: "class_number", name: "class_number"},
-			{data: "sport_class", name: "sport_class"},
+            {data: "student_school_class[].class", name: "class"},
+            {data: "student_school_class[].pivot.class_number", name: "class_number"},
+            {data: "student_class[].name", name: "sport_class"},
 			{data: "action", name: "action", orderable: false, searchable: false},
 		],
 		dom: "<'row'<'col-sm-12 mb-3'B>>" +
