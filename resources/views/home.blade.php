@@ -12,7 +12,7 @@
                 <div class="container">
                     <div class="row align-items-center">
                         <div class="col-lg-12 mx-auto text-center" data-aos="fade-up">
-                            <h1>{{ $slider->title }}</h1>
+                            <h3>{{ $slider->title }}</h3>
                         </div>
                     </div>
                 </div>
@@ -36,7 +36,6 @@
                         @foreach($sportClasses as $sportClass)
                             <div class="course-1-item">
                                 <figure class="thumnail">
-                                    <!--<img src="img/global/course_1.jpg" alt="Image" class="img-fluid">-->
                                     <div class="category text-center"><h3>{{ $sportClass->sport_name }}</h3></div>
                                 </figure>
                                 <div class="course-1-content pb-4">

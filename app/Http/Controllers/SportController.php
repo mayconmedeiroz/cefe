@@ -31,17 +31,14 @@ class SportController extends Controller
 
     public function getData()
     {
-        if(request()->ajax())
-        {
-            return DataTables()->of(Sport::latest()->get())
-                ->addColumn('action', function($data){
-                    $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm mr-lg-2"><i class="fas fa-edit"></i></button>';
-                    $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>';
-                    return $button;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-        }
+        return DataTables()->of(Sport::latest()->get())
+            ->addColumn('action', function($data){
+                $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm mr-lg-2"><i class="fas fa-edit"></i></button>';
+                $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>';
+                return $button;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
     /**

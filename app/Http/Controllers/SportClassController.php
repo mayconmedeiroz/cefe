@@ -148,6 +148,7 @@ class SportClassController extends Controller
      */
     public function create()
     {
+        //
     }
 
     /**

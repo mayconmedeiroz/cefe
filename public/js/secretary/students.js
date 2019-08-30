@@ -105,17 +105,16 @@ $(document).ready(function () {
 		$.ajax({
 			url:"/secretary/students/"+userID+"/edit",
 			dataType:"json",
-			success:function(html){
-				console.log(html);
-				$('#enrollment').val(html.data.enrollment);
-				$('#name').val(html.data.name);
-				$('#email').val(html.data.email);
-				$('#password').val(html.data.password).attr('required', false);
-				$('#school').val(html.data.school_name).change();
-				school_class = html.data.class;
-				$('#class_number').val(html.data.class_number);
+			success:function(data){
+				$('#enrollment').val(data.enrollment);
+				$('#name').val(data.name);
+				$('#email').val(data.email);
+                $('#password').attr('required', false);
+                $('#school').val(data.student_school_class[0].school.id).change();
+                school_class = data.student_school_class[0].id;
+                $('#class_number').val(data.student_school_class[0].pivot.class_number);
 				$('#action').val('secmod');
-				$('#hidden_id').val(html.data.id);
+				$('#hidden_id').val(data.id);
 				$('.modal-title').text('Modificar um aluno');
 				$('#action_button').val('Modificar');
 				$('#formModal').modal('show');

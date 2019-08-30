@@ -16,7 +16,7 @@
     <div class="site-mobile-menu site-navbar-target">
         <div class="site-mobile-menu-header">
             <div class="site-mobile-menu-close mt-3">
-                <span class="icon-close2 js-menu-toggle"></span>
+                <span class="fas fa-times js-menu-toggle"></span>
             </div>
         </div>
         <div class="site-mobile-menu-body"></div>
@@ -48,8 +48,8 @@
                 <div class="ml-auto">
                     <a href="{{ route('login') }}" class="small btn btn-primary btn-red px-4 py-2 rounded-0"><span
                                 class="icon-user"></span> Acessar</a>
-                    <a href="#" class="d-lg-none site-menu-toggle js-menu-toggle text-black btn"><span
-                                class="icon-menu h3"></span></a>
+                    <a href="#" class="d-lg-none site-menu-toggle js-menu-toggle text-black btn">
+                        <i class="fas fa-bars fa-lg"></i></a>
                 </div>
             </div>
         </div>
@@ -112,10 +112,8 @@
     </svg>
 </div>
 <script src="{{ asset('/js/jquery.min.js')}}"></script>
-<script src="{{ asset('/js/global/jquery-migrate-3.1.0.min.js')}}"></script>
 <script src="{{ asset('/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{ asset('/js/global/owl.carousel.min.js')}}"></script>
-<script src="{{ asset('/js/global/jquery.easing.1.3.js')}}"></script>
 <script src="{{ asset('/js/global/aos.js')}}"></script>
 <script src="{{ asset('/js/global/jquery.sticky.js')}}"></script>
 <script src="{{ asset('/js/global/main.js')}}"></script>
