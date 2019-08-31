@@ -163,7 +163,7 @@ class SportClassController extends Controller
 
         if($error->fails())
         {
-            return response()->json(['errors' => $error->errors()->all()]);
+            return response()->json(['error' => true, 'messages' => $error->errors()->all()]);
         }
 
         $sport_class = [
@@ -185,7 +185,7 @@ class SportClassController extends Controller
             ];
             ClassTeacher::create($class_teacher);
         }
-        return response()->json(['success' => 'Turma adicionada com sucesso.']);
+        return response()->json(['error' => false, 'messages' => ['Turma adicionada com sucesso.']]);
     }
 
     /**
@@ -221,7 +221,7 @@ class SportClassController extends Controller
                 ->groupBy('class_teachers.class_id')
                 ->first();
 
-            return response()->json(['data' => $data]);
+            return response()->json($data);
         }
     }
 
@@ -237,32 +237,30 @@ class SportClassController extends Controller
         $error = $this->validation($request);
 
         if($error->fails())
-        {
-            return response()->json(['errors' => "Falha na solicitação, tente novamente!"]);
-        }
+            return response()->json(['error' => true, 'messages' => $error->errors()->all()]);
 
         $sport_class = [
             'sport_id' => $request->sport,
             'vacancies' => $request->vacancies,
             'weekday' => $request->weekday,
-            'name' => $this->getSportName($request->sport, $request->hidden_id)->getData(),
+            'name' => $this->getSportName($request->sport, $request->id)->getData(),
             'start_time' => $request->start_time,
             'end_time' => $request->end_time
         ];
 
-        ClassTeacher::where('class_id', $request->hidden_id)->delete();
+        ClassTeacher::where('class_id', $request->id)->delete();
 
         foreach (explode(',', $request->teachers) as $teacher) {
             $class_teacher = [
                 'teacher_id' => $teacher,
-                'class_id' => $request->hidden_id
+                'class_id' => $request->id
             ];
             ClassTeacher::create($class_teacher);
         }
 
-        SportClass::whereId($request->hidden_id)->update($sport_class);
+        SportClass::whereId($request->id)->update($sport_class);
 
-        return response()->json(['success' => 'Turma atualizado com sucesso.']);
+        return response()->json(['error' => false, 'messages' => ['Turma atualizada com sucesso.']]);
     }
 
     /**

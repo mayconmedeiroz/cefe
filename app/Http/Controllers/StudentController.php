@@ -41,7 +41,7 @@ class StudentController extends Controller
 
     public function validation($request)
     {
-        $id = $request->hidden_id;
+        $id = $request->id;
         return Validator::make($request->all(), [
             'enrollment' => 'required|max:20|unique:users,enrollment,' . $id,
             'name' => 'required|max:64',
@@ -106,14 +106,7 @@ class StudentController extends Controller
 
             }
 
-            return DataTables()->of($users)
-                ->addColumn('action', function($data){
-                    $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm mr-lg-2"><i class="fas fa-edit"></i></button>';
-                    $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>';
-                    return $button;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
+            return DataTables()->of($users)->make(true);
         }
     }
 
@@ -137,7 +130,7 @@ class StudentController extends Controller
         $error = $this->validation($request);
 
         if ($error->fails())
-            return response()->json(['errors' => $error->errors()->all()]);
+            return response()->json(['error' => true, 'messages' => $error->errors()->all()]);
 
         $userId = User::create([
             'enrollment' => $request->enrollment,
@@ -163,7 +156,7 @@ class StudentController extends Controller
             ]);
         }
 
-        return response()->json(['success' => 'Aluno adicionado com sucesso.']);
+        return response()->json(['error' => false, 'messages' => ['Aluno adicionado com sucesso.']]);
     }
 
     /**
@@ -205,7 +198,7 @@ class StudentController extends Controller
         $error = $this->validation($request);
 
         if ($error->fails())
-            return response()->json(['errors' => $error->errors()->all()]);
+            return response()->json(['error' => true, 'messages' => $error->errors()->all()]);
 
         $user = [
             'enrollment' => $request->enrollment,
@@ -217,19 +210,19 @@ class StudentController extends Controller
             $user['password'] = Hash::make($request->password);
         }
 
-        User::findOrFail($request->hidden_id)->update($user);
+        User::findOrFail($request->id)->update($user);
 
-        StudentSchoolClass::where('student_id', $request->hidden_id)->delete();
+        StudentSchoolClass::where('student_id', $request->id)->delete();
         $school_year = SchoolYear::where('school_year', NOW())->first();
 
         StudentSchoolClass::create([
-            'student_id' => $request->hidden_id,
+            'student_id' => $request->id,
             'school_class_id' => $request->school_class,
             'class_number' => $request->class_number,
             'school_year_id' => $school_year->id,
         ]);
 
-        $studentClass = StudentClass::where('student_id', $request->hidden_id)->first();
+        $studentClass = StudentClass::where('student_id', $request->id)->first();
 
         if((!$studentClass || !($studentClass->sport_class_id == $request->sport_class)) && Auth::user()->level == 4)
         {
@@ -238,7 +231,7 @@ class StudentController extends Controller
             }
 
             $newStudentClass = [
-                'student_id' => $request->hidden_id,
+                'student_id' => $request->id,
                 'sport_class_id' => $request->sport_class,
                 'school_year_id' => $school_year->id
             ];
@@ -246,7 +239,7 @@ class StudentController extends Controller
             StudentClass::create($newStudentClass);
         }
 
-        return response()->json(['success' => 'Aluno atualizado com sucesso.']);
+        return response()->json(['error' => false, 'messages' => ['Aluno adicionado com sucesso.']]);
     }
 
     /**

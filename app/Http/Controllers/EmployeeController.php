@@ -24,20 +24,13 @@ class EmployeeController extends Controller
         if (Request()->ajax()) {
             $employees = User::where('level', '4');
 
-            return DataTables()->of($employees)
-                ->addColumn('action', function ($data) {
-                    $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm mr-lg-2"><i class="fas fa-edit"></i></button>';
-                    $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>';
-                    return $button;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
+            return DataTables()->of($employees)->make(true);
         }
     }
 
     public function validation($request)
     {
-        $id = $request->hidden_id;
+        $id = $request->id;
         return Validator::make($request->all(), [
             'enrollment' => 'required|max:20|unique:users,enrollment,'.$id,
             'name' => 'required|max:64',
@@ -67,7 +60,7 @@ class EmployeeController extends Controller
         $error = $this->validation($request);
 
         if ($this->validation($request)->fails())
-            return response()->json(['errors' => $error->errors()->all()]);
+            return response()->json(['error' => true, 'messages' => $error->errors()->all()]);
 
         User::create([
             'enrollment' => $request->enrollment,
@@ -77,7 +70,7 @@ class EmployeeController extends Controller
             'level' => '4',
         ]);
 
-        return response()->json(['success' => 'Funcionário adicionado com sucesso.']);
+        return response()->json(['error' => false, 'messages' => ['Funcionário adicionado com sucesso.']]);
     }
 
     /**
@@ -116,7 +109,7 @@ class EmployeeController extends Controller
         $error = $this->validation($request);
 
         if ($this->validation($request)->fails())
-            return response()->json(['errors' => $error->errors()->all()]);
+            return response()->json(['error' => true, 'messages' => $error->errors()->all()]);
 
         $user = [
             'enrollment' => $request->enrollment,
@@ -128,9 +121,9 @@ class EmployeeController extends Controller
             $user['password'] = Hash::make($request->password);
         }
 
-        User::FindOrFail($request->hidden_id)->update($user);
+        User::FindOrFail($request->id)->update($user);
 
-        return response()->json(['success' => 'Funcionário atualizado com sucesso.']);
+        return response()->json(['error' => false, 'messages' => ['Funcionário modificado com sucesso.']]);
     }
 
     /**

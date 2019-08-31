@@ -50,14 +50,7 @@ class ClassController extends Controller
                 ->select('users.id', 'users.name', 'school_classes.class', 'student_school_classes.class_number', 'schools.acronym')
                 ->where('student_classes.sport_class_id', $id);
 
-            return DataTables()->of($classes)
-                ->addColumn('action', function ($data) {
-                    $button = '<button type="button" name="edit" id="' . $data->id . '" class="edit btn btn-primary btn-sm mx-lg-1"><i class="fas fa-edit"></i></button>';
-                    $button .= '<button type="button" name="delete" id="' . $data->id . '" class="delete btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>';
-                    return $button;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
+            return DataTables()->of($classes)->make(true);
         }
     }
 

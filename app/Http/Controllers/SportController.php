@@ -14,8 +14,8 @@ class SportController extends Controller
     public function validation($request)
     {
         return Validator::make($request->all(), [
-            'name' => 'required|max:20|unique:sports,name,' . $request->hidden_id,
-            'acronym' => 'required|max:10|unique:sports,acronym,' . $request->hidden_id
+            'name' => 'required|max:20|unique:sports,name,' . $request->id,
+            'acronym' => 'required|max:10|unique:sports,acronym,' . $request->id
         ]);
     }
 
@@ -31,14 +31,7 @@ class SportController extends Controller
 
     public function getData()
     {
-        return DataTables()->of(Sport::latest()->get())
-            ->addColumn('action', function($data){
-                $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm mr-lg-2"><i class="fas fa-edit"></i></button>';
-                $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>';
-                return $button;
-            })
-            ->rawColumns(['action'])
-            ->make(true);
+        return DataTables()->of(Sport::latest()->get())->make(true);
     }
 
     /**
@@ -62,14 +55,14 @@ class SportController extends Controller
         $error = $this->validation($request);
 
         if($error->fails())
-            return response()->json(['errors' => "Falha na solicitação, tente novamente!"]);
+            return response()->json(['error' => true, 'messages' => $error->errors()->all()]);
 
         Sport::create([
             'name'    => $request->name,
             'acronym' => $request->acronym
         ]);
 
-        return response()->json(['success' => 'Modalidade adicionada com sucesso.']);
+        return response()->json(['error' => false, 'messages' => ['Modalidade adicionado com sucesso.']]);
     }
 
     /**
@@ -107,14 +100,14 @@ class SportController extends Controller
         $error = $this->validation($request);
 
         if($error->fails())
-            return response()->json(['errors' => "Falha na solicitação, tente novamente!"]);
+            return response()->json(['error' => true, 'messages' => $error->errors()->all()]);
 
-        Sport::findOrFail($request->hidden_id)->update([
+        Sport::findOrFail($request->id)->update([
             'name'    => $request->name,
             'acronym' => $request->acronym
         ]);
 
-        return response()->json(['success' => 'Modalidade atualizada com sucesso.']);
+        return response()->json(['error' => false, 'messages' => ['Modalidade atualizado com sucesso.']]);
     }
 
     /**

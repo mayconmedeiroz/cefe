@@ -35,20 +35,13 @@ class TeacherController extends Controller
                 ->whereNull('class_teachers.deleted_at')
                 ->groupBy('users.id');
 
-            return DataTables()->of($teachers)
-                ->addColumn('action', function($data){
-                    $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm mr-lg-2"><i class="fas fa-edit"></i></button>';
-                    $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>';
-                    return $button;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
+            return DataTables()->of($teachers)->make(true);
         }
     }
 
     public function validation($request)
     {
-        $id = $request->hidden_id;
+        $id = $request->id;
         return Validator::make($request->all(), [
             'enrollment' => 'required|max:20|unique:users,enrollment,' . $id,
             'name' => 'required|max:64',
@@ -78,7 +71,7 @@ class TeacherController extends Controller
         $error = $this->validation($request);
 
         if ($this->validation($request)->fails()) {
-            return response()->json(['errors' => $error->errors()->all()]);
+            return response()->json(['error' => true, 'messages' => $error->errors()->all()]);
         }
 
         User::create([
@@ -89,7 +82,7 @@ class TeacherController extends Controller
             'level' => '2',
         ]);
 
-        return response()->json(['success' => 'Professor adicionado com sucesso.']);
+        return response()->json(['error' => false, 'messages' => ['Professor adicionado com sucesso.']]);
     }
 
     /**
@@ -127,7 +120,7 @@ class TeacherController extends Controller
         $error = $this->validation($request);
 
         if ($this->validation($request)->fails())
-            return response()->json(['errors' => $error->errors()->all()]);
+            return response()->json(['error' => true, 'messages' => $error->errors()->all()]);
 
         $user = [
             'enrollment' => $request->enrollment,
@@ -139,9 +132,9 @@ class TeacherController extends Controller
             $user['password'] = Hash::make($request->password);
         }
 
-        User::findOrFail($request->hidden_id)->update($user);
+        User::findOrFail($request->id)->update($user);
 
-        return response()->json(['success' => 'Professor atualizada com sucesso.']);
+        return response()->json(['error' => false, 'messages' => ['Professor atualizado com sucesso.']]);
     }
 
     /**

@@ -39,18 +39,9 @@ class BlogController extends Controller
 
     public function getData()
     {
-        if (request()->ajax()) {
-            $posts = BlogPost::with('user:id,name')->get(['id', 'title', 'user_id']);
+        $posts = BlogPost::with('user:id,name')->get(['id', 'title', 'user_id']);
 
-            return DataTables()->of($posts)
-                ->addColumn('action', function ($data) {
-                    $button = '<button type="button" name="edit" id="' . $data->id . '" class="edit btn btn-primary btn-sm mx-lg-1"><i class="fas fa-edit"></i></button>';
-                    $button .= '<button type="button" name="delete" id="' . $data->id . '" class="delete btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>';
-                    return $button;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-        }
+        return DataTables()->of($posts)->make(true);
     }
 
     /**
@@ -88,7 +79,7 @@ class BlogController extends Controller
         $error = $this->validation($request);
 
         if($error->fails())
-            return response()->json(['errors' => $error->errors()->all()]);
+            return response()->json(['error' => true, 'messages' => $error->errors()->all()]);
 
         BlogPost::create([
             'user_id' => Auth::user()->id,
@@ -97,7 +88,7 @@ class BlogController extends Controller
             'body' => $request->body,
         ]);
 
-        return response()->json(['success' => 'Postagem adicionada com sucesso.']);
+        return response()->json(['error' => false, 'messages' => ['Notícia adicionada com sucesso.']]);
     }
 
     /**
@@ -138,7 +129,7 @@ class BlogController extends Controller
         $error = $this->validation($request);
 
         if($error->fails())
-            return response()->json(['errors' => $error->errors()->all()]);
+            return response()->json(['error' => true, 'messages' => $error->errors()->all()]);
 
         $post = [
             'title' => $request->title,
@@ -149,9 +140,9 @@ class BlogController extends Controller
             $post['image'] = $this->uploadImage($request)->original;
         }
 
-        BlogPost::findOrFail($request->hidden_id)->update($post);
+        BlogPost::findOrFail($request->id)->update($post);
 
-        return response()->json(['success' => 'Posteagem atualizada com sucesso.']);
+        return response()->json(['error' => false, 'messages' => ['Notícia atualizada com sucesso.']]);
     }
 
     /**

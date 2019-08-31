@@ -21,63 +21,53 @@
 @endsection
 
 @section('custom-js')
-    <script src="{{ asset('js/datatables.min.js') }}"></script>
-    <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
-    <script src="{{ asset('js/summernote-pt-BR.min.js') }}"></script>
-    <script src="{{ asset('js/admin/blog.js') }}"></script>
-    <div id="formModal" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form method="post" id="post-form" class="form-horizontal" enctype="multipart/form-data">
-                    <div class="modal-body">
-                        <span id="form-result"></span>
-                        @csrf
-                        <div class="form-group">
-                            <label for="image">Imagem:</label>
-                            <input type="file" class="form-control-file" id="image" name="image">
-                        </div>
-                        <div class="form-group">
-                            <label for="title" class="control-label mb-0">Título: </label>
-                            <input type="text" name="title" id="title" class="form-control" required/>
-                        </div>
-                        <div class="form-group">
-                            <label for="body" class="control-label mb-0">Corpo: </label>
-                            <div id="summernote" name="body" id="body"></div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <div class="form-group">
-                            <input type="hidden" name="hidden_id" id="hidden_id"/>
-                            <input type="submit" name="action_button" id="action_button" class="btn btn-primary"/>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div id="confirmModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Confirmação</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <h6 class="mb-0">Você tem certeza que quer remover essa modalidade?</h6>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" name="confirmDelete" id="confirmDelete" class="btn btn-danger">Confirmar</button>
-                </div>
-            </div>
-        </div>
-    </div>
+<script src="{{ asset('js/datatables.min.js') }}"></script>
+<script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
+<script src="{{ asset('js/summernote-pt-BR.min.js') }}"></script>
+<script src="{{ asset('js/admin/DataTableController.js') }}"></script>
+<script src="{{ asset('js/admin/blog.js') }}"></script>
+<script>
+    $(document).ready(function () {
+        let dataTableColumns = [
+            {data: 'id', name: 'id'},
+            {data: 'title', name: 'title'},
+            {data: 'user.name', name: 'user.name'},
+        ];
+
+        new DataTableController('blog', dataTableColumns, 'Notícia');
+    });
+
+    window.customCreate = function () {
+        $('#summernote').summernote('code', '');
+    };
+
+    window.customEdit = function (data) {
+        $('#summernote').summernote('code', data.body);
+    };
+
+    window.customBeforeSubmitAjax = function (formData) {
+        formData.append('body', $('#summernote').summernote('code'));
+    };
+
+    window.customSubmitSuccess = function () {
+        ($('#submit-button').val() === "Adicionar") ? $('#summernote').summernote('code', '') : '';
+    }
+
+</script>
+@modal
+    @slot('inputs')
+		<div class="form-group">
+			<label for="image">Imagem:</label>
+			<input type="file" class="form-control-file" id="image" name="image">
+		</div>
+		<div class="form-group">
+			<label for="title" class="control-label mb-0">Título: </label>
+			<input type="text" name="title" id="title" class="form-control" required/>
+		</div>
+		<div class="form-group">
+			<label for="body" class="control-label mb-0">Corpo: </label>
+			<div id="summernote" name="body" id="body"></div>
+		</div>
+	@endslot
+@endmodal
 @endsection
