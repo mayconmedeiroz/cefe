@@ -15,7 +15,7 @@
                 <th>Professor</th>
                 <th>Horário</th>
                 <th>Vagas Restante</th>
-                <th width="94px">Ação</th>
+                <th width="101px">Ação</th>
             </tr>
             </thead>
         </table>
@@ -41,12 +41,15 @@
     });
 
     window.customEdit = function (data) {
+        $('#sport').val(data.id);
         $('#teachers').val(data.teachers_id.split(", "));
     };
 
     window.customBeforeSubmitAjax = function (formData) {
         formData.append('teachers', $('#teachers').val());
     };
+
+    window.viewExists = 'class';
 </script>
 @modal
     @slot('inputs')

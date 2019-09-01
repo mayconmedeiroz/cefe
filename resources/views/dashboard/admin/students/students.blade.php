@@ -49,11 +49,17 @@
 
     window.customEdit = function (data) {
         $('#password').attr('required', false);
-        $('#school').val(data.student_school_class[0].school.id).change();
-        school_class = data.student_school_class[0].id;
-        $('#class_number').val(data.student_school_class[0].pivot.class_number);
-        $('#sport').val(data.student_class[0].sport.id).change();
-        sport_class = data.student_class[0].id;
+
+        if (data.student_school_class != '') {
+            $('#school').val(data.student_school_class[0].school.id).change();
+            school_class = data.student_school_class[0].id;
+            $('#class_number').val(data.student_school_class[0].pivot.class_number);
+        }
+
+        if (data.student_class != '') {
+            $('#sport').val(data.student_class[0].sport.id).change();
+            sport_class = data.student_class[0].id;
+        }
     };
 
 </script>

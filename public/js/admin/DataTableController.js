@@ -4,12 +4,13 @@ class DataTableController {
     constructor(urlMethod, dataTablesColumns, name) {
         dataTablesColumns.push(
             {name: 'action', orderable: false, searchable: false,
-                render: function ( data, type, row ) {
-                    return `<button type="button" name="edit" id="${row.id}" class="edit btn btn-primary btn-sm mr-lg-1"><i class="fas fa-edit"></i></button>
+                render: function (data, type, row) {
+                    return `${(typeof viewExists != 'undefined') ? `<a href="/admin/${viewExists}/${row.id}" class="view btn btn-secondary btn-sm"><i class="fas fa-eye"></i></a>` : ''}
+                            <button type="button" name="edit" id="${row.id}" class="edit btn btn-primary btn-sm ${(typeof viewExists != 'undefined') ? 'mx-lg-1' : 'mr-lg-1'}"><i class="fas fa-edit"></i></button>
                             <button type="button" name="delete" id="${row.id}" class="delete btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>`;
-
+                }
             }
-        });
+        );
         this.loadDataTable(urlMethod, dataTablesColumns, name);
         this.showPanelCreate(name);
         this.showPanelEdit(urlMethod, name);
