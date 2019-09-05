@@ -1,41 +1,20 @@
 class DataTableController {
     "use strict";
 
-    constructor(urlMethod, dataTablesColumns, name) {
-        dataTablesColumns.push(
-            {name: 'action', orderable: false, searchable: false,
-                render: function (data, type, row) {
-                    return `${(typeof viewExists != 'undefined') ? `<a href="/admin/${viewExists}/${row.id}" class="view btn btn-secondary btn-sm"><i class="fas fa-eye"></i></a>` : ''}
-                            <button type="button" name="edit" id="${row.id}" class="edit btn btn-primary btn-sm ${(typeof viewExists != 'undefined') ? 'mx-lg-1' : 'mr-lg-1'}"><i class="fas fa-edit"></i></button>
-                            <button type="button" name="delete" id="${row.id}" class="delete btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>`;
-                }
-            }
-        );
-        this.loadDataTable(urlMethod, dataTablesColumns, name);
+    constructor(userLevel, urlMethod, dataTablesColumns, name) {
+        this.loadDataTable(userLevel, urlMethod, dataTablesColumns, name);
         this.showPanelCreate(name);
-        this.showPanelEdit(urlMethod, name);
-        this.onSubmit(urlMethod);
-        this.showPanelDelete(urlMethod);
+        this.showPanelEdit(userLevel, urlMethod, name);
+        this.onSubmit(userLevel, urlMethod);
+        this.showPanelDelete(userLevel, urlMethod);
     }
 
-    loadDataTable(urlMethod, dataTablesColumns, name) {
-        
-        $('#list').DataTable({
-            processing: true,
-            serverSide: true,
-            autoWidth: false,
-            ajax: {
-                url: `/admin/${urlMethod}/getData`,
-                type: 'POST'
-            },
-            lengthMenu: [ [10, 25, 50, 100, -1], [10, 25, 50, 100, 'Todos'] ],
-            pagingType: "full_numbers",
-            columns: dataTablesColumns,
-            dom: "<'row'<'col-sm-12 mb-3'B>>" +
-                 "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
-                 "<'row'<'col-sm-12'tr>>" +
-                 "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-            buttons: [
+    loadDataTable(userLevel, urlMethod, dataTablesColumns, name) {
+
+        let buttons = [];
+
+        if (userLevel != 'teacher') {
+            buttons = [
                 {
                     extend: 'copy',
                     text: '<i class="fas fa-copy"></i> Copiar',
@@ -65,7 +44,37 @@ class DataTableController {
                         id: 'new'
                     }
                 }
-            ],
+            ];
+        }
+
+        if (typeof actionRow === 'undefined') {
+            dataTablesColumns.push(
+                {name: 'action', orderable: false, searchable: false,
+                    render: function (data, type, row) {
+                        return `${(typeof viewExists != 'undefined') ? `<a href="/${userLevel}/${viewExists}/${row.id}" class="view btn btn-secondary btn-sm"><i class="fas fa-eye"></i></a>` : ''}
+                                ${(!(userLevel === 'teacher')) ? `<button type="button" name="edit" id="${row.id}" class="edit btn btn-primary btn-sm ${(typeof viewExists != 'undefined') ? 'mx-lg-1' : 'mr-lg-1'}"><i class="fas fa-edit"></i></button>
+                                <button type="button" name="delete" id="${row.id}" class="delete btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>` : ''}`;
+                    }
+                }
+            );
+        }
+
+        $('#list').DataTable({
+            processing: true,
+            serverSide: true,
+            autoWidth: false,
+            ajax: {
+                url: `/${userLevel}/${urlMethod}/getData`,
+                type: 'POST'
+            },
+            lengthMenu: [ [10, 25, 50, 100, -1], [10, 25, 50, 100, 'Todos'] ],
+            pagingType: "full_numbers",
+            columns: dataTablesColumns,
+            dom: "<'row'<'col-sm-12 mb-3'B>>" +
+                 "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+                 "<'row'<'col-sm-12'tr>>" +
+                 "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+            buttons: buttons,
             select: {
                 selector: 'td:not(:last-child)'
             },
@@ -116,17 +125,17 @@ class DataTableController {
             $('#formModal .modal-title').text(`Adicionar ${name}`);
             $('#submit-button').val('Adicionar');
             $('#action').val('add');
-            
+
             if (typeof customCreate === 'function') {
                 customCreate();
             }
 
             $('#formModal').modal('show');
-            
+
         });
     }
 
-    onSubmit(urlMethod) {
+    onSubmit(userLevel, urlMethod) {
 
         $(document).on('submit', `#submit-form`, function(e){
 
@@ -137,11 +146,11 @@ class DataTableController {
             if (typeof customBeforeSubmitAjax === 'function') {
                 customBeforeSubmitAjax(formData);
             }
-            
+
             let action = ($('#submit-button').val() === 'Adicionar') ? '' : '/update';
-            
+
             $.ajax({
-                url:`/admin/${urlMethod}${action}`,
+                url:`/${userLevel}/${urlMethod}${action}`,
                 method: 'POST',
                 data: formData,
                 contentType: false,
@@ -151,7 +160,7 @@ class DataTableController {
                 success:function(data) {
 
                     let html, messages = '';
-                    
+
                     data.messages.forEach((message)=> {
                         messages += `<p>${message}</p>`;
                     });
@@ -171,7 +180,7 @@ class DataTableController {
                     if (typeof customSubmitSuccess === 'function') {
                         customSubmitSuccess();
                     }
-                    
+
                     $('#form-result').html(html);
 
                 }
@@ -179,7 +188,7 @@ class DataTableController {
         });
     }
 
-    showPanelEdit(urlMethod, name) {
+    showPanelEdit(userLevel, urlMethod, name) {
 
         let buttonId;
 
@@ -190,9 +199,10 @@ class DataTableController {
             $('#form-result').html('');
 
             $.ajax({
-                url:`/admin/${urlMethod}/${buttonId}/edit`,
+                url:`/${userLevel}/${urlMethod}/${buttonId}/edit`,
                 dataType:"json",
                 success:function(data){
+                    $('#submit-form')[0].reset();
 
                     Object.keys(data).forEach(function(item) {
 
@@ -216,7 +226,7 @@ class DataTableController {
 
     }
 
-    showPanelDelete(urlMethod) {
+    showPanelDelete(userLevel, urlMethod) {
 
         let buttonId;
 
@@ -232,7 +242,7 @@ class DataTableController {
 
             $.ajax({
                 method:'DELETE',
-                url:`/admin/${urlMethod}/${buttonId}`,
+                url:`/${userLevel}/${urlMethod}/${buttonId}`,
                 success:function(){
                     setTimeout(function(){
                         $('#confirmModal').modal('hide');

@@ -40,7 +40,7 @@
             {data: "student_class[0].name", name: "sport_class"}
         ];
 
-        new DataTableController('students', dataTableColumns, 'Aluno');
+        new DataTableController('admin', 'students', dataTableColumns, 'Aluno');
     });
 
     window.customCreate = function () {

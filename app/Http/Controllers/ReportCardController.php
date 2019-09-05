@@ -2,6 +2,7 @@
 
 namespace CEFE\Http\Controllers;
 
+use CEFE\Secretary;
 use CEFE\Evaluation;
 use CEFE\SchoolClass;
 use Illuminate\Http\Request;
@@ -26,7 +27,7 @@ class ReportCardController extends Controller
         switch (Auth::user()->level) {
             case 3:
 
-                $school = Secretary::where('user_id', Auth::user()->id, ['school_id']);
+                $school = Secretary::where('secretary_id', Auth::user()->id)->first(['school_id']);
 
                 return view('dashboard.secretary.report_cards.report_cards')->with(compact('school'));
                 break;
@@ -54,20 +55,21 @@ class ReportCardController extends Controller
 
             return Excel::download(new ReportCardExport($evaluation, $school, $school_class, $school_year, $data->class)
                 , 'Boletim '.$data->school_year.' - '.$data->acronym.' - '.$data->class.' - '.$data->name.'.xlsx');
-        } else {
-            $data = DB::table('evaluations')
-                ->select('evaluations.name', 'schools.acronym', 'school_years.school_year')
-                ->join('schools', function ($join) use ($school) {
-                    $join->where('schools.id', $school);
-                })->join('school_years', function ($join) use ($school_year) {
-                    $join->where('school_years.id', $school_year);
-                })
-                ->where('evaluations.id', $evaluation)
-                ->first();
-
-            return Excel::download(new ReportCardPerSchoolExport($evaluation, $school, $school_year)
-                , 'Boletim '.$data->school_year.' - '.$data->acronym.' - Todas as Turmas - '.$data->name.'.xlsx');
         }
+
+        $data = DB::table('evaluations')
+            ->select('evaluations.name', 'schools.acronym', 'school_years.school_year')
+            ->join('schools', function ($join) use ($school) {
+                $join->where('schools.id', $school);
+            })->join('school_years', function ($join) use ($school_year) {
+                $join->where('school_years.id', $school_year);
+            })
+            ->where('evaluations.id', $evaluation)
+            ->first();
+
+        return Excel::download(new ReportCardPerSchoolExport($evaluation, $school, $school_year)
+            , 'Boletim '.$data->school_year.' - '.$data->acronym.' - Todas as Turmas - '.$data->name.'.xlsx');
+
     }
 
     public function studentReportCardIndex()

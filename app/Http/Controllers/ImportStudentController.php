@@ -20,7 +20,7 @@ class ImportStudentController extends Controller
         switch (Auth::user()->level) {
             case 3:
 
-                $school = Secretary::findOrFail(Auth::user()->id, ['school_id']);
+                $school = Secretary::where('secretary_id', Auth::user()->id)->first(['school_id']);
 
                 return view('dashboard.secretary.students.import_students')->with(compact('school'));
                 break;

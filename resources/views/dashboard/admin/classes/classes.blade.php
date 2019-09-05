@@ -37,7 +37,7 @@
             {data: 'vacancies', name: 'vacancies'}
         ];
 
-        new DataTableController('sport_classes', dataTableColumns, 'Turma');
+        new DataTableController('admin', 'sport_classes', dataTableColumns, 'Turma');
     });
 
     window.customEdit = function (data) {

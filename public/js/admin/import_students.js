@@ -1,12 +1,11 @@
 $(document).ready(function () {
+	
+	$('.import-row').hide();
 
-	// Add the following code if you want the name of the file appear on select
 	$(".custom-file-input").on("change", function() {
 		var fileName = $(this).val().split("\\").pop();
 		$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 	});
-
-	$('.import-row').hide();
 
 	$(document).on('change', '#school_year', function() {
 		$('#school').prop('disabled', false);

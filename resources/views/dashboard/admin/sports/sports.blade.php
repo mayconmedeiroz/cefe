@@ -30,7 +30,7 @@
             {data: 'acronym', name: 'acronym'}
         ];
 
-        new DataTableController('sports', dataTableColumns, 'Modalidade');
+        new DataTableController('admin', 'sports', dataTableColumns, 'Modalidade');
     });
 </script>
 @modal

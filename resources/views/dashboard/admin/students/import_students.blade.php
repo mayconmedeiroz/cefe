@@ -34,7 +34,7 @@
                     @csrf
                     <div class="custom-file">
                         <input type="file" accept='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' id="import_students" name="import_students" class="custom-file-input" required>
-                        <label class="custom-file-label" for="import_students">Escolha o arquivo Excel</label>
+                        <label class="custom-file-label" for="import_students" data-browse="Procurar">Escolha o arquivo Excel</label>
                         <div class="form-group">
                             <input type="submit" name="action_button" id="action_button" class="btn btn-primary"/>
                         </div>

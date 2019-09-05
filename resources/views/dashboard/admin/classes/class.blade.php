@@ -27,20 +27,21 @@
 <script>
     $(document).ready(function () {
         let dataTableColumns = [
-            {data: 'id', name: 'id'},
-            {data: 'name', name: 'name'},
-            {data: 'acronym', name: 'acronym'},
-            {data: 'class', name: 'class'},
-            {data: 'class_number', name: 'class_number'}
+            {data: "id", name: "id"},
+            {data: "name", name: "name"},
+            {data: "student_school_class[0].school.acronym", name: "acronym"},
+            {data: "student_school_class[0].class", name: "class"},
+            {data: "student_school_class[0].pivot.class_number", name: "class_number"},
         ];
 
-        new DataTableController('sport_classes', dataTableColumns, 'Turma');
+        let sportId = window.location.href.split('/').slice(-1).pop();
+
+        new DataTableController(`class/${sportId}`, dataTableColumns, 'Turma');
     });
 
     window.customCreate = function () {
         $('#password').attr('required', true);
     };
-
     window.customEdit = function (data) {
         $('#password').attr('required', false);
         $('#school').val(data.student_school_class[0].school.id).change();
@@ -50,7 +51,7 @@
         sport_class = data.student_class[0].id;
     };
 </script>
-<script src="{{ asset('js/admin/sportClass.js') }}"></script>
+<script src="{{ asset('js/admin/students.js') }}"></script>
 @modal
     @slot('inputs')
 		<div class="form-group">

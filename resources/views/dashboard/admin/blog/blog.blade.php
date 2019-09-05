@@ -34,7 +34,7 @@
             {data: 'user.name', name: 'user.name'},
         ];
 
-        new DataTableController('blog', dataTableColumns, 'Notícia');
+        new DataTableController('admin', 'blog', dataTableColumns, 'Notícia');
     });
 
     window.customCreate = function () {

@@ -102,9 +102,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('sport_classes/getSportName/{id}/{classId}', 'SportClassController@getSportName');
 
         Route::get('class/{id}', 'ClassController@index')->name('class.index');
-        Route::resource('class', 'ClassController');
-        Route::delete('class/{id}/{sportId}', 'ClassController@destroy');
         Route::post('class/{id}/getData', 'ClassController@getData');
+        Route::get('class/{sportId}/{id}/edit', 'ClassController@edit')->name('class.edit');
+        Route::delete('class/{sportId}{id}', 'ClassController@destroy');
 
         Route::resource('grades', 'GradeController');
         Route::post('grades/getData/{sportClass}/{evaluation}', 'GradeController@getData');

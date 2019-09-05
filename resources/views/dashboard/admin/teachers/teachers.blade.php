@@ -30,7 +30,7 @@
             {data: 'sport_class_name', name: 'sport_class_name'}
         ];
 
-        new DataTableController('teachers', dataTableColumns, 'Professor');
+        new DataTableController('admin', 'teachers', dataTableColumns, 'Professor');
     });
 
     window.customCreate = function () {

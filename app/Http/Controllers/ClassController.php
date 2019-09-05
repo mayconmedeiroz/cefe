@@ -2,12 +2,12 @@
 
 namespace CEFE\Http\Controllers;
 
+use CEFE\User;
 use CEFE\School;
 use CEFE\Sport;
 use CEFE\SportClass;
 use CEFE\StudentClass;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class ClassController extends Controller
@@ -38,20 +38,13 @@ class ClassController extends Controller
 
     public function getData($id)
     {
-        if (request()->ajax()) {
-            $classes = DB::table('users')
-                ->join('student_school_classes', 'users.id', '=', 'student_school_classes.student_id')
-                ->join('school_classes', 'student_school_classes.school_class_id', '=', 'school_classes.id')
-                ->join('schools', 'school_classes.school_id', '=', 'schools.id')
-                ->join('student_classes', function ($join) {
-                    $join->on('student_classes.student_id', '=', 'users.id')
-                        ->whereNull('student_classes.deleted_at');
-                })
-                ->select('users.id', 'users.name', 'school_classes.class', 'student_school_classes.class_number', 'schools.acronym')
-                ->where('student_classes.sport_class_id', $id);
+        $classes = User::with(['studentSchoolClass.school:id,acronym', 'studentClass:name'])
+            ->select('users.id', 'users.name')
+            ->whereHas('studentClass', function($query) use($id) {
+                $query->where('sport_class_id', $id);
+            });
 
-            return DataTables()->of($classes)->make(true);
-        }
+        return DataTables()->of($classes)->make(true);
     }
 
     /**
@@ -116,7 +109,7 @@ class ClassController extends Controller
      * @param  int  $sportId
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, $sportId)
+    public function destroy($sportId, $id)
     {
         StudentClass::where('student_id', $id)
             ->where('sport_class_id', $sportId)

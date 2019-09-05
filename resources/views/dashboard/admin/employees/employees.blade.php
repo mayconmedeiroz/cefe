@@ -28,7 +28,7 @@
             {data: 'name', name: 'name'}
         ];
 
-        new DataTableController('employees', dataTableColumns, 'Funcionário');
+        new DataTableController('admin', 'employees', dataTableColumns, 'Funcionário');
     });
 
     window.customCreate = function () {
