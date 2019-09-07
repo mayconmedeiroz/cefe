@@ -3,7 +3,20 @@
 @section('content')
 <div class="form">
     <div class="form-body">
-        <div id="form-result"></div>
+        <div id="form-result">
+            <div class="alert alert-secondary" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="alert-heading">Bem-vindo!</h4>
+                <p>Este é o sistema de importar estudantes, se você já conhece pode seguir em frente.</p>
+                <p>Caso não conheça é bem simples, siga o tutorial do excel.</p>
+                <hr/>
+                <a class="text-dark" href="{{ asset('excel/importar-estudante-base.xlsx') }}" download>
+                    Clique aqui para baixar o excel base.
+                </a>
+            </div>
+        </div>
         <div class="row">
             <div class="col-lg-6">
                 <div class="form-group">
@@ -47,5 +60,8 @@
 @endsection
 
 @section('custom-js')
-<script src="{{ asset('js/admin/import_students.js') }}"></script>
+<script src="{{ asset('js/admin/ImportStudentController.js') }}"></script>
+<script>
+    new ImportStudentController('admin');
+</script>
 @endsection

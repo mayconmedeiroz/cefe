@@ -38,7 +38,22 @@ class ImportStudentController extends Controller
      */
     public function store(Request $request)
     {
-        Excel::import(new StudentImport($request->school_year, $request->school), $request->file('import_students'));
-        return response()->json(['success' => "Usuários importados com sucesso."]);
+        try {
+
+            Excel::import(new StudentImport($request->school_year, $request->school), $request->file('import_students'));
+
+            return response()->json(['error' => false, 'messages' => "Usuários importados com sucesso."]);
+
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+
+            $message = '';
+
+            foreach ($failures as $failure) {
+                $message .= 'Erro na linha ' . $failure->row() . '. ' . implode($failure->errors(), '. ') . '<br/>';
+            }
+
+            return response()->json(['error' => true, 'message' => $message]);
+        }
     }
 }
