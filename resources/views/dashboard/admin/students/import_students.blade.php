@@ -3,7 +3,7 @@
 @section('content')
 <div class="form">
     <div class="form-body">
-        <div id="form-result">
+        <span id="form-result">
             <div class="alert alert-secondary" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -16,14 +16,14 @@
                     Clique aqui para baixar o excel base.
                 </a>
             </div>
-        </div>
+        </span>
         <div class="row">
             <div class="col-lg-6">
                 <div class="form-group">
                     <label for="school_year">Ano Letivo:</label>
                     <select name="school_year" id="school_year" class="form-control" required>
                         <option value="" disabled selected hidden>Escolha o ano letivo</option>
-                        @foreach(\CEFE\SchoolYear::get() as $school_year)
+                        @foreach($school_years as $school_year)
                             <option value="{{$school_year->id}}">{{$school_year->school_year}}</option>
                         @endforeach
                     </select>
@@ -34,8 +34,8 @@
                     <label for="school">Escola:</label>
                     <select name="school" id="school" class="form-control" disabled required>
                         <option value="" disabled selected hidden>Escolha a Escola</option>
-                        @foreach(\CEFE\School::get() as $sport)
-                            <option value="{{$sport->id}}">{{$sport->name}}</option>
+                        @foreach($schools as $school)
+                            <option value="{{$school->id}}">{{$school->name}}</option>
                         @endforeach
                     </select>
                 </div>

@@ -9,8 +9,8 @@
                     <label for="school_year">Ano Letivo:</label>
                     <select name="school_year" id="school_year" class="form-control" required>
                         <option value="" disabled selected hidden>Escolha o ano letivo</option>
-                        @foreach(\CEFE\SchoolYear::get() as $school_year)
-                            <option value="{{$school_year->id}}">{{$school_year->school_year}}</option>
+                        @foreach($schoolYears as $schoolYear)
+                            <option value="{{$schoolYear->id}}">{{$schoolYear->school_year}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -20,8 +20,8 @@
                     <label for="school">Escola:</label>
                     <select name="school" id="school" class="form-control" disabled required>
                         <option value="" disabled selected hidden>Escolha a Escola</option>
-                        @foreach(\CEFE\School::get() as $sport)
-                            <option value="{{$sport->id}}">{{$sport->name}}</option>
+                        @foreach($schools as $school)
+                            <option value="{{$school->id}}">{{$school->name}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -39,7 +39,7 @@
                     <label for="evaluation">Avaliação:</label>
                     <select name="evaluation" id="evaluation" class="form-control" disabled required>
                         <option value="" disabled selected hidden>Escolha a Avaliação:</option>
-                        @foreach(\CEFE\Evaluation::get() as $evaluation)
+                        @foreach($evaluations as $evaluation)
                             <option value="{{$evaluation->id}}">{{$evaluation->name}}</option>
                         @endforeach
                     </select>
@@ -56,5 +56,8 @@
 @endsection
 
 @section('custom-js')
-<script src="{{ asset('js/admin/report_cards.js') }}"></script>
+<script src="{{ asset('js/admin/ReportCardController.js') }}"></script>
+<script>
+    new ReportCardController('admin');
+</script>
 @endsection

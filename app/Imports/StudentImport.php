@@ -53,6 +53,8 @@ class StudentImport implements ToModel, WithHeadingRow, WithValidation
         }
 
         $school_class = SchoolClass::where('class', $row['turma'])->where('school_id', $this->school)->first();
+
+        # Ver a possibilidade da retirada dessa linha.
         StudentSchoolClass::where('student_id', $user->id)->where('school_year_id', '!=', $this->school_year)->delete();
 
         StudentSchoolClass::updateOrCreate(

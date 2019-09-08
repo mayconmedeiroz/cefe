@@ -2,7 +2,9 @@
 
 namespace CEFE\Http\Controllers;
 
+use CEFE\SchoolYear;
 use CEFE\Secretary;
+use CEFE\School;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use CEFE\Imports\StudentImport;
@@ -17,15 +19,20 @@ class ImportStudentController extends Controller
      */
     public function index()
     {
+        $school_years = SchoolYear::get(['id', 'school_year']);
+
         switch (Auth::user()->level) {
             case 3:
 
                 $school = Secretary::where('secretary_id', Auth::user()->id)->first(['school_id']);
 
-                return view('dashboard.secretary.students.import_students')->with(compact('school'));
+                return view('dashboard.secretary.students.import_students')->with(compact('school_years', 'school'));
                 break;
             case 4:
-                return view('dashboard.admin.students.import_students');
+
+                $schools = School::get();
+
+                return view('dashboard.admin.students.import_students')->with(compact('school_years', 'schools'));
                 break;
         }
     }
@@ -42,7 +49,7 @@ class ImportStudentController extends Controller
 
             Excel::import(new StudentImport($request->school_year, $request->school), $request->file('import_students'));
 
-            return response()->json(['error' => false, 'messages' => "Usuários importados com sucesso."]);
+            return response()->json(['error' => false, 'messages' => "Estudantes importados com sucesso."]);
 
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
@@ -50,10 +57,10 @@ class ImportStudentController extends Controller
             $message = '';
 
             foreach ($failures as $failure) {
-                $message .= 'Erro na linha ' . $failure->row() . '. ' . implode($failure->errors(), '. ') . '<br/>';
+                $message .= 'Erro na linha ' . $failure->row() . ' do excel. ' . implode($failure->errors(), '. ') . '<br/>';
             }
 
-            return response()->json(['error' => true, 'message' => $message]);
+            return response()->json(['error' => true, 'messages' => $message]);
         }
     }
 }

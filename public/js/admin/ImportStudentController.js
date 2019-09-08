@@ -57,7 +57,6 @@ class ImportStudentController {
 		}
 
 		$(document).on('change', '#school_year', () => {
-
 			if (userLevel === 'admin') {
 				$('.import-row').fadeOut('slow');
 				$('#school').prop('disabled', false);

@@ -54,41 +54,38 @@ class GradeController extends Controller
 
     public function getData($sportClass, $evaluation)
     {
-        if(request()->ajax())
-        {
-            $grades = DB::table('users')
-                ->leftJoin('student_classes', function($join){
-                    $join->on('student_classes.student_id', '=', 'users.id')
-                        ->whereNull('student_classes.deleted_at');
-                })
-                ->leftJoin('student_grades', function($join) use ($evaluation){
-                    $join->on('student_grades.student_id', '=', 'users.id')
-                        ->where('student_grades.evaluation_id', $evaluation);
-                })
-                ->leftJoin('absences', 'student_grades.id', '=', 'absences.student_grade_id')
-                ->leftJoin('recuperations', 'student_grades.id', '=', 'recuperations.student_grade_id')
-                ->select('users.id', 'users.name', 'student_grades.grade', 'absences.absences', 'recuperations.grade as recuperation_grade', DB::raw("(SELECT `sport_classes`.`name` FROM `sport_classes`  WHERE `student_classes`.`deleted_at` IS NULL AND `sport_classes`.`id` = `student_classes`.`sport_class_id`) AS `sport_class`"))
-                ->whereNull('users.deleted_at')
-                ->where('student_classes.sport_class_id', $sportClass);
+        $grades = DB::table('users')
+            ->leftJoin('student_classes', function($join){
+                $join->on('student_classes.student_id', '=', 'users.id')
+                    ->whereNull('student_classes.deleted_at');
+            })
+            ->leftJoin('student_grades', function($join) use ($evaluation){
+                $join->on('student_grades.student_id', '=', 'users.id')
+                    ->where('student_grades.evaluation_id', $evaluation);
+            })
+            ->leftJoin('absences', 'student_grades.id', '=', 'absences.student_grade_id')
+            ->leftJoin('recuperations', 'student_grades.id', '=', 'recuperations.student_grade_id')
+            ->select('users.id', 'users.name', 'student_grades.grade', 'absences.absences', 'recuperations.grade as recuperation_grade', DB::raw("(SELECT `sport_classes`.`name` FROM `sport_classes`  WHERE `student_classes`.`deleted_at` IS NULL AND `sport_classes`.`id` = `student_classes`.`sport_class_id`) AS `sport_class`"))
+            ->whereNull('users.deleted_at')
+            ->where('student_classes.sport_class_id', $sportClass);
 
-            return DataTables()->of($grades)
-                ->addColumn('grade', function($data){
-                    $input = '<input name="grade" type="text" class="form-control grade" value="'.str_replace(".",",", $data->grade).'" required>';
-                    return $input;
-                })
-                ->addColumn('attendance', function($data){
-                    $input = '<input name="attendance" type="text" class="form-control attendance" value="'.str_replace(".",",", $data->absences).'" required>';
-                    return $input;
-                })
-                ->addColumn('recuperation', function($data){
-                    $disabled = NULL;
-                    if($data->grade >= 6 || $data->grade == 0){$disabled = "disabled";};
-                    $input = '<input name="recuperation" type="text" class="form-control recuperation" value="'.str_replace(".",",", $data->recuperation_grade).'"'.$disabled.'/>';
-                    return $input;
-                })
-                ->rawColumns(['recuperation', 'grade', 'attendance'])
-                ->make(true);
-        }
+        return DataTables()->of($grades)
+            ->addColumn('grade', function($data){
+                $input = '<input name="grade" type="text" class="form-control grade" value="'.str_replace(".",",", $data->grade).'" required>';
+                return $input;
+            })
+            ->addColumn('attendance', function($data){
+                $input = '<input name="attendance" type="text" class="form-control attendance" value="'.str_replace(".",",", $data->absences).'" required>';
+                return $input;
+            })
+            ->addColumn('recuperation', function($data){
+                $disabled = NULL;
+                if($data->grade >= 6 || $data->grade == 0){$disabled = "disabled";};
+                $input = '<input name="recuperation" type="text" class="form-control recuperation" value="'.str_replace(".",",", $data->recuperation_grade).'"'.$disabled.'/>';
+                return $input;
+            })
+            ->rawColumns(['recuperation', 'grade', 'attendance'])
+            ->make(true);
     }
 
     /**

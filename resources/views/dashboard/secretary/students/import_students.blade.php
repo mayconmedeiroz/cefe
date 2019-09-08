@@ -3,7 +3,7 @@
 @section('content')
 <div class="form">
     <div class="form-body">
-        <div id="form-result">
+        <span id="form-result">
             <div class="alert alert-secondary" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -16,14 +16,14 @@
                     Clique aqui para baixar o excel base.
                 </a>
             </div>
-        </div>
+        </span>
         <div class="row">
             <div class="col">
                 <div class="form-group">
                     <label for="school_year">Ano Letivo:</label>
                     <select name="school_year" id="school_year" class="form-control" required>
                         <option value="" disabled selected hidden>Escolha o ano letivo</option>
-                        @foreach(\CEFE\SchoolYear::get() as $school_year)
+                        @foreach($school_years as $school_year)
                             <option value="{{$school_year->id}}">{{$school_year->school_year}}</option>
                         @endforeach
                     </select>
@@ -37,7 +37,7 @@
                     <div class="custom-file">
                         <input type="file" accept='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' id="import_students" name="import_students" class="custom-file-input" required>
                         <input type="hidden" id="school" value="{{ $school->school_id }}"/>
-                        <label class="custom-file-label" for="import_students">Escolha o arquivo Excel</label>
+                        <label class="custom-file-label" for="import_students" data-browse="Procurar">Escolha o arquivo Excel</label>
                         <div class="form-group">
                             <input type="submit" name="action_button" id="action_button" class="btn btn-primary"/>
                         </div>
