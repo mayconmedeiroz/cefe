@@ -35,6 +35,12 @@ Breadcrumbs::for('employee.teachers.index', function ($trail) {
     $trail->push('Gerenciar Professores');
 });
 
+// Dashboard > Funcionário > Gerenciar Secretários
+Breadcrumbs::for('employee.secretaries.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Gerenciar Secretários');
+});
+
 // Dashboard > Funcionário > Gerenciar Funcionários
 Breadcrumbs::for('employee.employees.index', function ($trail) {
     $trail->parent('dashboard');

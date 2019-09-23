@@ -2,14 +2,15 @@
 
 namespace CEFE\Http\Controllers;
 
+use CEFE\School;
+use CEFE\Secretary;
 use CEFE\User;
-use CEFE\ClassTeacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 
-class TeacherController extends Controller
+class SecretaryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,20 +19,21 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        return view('dashboard.admin.teachers.teachers');
+        $schools = School::all();
+
+        return view('dashboard.admin.secretaries.secretaries')->with(compact('schools'));
     }
 
     public function getData()
     {
-        $teachers = DB::table('users')
-            ->leftJoin('class_teachers', 'users.id', '=', 'class_teachers.teacher_id')
-            ->leftJoin('sport_classes', 'class_teachers.class_id', '=', 'sport_classes.id')
-            ->select('users.id', 'users.name')
-            ->selectRaw('GROUP_CONCAT(`sport_classes`.`name` ORDER BY `sport_classes`.`name` ASC SEPARATOR ", ") AS `sport_class_name`')
-            ->where('users.level', '2')
-            ->whereNull('users.deleted_at')
-            ->whereNull('class_teachers.deleted_at')
-            ->groupBy('users.id');
+         $teachers = DB::table('users')
+            ->select('users.id', 'users.name', 'schools.acronym')
+            ->join('secretaries', function($join) {
+                $join->on('secretaries.secretary_id', '=' ,'users.id');
+                    #->whereNull('secretaries.deleted_at');
+            })
+            ->join('schools', 'secretaries.school_id', '=', 'schools.id')
+            ->whereNull('users.deleted_at');
 
         return DataTables()->of($teachers)->make(true);
     }
@@ -44,6 +46,7 @@ class TeacherController extends Controller
             'name' => 'required|max:64',
             'email' => 'required|email|max:50|unique:users,email,' . $id,
             'password' => 'required_if:action,==,add|max:60',
+            'school' => 'required|numeric'
         ]);
     }
 
@@ -70,16 +73,20 @@ class TeacherController extends Controller
         if ($this->validation($request)->fails())
             return response()->json(['error' => true, 'messages' => $error->errors()->all()]);
 
-
-        User::create([
+        $user = User::create([
             'enrollment' => $request->enrollment,
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'level' => '2',
+            'level' => '3',
         ]);
 
-        return response()->json(['error' => false, 'messages' => ['Professor adicionado com sucesso.']]);
+        Secretary::create([
+            'secretary_id' => $user->id,
+            'school_id' => $request->school,
+        ]);
+
+        return response()->json(['error' => false, 'messages' => ['Secretário adicionado com sucesso.']]);
     }
 
     /**
@@ -101,7 +108,16 @@ class TeacherController extends Controller
      */
     public function edit($id)
     {
-        $data = User::findOrFail($id, ['users.id', 'users.name', 'users.enrollment', 'users.email']);
+        $data = DB::table('users')
+            ->select('users.id', 'users.name', 'users.enrollment', 'users.email', 'schools.id as school')
+            ->join('secretaries', function($join) {
+                $join->on('secretaries.secretary_id', '=' ,'users.id');
+                #->whereNull('secretaries.deleted_at');
+            })
+            ->join('schools', 'secretaries.school_id', '=', 'schools.id')
+            ->where('users.id', $id)
+            ->whereNull('users.deleted_at')
+            ->first();
 
         return response()->json($data);
     }
@@ -110,6 +126,7 @@ class TeacherController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
@@ -131,7 +148,11 @@ class TeacherController extends Controller
 
         User::findOrFail($request->id)->update($user);
 
-        return response()->json(['error' => false, 'messages' => ['Professor atualizado com sucesso.']]);
+        Secretary::where('secretary_id', $request->id)->update([
+            'school_id' => $request->school,
+        ]);
+
+        return response()->json(['error' => false, 'messages' => ['Secretário atualizado com sucesso.']]);
     }
 
     /**
@@ -142,7 +163,7 @@ class TeacherController extends Controller
      */
     public function destroy($id)
     {
-        ClassTeacher::where('teacher_id', $id)->delete();
+        Secretary::where('secretary_id', $id)->delete();
         User::findOrFail($id)->delete();
     }
 }

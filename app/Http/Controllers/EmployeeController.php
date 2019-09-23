@@ -21,11 +21,9 @@ class EmployeeController extends Controller
 
     public function getData()
     {
-        if (Request()->ajax()) {
-            $employees = User::where('level', '4');
+        $employees = User::where('level', '4');
 
-            return DataTables()->of($employees)->make(true);
-        }
+        return DataTables()->of($employees)->make(true);
     }
 
     public function validation($request)

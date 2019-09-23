@@ -92,6 +92,10 @@ Route::middleware(['auth'])->group(function () {
         Route::post('teachers/getData', 'TeacherController@getData');
         Route::post('teachers/update', 'TeacherController@update');
 
+        Route::resource('secretaries', 'SecretaryController');
+        Route::post('secretaries/getData', 'SecretaryController@getData');
+        Route::post('secretaries/update', 'SecretaryController@update');
+
         Route::resource('employees', 'EmployeeController');
         Route::post('employees/getData', 'EmployeeController@getData');
         Route::post('employees/update', 'EmployeeController@update');

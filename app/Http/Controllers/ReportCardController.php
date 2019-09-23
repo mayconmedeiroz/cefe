@@ -31,7 +31,6 @@ class ReportCardController extends Controller
 
         switch (Auth::user()->level) {
             case 3:
-
                 $school = Secretary::where('secretary_id', Auth::user()->id)->first(['school_id']);
 
                 return view('dashboard.secretary.report_cards.report_cards')

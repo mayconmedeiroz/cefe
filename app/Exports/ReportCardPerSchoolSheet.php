@@ -60,6 +60,7 @@ class ReportCardPerSchoolSheet implements FromCollection, ShouldAutoSize, WithHe
             ->leftJoin('absences', 'absences.student_grade_id', '=', 'student_grades.id')
             ->leftJoin('recuperations', 'recuperations.student_grade_id', '=', 'student_grades.id')
             ->orderByRaw('`student_school_classes`.`class_number` + 0 ASC')
+            ->whereNull('users.deleted_at')
             ->get();
 
         return $data;

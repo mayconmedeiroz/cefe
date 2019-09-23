@@ -29,6 +29,11 @@ switch (Auth::user()->level) {
                 'icon'      => 'fa-chalkboard-teacher',
             ],
             [
+                'title'     => 'Gerenciar Secretários',
+                'route'     => 'employee.secretaries.index',
+                'icon'      => 'fa-id-card-alt',
+            ],
+            [
                 'title'     => 'Gerenciar Funcionários',
                 'route'     => 'employee.employees.index',
                 'icon'      => 'fa-user',
