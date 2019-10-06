@@ -1,11 +1,11 @@
 <?php
 
-namespace CEFE\Http\Controllers;
+namespace App\Http\Controllers;
 
-use CEFE\ClassTeacher;
-use CEFE\Sport;
-use CEFE\SportClass;
-use CEFE\StudentClass;
+use App\ClassTeacher;
+use App\Sport;
+use App\SportClass;
+use App\StudentClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;

@@ -1,16 +1,16 @@
 <?php
 
-namespace CEFE\Http\Controllers;
+namespace App\Http\Controllers;
 
-use CEFE\School;
-use CEFE\SchoolYear;
-use CEFE\Secretary;
-use CEFE\Evaluation;
-use CEFE\SchoolClass;
+use App\School;
+use App\SchoolYear;
+use App\Secretary;
+use App\Evaluation;
+use App\SchoolClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use CEFE\Exports\ReportCardExport;
-use CEFE\Exports\ReportCardPerSchoolExport;
+use App\Exports\ReportCardExport;
+use App\Exports\ReportCardPerSchoolExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Auth;
 

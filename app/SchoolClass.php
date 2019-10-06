@@ -1,6 +1,6 @@
 <?php
 
-namespace CEFE;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,6 +17,6 @@ class SchoolClass extends Model
 
     public function school()
     {
-        return $this->belongsTo('CEFE\School');
+        return $this->belongsTo('App\School');
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use CEFE\StudentClass;
+use App\StudentClass;
 
 class StudentClassesTableSeeder extends Seeder
 {

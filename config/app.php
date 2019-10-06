@@ -169,11 +169,11 @@ return [
         /*
          * Application Service Providers...
          */
-        CEFE\Providers\AppServiceProvider::class,
-        CEFE\Providers\AuthServiceProvider::class,
-        // CEFE\Providers\BroadcastServiceProvider::class,
-        CEFE\Providers\EventServiceProvider::class,
-        CEFE\Providers\RouteServiceProvider::class,
+        App\Providers\AppServiceProvider::class,
+        App\Providers\AuthServiceProvider::class,
+        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\EventServiceProvider::class,
+        App\Providers\RouteServiceProvider::class,
 
         /*
          * Custom

@@ -2,9 +2,9 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use CEFE\ClassTeacher;
-use CEFE\User;
-use CEFE\SportClass;
+use App\ClassTeacher;
+use App\User;
+use App\SportClass;
 use Faker\Generator as Faker;
 
 $factory->define(ClassTeacher::class, function (Faker $faker) {

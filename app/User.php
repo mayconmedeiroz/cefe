@@ -1,6 +1,6 @@
 <?php
 
-namespace CEFE;
+namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -29,27 +29,27 @@ class User extends Authenticatable
 
     public function classTeachers()
     {
-        return $this->belongsToMany('CEFE\SportClass', 'class_teachers', 'teacher_id', 'class_id');
+        return $this->belongsToMany('App\SportClass', 'class_teachers', 'teacher_id', 'class_id');
     }
 
     public function secretary()
     {
-        return $this->hasMany('CEFE\Secretary', 'secretary_id');
+        return $this->hasMany('App\Secretary', 'secretary_id');
     }
 
     public function studentSchoolClass()
     {
-        return $this->belongsToMany('CEFE\SchoolClass', 'student_school_classes', 'student_id')->withPivot(['class_number', 'school_year_id'])->whereNull('student_school_classes.deleted_at');
+        return $this->belongsToMany('App\SchoolClass', 'student_school_classes', 'student_id')->withPivot(['class_number', 'school_year_id'])->whereNull('student_school_classes.deleted_at');
     }
 
     public function studentClass()
     {
-        return $this->belongsToMany('CEFE\SportClass', 'student_classes', 'student_id')->withPivot('school_year_id')->whereNull('student_classes.deleted_at');
+        return $this->belongsToMany('App\SportClass', 'student_classes', 'student_id')->withPivot('school_year_id')->whereNull('student_classes.deleted_at');
     }
 
     public function studentSchool()
     {
-        return $this->hasManyThrough('CEFE\School', 'CEFE\StudentClass');
+        return $this->hasManyThrough('App\School', 'App\StudentClass');
     }
 
 }

@@ -2,8 +2,8 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use CEFE\SportClass;
-use CEFE\Sport;
+use App\SportClass;
+use App\Sport;
 use Faker\Generator as Faker;
 
 $factory->define(SportClass::class, function (Faker $faker) {

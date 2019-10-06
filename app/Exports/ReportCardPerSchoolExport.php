@@ -1,8 +1,8 @@
 <?php
 
-namespace CEFE\Exports;
+namespace App\Exports;
 
-use CEFE\SchoolClass;
+use App\SchoolClass;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 

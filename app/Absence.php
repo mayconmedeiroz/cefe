@@ -1,6 +1,6 @@
 <?php
 
-namespace CEFE;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,6 +17,6 @@ class Absence extends Model
 
     public function studentGrade()
     {
-        return $this->belongsTo('CEFE\StudentGrade');
+        return $this->belongsTo('App\StudentGrade');
     }
 }

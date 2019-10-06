@@ -1,6 +1,6 @@
 <?php
 
-use CEFE\BlogPost;
+use App\BlogPost;
 use Illuminate\Database\Seeder;
 
 class BlogSeeder extends Seeder

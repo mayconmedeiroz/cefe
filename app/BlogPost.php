@@ -1,6 +1,6 @@
 <?php
 
-namespace CEFE;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,6 +17,6 @@ class BlogPost extends Model
 
     public function user()
     {
-        return $this->belongsTo('CEFE\User');
+        return $this->belongsTo('App\User');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace CEFE;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,11 +17,11 @@ class Secretary extends Model
 
     public function user()
     {
-        return $this->belongsTo('CEFE\User', 'secretary_id');
+        return $this->belongsTo('App\User', 'secretary_id');
     }
 
     public function school()
     {
-        return $this->belongsTo('CEFE\School');
+        return $this->belongsTo('App\School');
     }
 }

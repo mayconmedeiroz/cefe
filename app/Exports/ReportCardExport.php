@@ -1,6 +1,6 @@
 <?php
 
-namespace CEFE\Exports;
+namespace App\Exports;
 
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\FromCollection;

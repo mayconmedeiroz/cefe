@@ -14,7 +14,7 @@
                         <label for="school_year">Ano Letivo:</label>
                         <select name="school_year" id="school_year" class="form-control" required>
                             <option value="" disabled selected hidden>Escolha o ano letivo</option>
-                            @foreach(\CEFE\SchoolYear::get() as $school_year)
+                            @foreach(\App\SchoolYear::get() as $school_year)
                                 <option value="{{$school_year->id}}">{{$school_year->school_year}}</option>
                             @endforeach
                         </select>
@@ -38,7 +38,7 @@
                         <label for="evaluation">Avaliação:</label>
                         <select name="evaluation" id="evaluation" class="form-control" disabled required>
                             <option value="" disabled selected hidden>Escolha a Avaliação:</option>
-                            @foreach(\CEFE\Evaluation::get() as $evaluation)
+                            @foreach(\App\Evaluation::get() as $evaluation)
                                 <option value="{{$evaluation->id}}">{{$evaluation->name}}</option>
                             @endforeach
                         </select>

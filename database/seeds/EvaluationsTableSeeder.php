@@ -1,6 +1,6 @@
 <?php
 
-use CEFE\Evaluation;
+use App\Evaluation;
 use Illuminate\Database\Seeder;
 
 class EvaluationsTableSeeder extends Seeder

@@ -1,9 +1,9 @@
 <?php
 
-namespace CEFE\Http\Controllers;
+namespace App\Http\Controllers;
 
-use CEFE\User;
-use CEFE\ClassTeacher;
+use App\User;
+use App\ClassTeacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;

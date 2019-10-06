@@ -1,6 +1,6 @@
 <?php
 
-use CEFE\User;
+use App\User;
 use Faker\Generator as Faker;
 
 /*

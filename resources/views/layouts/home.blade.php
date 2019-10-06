@@ -4,6 +4,7 @@
     <title>{{ $title }} - CEFE</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="Description" content="Site do Centro Esportivo da FAETEC.">
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/global/owl.carousel.min.css') }}">
@@ -27,7 +28,7 @@
             <div class="d-flex align-items-center">
                 <div class="site-logo">
                     <a href="{{ route('index') }}" class="d-block">
-                        <img src="{{ asset('img/global/logo.jpg') }}" alt="Image" class="img-fluid">
+                        <img src="{{ asset('img/global/logo.png') }}" alt="logo" title="Logo" class="img-fluid">
                     </a>
                 </div>
                 <div class="mr-auto">
@@ -47,7 +48,7 @@
                 </div>
                 <div class="ml-auto">
                     <a href="{{ route('login') }}" class="small btn btn-primary btn-red px-4 py-2 rounded-0"><span
-                                class="icon-user"></span> Acessar</a>
+                            class="icon-user"></span> Acessar</a>
                     <a href="#" class="d-lg-none site-menu-toggle js-menu-toggle text-black btn">
                         <i class="fas fa-bars fa-lg"></i></a>
                 </div>
@@ -58,7 +59,7 @@
 
 @yield('content')
 
-<div class="section-bg style-1" style="background-image: url('{{ asset('img/global/bg_1.jpg') }}');">
+<section class="section-bg style-1" style="background-image: url('{{ asset('img/global/bg_1.jpg') }}');">
     <div class="container">
         <div class="row">
             <div class="col-lg-4 col-md-6 mb-5 mb-lg-0">
@@ -83,32 +84,31 @@
             </div>
         </div>
     </div>
-</div>
+</section>
 
 @yield('content-down')
 
-<div class="footer">
+<footer class="footer">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="copyright py-0">
-                    <img src="{{ asset('img/global/logo.png') }}" alt="Image" class="mb-2 img-fluid">
+                    <img src="{{ asset('img/global/logo-footer.png') }}" alt="logo-footer" title="Logo Footer" class="mb-2 img-fluid">
                     <p class="m-0">
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         Copyright &copy;2019 Todos os direitos reservados. | Template feito por <a
-                                href="https://colorlib.com" target="_blank">Colorlib</a>
+                            href="https://colorlib.com" target="_blank" rel="noopener">Colorlib</a>
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                     </p>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</footer>
 <div id="loader" class="show fullscreen">
     <svg class="circular" width="48px" height="48px">
         <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/>
-        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-                stroke="#51be78"/>
+        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#51be78"/>
     </svg>
 </div>
 <script src="{{ asset('/js/jquery.min.js')}}"></script>

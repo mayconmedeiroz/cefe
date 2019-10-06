@@ -2,7 +2,7 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use CEFE\School;
+use App\School;
 use Faker\Generator as Faker;
 
 $factory->define(School::class, function (Faker $faker) {

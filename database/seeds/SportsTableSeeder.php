@@ -1,6 +1,6 @@
 <?php
 
-use CEFE\Sport;
+use App\Sport;
 use Illuminate\Database\Seeder;
 
 class SportsTableSeeder extends Seeder

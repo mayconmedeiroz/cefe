@@ -2,8 +2,8 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use CEFE\BlogPost;
-use CEFE\User;
+use App\BlogPost;
+use App\User;
 use Faker\Generator as Faker;
 
 $factory->define(BlogPost::class, function (Faker $faker) {

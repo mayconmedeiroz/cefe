@@ -20,7 +20,7 @@
         @endforeach
     </div>
 
-    <div class="site-section" style="{{ ($sliders == "[]") ? 'padding-top:8em' : '' }}">
+    <section class="site-section" style="{{ ($sliders == "[]") ? 'padding-top:8em' : '' }}">
         <div class="container">
             <div class="row mb-5 justify-content-center text-center">
                 <div class="col-lg-6 mb-5">
@@ -50,49 +50,52 @@
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 @endsection
 
 @section('content-down')
     @if($posts != "[]")
-        <div class="news-updates">
+        <section class="news-updates">
             <div class="container">
                 <div class="row d-flex justify-content-center">
                     <div class="col-lg-9">
                         <div class="section-heading">
                             <h2 class="text-black">Notícias</h2>
-                            <a href="/blog">Ler todas as notícias</a>
+                            <a href="{{ route('blog') }}">Ler todas as notícias</a>
                         </div>
                         <div class="row">
-                            <div class="col-lg-6">
+                            <article class="col-lg-6">
                                 <div class="post-entry-big">
-                                    <a href="/blog/{{ $posts[0]->id }}" class="img-link"><img
-                                                src="/storage/posts/{{ $posts[0]->image }}" alt="Image"
+                                    <a href="{{ route('article.show', ['id' => $posts[0]->id]) }}" class="img-link"><img
+                                                src="{{ asset('storage/posts/'.$posts[0]->image) }}" alt="Image"
                                                 class="img-fluid"></a>
                                     <div class="post-content">
                                         <div class="post-meta">
-                                            <a href="/blog/{{ $posts[0]->id }}">{{ strftime("%d de %B de %Y", strtotime($posts[0]->created_at)) }}</a>
+                                            <a href="{{ route('article.show', ['id' => $posts[0]->id]) }}">{{ strftime("%d de %B de %Y", strtotime($posts[0]->created_at)) }}</a>
                                         </div>
                                         <h3 class="post-heading"><a
-                                                    href="/blog/{{ $posts[0]->id }}">{{ $posts[0]->title }}</a></h3>
+                                                    href="{{ route('article.show', ['id' => $posts[0]->id]) }}">{{ $posts[0]->title }}</a></h3>
                                     </div>
                                 </div>
-                            </div>
+                            </article>
                             <div class="col-lg-6">
                                 @foreach($posts as $post)
                                     @if (!$loop->first)
-                                        <div class="post-entry-big horizontal d-flex mb-4">
-                                            <a href="/blog/{{ $post->id }}" class="img-link mr-4"><img
-                                                        src="/storage/posts/{{ $post->image }}" alt="Image"
+                                        <article class="post-entry-big horizontal d-flex mb-4">
+                                            <a href="{{ route('article.show', ['id' => $post->id]) }}" class="img-link mr-4"><img
+                                                        src="{{ asset('storage/posts/'.$post->image) }}" alt="Image"
                                                         class="img-fluid"></a>
                                             <div class="post-content">
                                                 <div class="post-meta">
-                                                    <a href="/blog/{{ $post->id }}">{{ strftime("%d de %B de %Y", strtotime($post->created_at)) }}</a>
+                                                    <a href="{{ route('article.show', ['id' => $post->id]) }}">
+                                                        {{ strftime("%d de %B de %Y", strtotime($post->created_at)) }}
+                                                    </a>
                                                 </div>
-                                                <h3 class="post-heading"><a
-                                                            href="/blog/{{ $post->id }}">{{ $post->title }}</a></h3>
+                                                <h3 class="post-heading">
+                                                    <a href="{{ route('article.show', ['id' => $post->id]) }}">{{ $post->title }}</a>
+                                                </h3>
                                             </div>
-                                        </div>
+                                        </article>
                                     @endif
                                 @endforeach
                             </div>
@@ -100,6 +103,6 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     @endif
 @endsection

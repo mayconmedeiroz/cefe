@@ -1,6 +1,6 @@
 <?php
 
-use CEFE\HomepageSlider;
+use App\HomepageSlider;
 use Illuminate\Database\Seeder;
 
 class HomepageSliderSeeder extends Seeder

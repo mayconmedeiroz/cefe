@@ -1,8 +1,8 @@
 <?php
 
-namespace CEFE\Http\Controllers;
+namespace App\Http\Controllers;
 
-use CEFE\BlogPost;
+use App\BlogPost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;

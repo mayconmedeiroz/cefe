@@ -1,6 +1,6 @@
 <?php
 
-use CEFE\ClassTeacher;
+use App\ClassTeacher;
 use Illuminate\Database\Seeder;
 
 class ClassTeachersTableSeeder extends Seeder

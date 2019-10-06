@@ -1,13 +1,13 @@
 <?php
 
-namespace CEFE\Http\Controllers;
+namespace App\Http\Controllers;
 
-use CEFE\Absence;
-use CEFE\Evaluation;
-use CEFE\Recuperation;
-use CEFE\SportClass;
-use CEFE\SportClassLesson;
-use CEFE\StudentGrade;
+use App\Absence;
+use App\Evaluation;
+use App\Recuperation;
+use App\SportClass;
+use App\SportClassLesson;
+use App\StudentGrade;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

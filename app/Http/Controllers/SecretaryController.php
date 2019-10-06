@@ -1,10 +1,10 @@
 <?php
 
-namespace CEFE\Http\Controllers;
+namespace App\Http\Controllers;
 
-use CEFE\School;
-use CEFE\Secretary;
-use CEFE\User;
+use App\School;
+use App\Secretary;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;

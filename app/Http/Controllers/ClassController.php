@@ -1,12 +1,12 @@
 <?php
 
-namespace CEFE\Http\Controllers;
+namespace App\Http\Controllers;
 
-use CEFE\User;
-use CEFE\School;
-use CEFE\Sport;
-use CEFE\SportClass;
-use CEFE\StudentClass;
+use App\User;
+use App\School;
+use App\Sport;
+use App\SportClass;
+use App\StudentClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

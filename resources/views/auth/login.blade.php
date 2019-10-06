@@ -2,86 +2,89 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="description" content="Login - Centro Esportivo da FAETEC"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
 
-    <title>Login - CEFE</title>
+    <title>Login - Centro Esportivo da FAETEC</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}"/>
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500" rel="stylesheet">
 
     <!-- Style -->
     <link rel="stylesheet" href="{{ asset('css/login.css') }}"/>
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="row container-left-background">
-            <div class="col-md-6 container-left">
-                <div class="logo-left p-4">
-                    <a href="#">
-                        <img src="{{ asset('img/logo.png') }}" alt="CEFE">
+<div class="grid grid-ver grid-root">
+    <div class="grid grid-hor grid-root">
+        <div class="grid-item grid-item-fluid grid grid-desktop grid-ver-desktop grid-hor-tablet-and-mobile">
+            <div class="grid-item grid-item-order-tablet-and-mobile-2 grid grid-hor login-aside" style="background: url({{ asset('img/background.jpg') }}) right 100%;">
+                <div class="grid-item">
+                    <a href="{{ route('index') }}" class="login-logo">
+                        <img src="{{ asset('img/global/logo.png') }}" alt="Logo" title="Logo">
                     </a>
                 </div>
-                <div class="h-75 d-flex align-items-center">
-                    <span class="phrase">
-                        <p>
-                            Lorem ipsum dolor sit amet, consec adipiscing alot elit. Praesent hendrerit efficitur enim at tempus.
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit
-                        </p>
-                    </span>
+                <div class="grid-item grid-item-fluid grid grid-ver">
+                    <div class="grid-item grid-item-middle">
+                        <h3 class="login-title">Autentique-se para prosseguir!</h3>
+                        <h4 class="login-subtitle">Bem-vindo ao dashboard do CEFE, aqui você poderá se cadastrar em turmas, ver suas notas, ver datas de eventos e muito mais...</h4>
+                    </div>
+                </div>
+                <div class="grid-item">
+                    <div class="login-info">
+                        <div class="login-copyright">
+                            &copy 2019 Centro Esportivo da FAETEC
+                        </div>
+                        <div class="login-menu">
+                            <a href="#" class="link">Lorem</a>
+                            <a href="#" class="link">Ipsum</a>
+                            <a href="#" class="link">Dolor sit</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div id="login" class="col-md-6 bg-light">
-                <div class="d-table w-100 mx-auto container-right">
-                    <form class="d-table-cell align-middle" method="POST" action="{{ route('login') }}">
-                        @if ($errors->any())
-                        <div class="alert alert-danger w-75 mx-auto d-block fade show" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            O endereço de email/matrícula ou a senha que você inseriu não é válido. Tente novamente.
+            <div class="grid-item grid-item-fluid  grid-item-order-tablet-and-mobile-1 login-wrapper">
+                <div class="login-body">
+                    <div class="login-form">
+                        <div class="login-title">
+                            <h3>Entrar</h3>
                         </div>
-                        @endif
-                        @csrf
-                        <h1 class="py-5">Login</h1>
-                        <div class="form-group">
-                            <input placeholder="Email ou Matrícula" id="login" type="text" value="{{ old('email') }}{{ old('enrollment') }}" class="form-control" name="login" required autocomplete="email" autofocus>
-                        </div>
-                        <div class="form-group">
-                            <input id="password" type="password" class="form-control" name="password" required autocomplete="current-password" placeholder="Senha">
-                        </div>
-                        <div class="form-group button-group">
-                            <a class="forget-pass-div" href="#">Esqueci a senha</a>
-                            <button type="submit" class="btn btn-primary float-sm-right">Acessar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div id="forget-password" class="col-md-6 bg-light d-none d-sm-none">
-                <div class="d-table w-100 mx-auto container-right">
-                    <form class="d-table-cell align-middle">
-                        <h1 class="py-5">Esqueci a senha</h1>
-                        <div class="form-group">
-                            <input type="email" class="form-control" id="" placeholder="Email">
-                        </div>
-                        <div class="form-group button-group">
-                            <a class="login-div" href="#">Fazer Login</a>
-                            <button type="submit" class="btn btn-primary float-sm-right">Enviar</button>
-                        </div>
-                    </form>
+                        <form class="form" method="POST" action="{{ route('login') }}">
+                            @if ($errors->any())
+                                <div class="alert alert-danger" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    O endereço de email/matrícula ou a senha que você inseriu não é válido. Tente novamente.
+                                </div>
+                            @endif
+                            @csrf
+                            <div class="form-group">
+                                <input class="form-control" type="text" placeholder="Email ou Matrícula" name="login" id="login" value="{{ old('email') }}{{ old('enrollment') }}">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="password" placeholder="Senha" name="password" id="password">
+                            </div>
+                            <div class="login-actions">
+                                <a href="#" class="link login-link-forgot">
+                                    Esqueceu a senha ?
+                                </a>
+                                <button id="kt_login_signin_submit" class="btn btn-primary btn-elevate login-btn-primary">Entrar</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('js/login.js') }}"></script>
+</div>
+<script src="{{ asset('js/jquery.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('js/login.js') }}"></script>
 </body>
 </html>

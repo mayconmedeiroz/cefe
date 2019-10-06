@@ -1,10 +1,10 @@
 <?php
 
-namespace CEFE\Imports;
+namespace App\Imports;
 
-use CEFE\SchoolClass;
-use CEFE\User;
-use CEFE\StudentSchoolClass;
+use App\SchoolClass;
+use App\User;
+use App\StudentSchoolClass;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;

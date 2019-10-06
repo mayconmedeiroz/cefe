@@ -1,6 +1,6 @@
 <?php
 
-use CEFE\Secretary;
+use App\Secretary;
 use Illuminate\Database\Seeder;
 
 class SecretariesTableSeeder extends Seeder

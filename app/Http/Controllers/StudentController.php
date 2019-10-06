@@ -1,14 +1,14 @@
 <?php
 
-namespace CEFE\Http\Controllers;
+namespace App\Http\Controllers;
 
-use CEFE\Secretary;
-use CEFE\SchoolYear;
-use CEFE\User;
-use CEFE\School;
-use CEFE\Sport;
-use CEFE\StudentClass;
-use CEFE\StudentSchoolClass;
+use App\Secretary;
+use App\SchoolYear;
+use App\User;
+use App\School;
+use App\Sport;
+use App\StudentClass;
+use App\StudentSchoolClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;

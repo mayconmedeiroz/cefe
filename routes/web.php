@@ -12,7 +12,7 @@
 */
 
 Route::get('/', 'HomeController@index')->name('index');
-Route::get('blog/{id}', 'BlogController@show')->name('sports.show');
+Route::get('blog/{id}', 'BlogController@show')->name('article.show');
 Route::get('blog', 'BlogController@indexHome')->name('blog');
 Route::get('contact', 'HomeController@contact')->name('contact');
 Route::get('about', 'HomeController@about')->name('about');

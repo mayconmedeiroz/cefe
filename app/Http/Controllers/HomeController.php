@@ -1,8 +1,8 @@
 <?php
 
-namespace CEFE\Http\Controllers;
+namespace App\Http\Controllers;
 
-use CEFE\HomepageSlider;
+use App\HomepageSlider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 

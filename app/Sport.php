@@ -1,6 +1,6 @@
 <?php
 
-namespace CEFE;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -19,6 +19,6 @@ class Sport extends Model
 
     public function sportClasses()
     {
-        return $this->hasMany('CEFE\SportClass');
+        return $this->hasMany('App\SportClass');
     }
 }

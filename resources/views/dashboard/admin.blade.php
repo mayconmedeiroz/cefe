@@ -52,7 +52,7 @@
             var calendar = new FullCalendar.Calendar($('#calendar').get(0), {
                 plugins: ['dayGrid'],
                 events: [
-                @foreach(\CEFE\SportClass::get() as $sportClass)
+                @foreach(\App\SportClass::get() as $sportClass)
                     {
                         title : '{{ $sportClass->name}}',
                         daysOfWeek : '{{ $sportClass->weekday}}',

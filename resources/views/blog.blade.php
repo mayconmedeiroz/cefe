@@ -26,12 +26,12 @@
         </div>
     </div>
 
-    <div class="site-section">
+    <section class="site-section">
         <div class="news-updates" style="padding: 0;">
             <div class="container">
                 <div class="row">
                     @foreach($posts as $post)
-                        <div class="col-lg-4 col-md-6 mb-4">
+                        <article class="col-lg-4 col-md-6 mb-4">
                             <div class="post-entry-big">
                                 <a href="/blog/{{ $post->id }}" class="img-link"><img
                                             src="/storage/posts/{{ $post->image }}" alt="Image" class="img-fluid"></a>
@@ -42,13 +42,13 @@
                                     <h3 class="post-heading"><a href="/blog/{{ $post->id }}">{{ $post->title }}</a></h3>
                                 </div>
                             </div>
-                        </div>
+                        </article>
                     @endforeach
                 </div>
                 {{ $posts->links() }}
             </div>
         </div>
-    </div>
+    </section>
 @endsection
 
 @section('custom-js')

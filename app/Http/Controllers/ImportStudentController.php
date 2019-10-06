@@ -1,13 +1,13 @@
 <?php
 
-namespace CEFE\Http\Controllers;
+namespace App\Http\Controllers;
 
-use CEFE\SchoolYear;
-use CEFE\Secretary;
-use CEFE\School;
+use App\SchoolYear;
+use App\Secretary;
+use App\School;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use CEFE\Imports\StudentImport;
+use App\Imports\StudentImport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ImportStudentController extends Controller

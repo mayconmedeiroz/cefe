@@ -21,8 +21,8 @@
         </div>
     </div>
 
-    <div class="container pt-5 mb-5">
-        <div class="row">
+    <section class="container pt-5 mb-5">
+        <article class="row">
             <div class="col-lg-4">
                 <h2 class="section-title-underline">
                     <span>Lorem ipsum dolor sit</span>
@@ -38,12 +38,12 @@
                     architecto, hic alias quia quisquam, obcaecati laborum dolores. Ex libero cumque veritatis numquam
                     placeat?</p>
             </div>
-        </div>
-    </div>
+        </article>
+    </section>
 
-    <div class="site-section">
+    <section class="site-section">
         <div class="container">
-            <div class="row mb-5">
+            <article class="row mb-5">
                 <div class="col-lg-6 mb-lg-0 mb-4">
                     <img src="{{ asset('img/global/course_1.jpg') }}" alt="Image" class="img-fluid">
                 </div>
@@ -56,9 +56,9 @@
                     <p>Modi sit dolor repellat esse! Sed necessitatibus itaque libero odit placeat nesciunt, voluptatum
                         totam facere.</p>
                 </div>
-            </div>
+            </article>
 
-            <div class="row">
+            <article class="row">
                 <div class="col-lg-6 order-1 order-lg-2 mb-4 mb-lg-0">
                     <img src="{{ asset('img/global/course_1.jpg') }}" alt="Image" class="img-fluid">
                 </div>
@@ -71,7 +71,7 @@
                     <p>Modi sit dolor repellat esse! Sed necessitatibus itaque libero odit placeat nesciunt, voluptatum
                         totam facere.</p>
                 </div>
-            </div>
+            </article>
         </div>
-    </div>
+    </section>
 @endsection
