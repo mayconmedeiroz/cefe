@@ -33,7 +33,8 @@ class SecretaryController extends Controller
                     #->whereNull('secretaries.deleted_at');
             })
             ->join('schools', 'secretaries.school_id', '=', 'schools.id')
-            ->whereNull('users.deleted_at');
+            ->whereNull('users.deleted_at')
+            ->get();
 
         return DataTables()->of($teachers)->make(true);
     }

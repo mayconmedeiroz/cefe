@@ -11,9 +11,23 @@
 |
 */
 
+Route::get('clear-cache', function() {
+    $exitCode = Artisan::call('migrate:fresh');
+    $exitCode = Artisan::call('db:seed');
+    $exitCode = Artisan::call('storage:link');
+    $exitCode = Artisan::call('config:clear');
+    $exitCode = Artisan::call('cache:clear');
+    $exitCode = Artisan::call('config:cache');
+    return 'DONE'; //Return anything
+});
+
+Route::get('test', function() {
+    return view('test');
+});
+
 Route::get('/', 'HomeController@index')->name('index');
-Route::get('blog/{id}', 'BlogController@show')->name('article.show');
-Route::get('blog', 'BlogController@indexHome')->name('blog');
+Route::get('article/{id}', 'ArticleController@show')->name('article.show');
+Route::get('blog', 'HomeController@articles')->name('blog');
 Route::get('contact', 'HomeController@contact')->name('contact');
 Route::get('about', 'HomeController@about')->name('about');
 
@@ -26,6 +40,8 @@ Route::middleware(['auth'])->group(function () {
     //Routes available to all auth users
     Route::get('dashboard', 'UserController@dashboard')->name('dashboard');
     Route::get('profile', 'UserController@profile')->name('profile');
+    Route::get('report', 'ReportController@report')->name('report');
+    Route::post('report', 'ReportController@storeReport');
 
     Route::post('updateAvatar', 'UserController@updateAvatar');
     Route::post('updateUser', 'UserController@updateUser');
@@ -124,9 +140,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('import_students', 'ImportStudentController@index')->name('import_students.index');
         Route::post('import_students', 'ImportStudentController@store');
 
-        Route::resource('blog', 'BlogController');
-        Route::post('blog/update', 'BlogController@update');
-        Route::post('blog/getData', 'BlogController@getData');
-        Route::post('blog/uploadImage', 'BlogController@uploadImage');
+        Route::resource('articles', 'ArticleController');
+        Route::post('articles/update', 'ArticleController@update');
+        Route::post('articles/getData', 'ArticleController@getData');
+        Route::post('articles/uploadImage', 'ArticleController@uploadImage');
+
+        Route::resource('categories', 'CategoryController');
+        Route::post('categories/update', 'CategoryController@update');
+        Route::post('categories/getData', 'CategoryController@getData');
     });
 });

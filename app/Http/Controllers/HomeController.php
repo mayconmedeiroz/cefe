@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\HomepageSlider;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -21,7 +19,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $sliders = HomepageSlider::all();
+        $sliders = \App\HomepageSlider::all();
 
         $sportClasses = DB::table('sport_classes')
             ->select('sport_classes.id', 'sport_classes.name', 'sports.name as sport_name')
@@ -32,10 +30,11 @@ class HomeController extends Controller
             ->limit('6')
             ->get();
 
-        $posts = DB::table('blog_posts')
-            ->select('blog_posts.id', 'blog_posts.title', 'blog_posts.created_at', 'blog_posts.image')
-            ->orderBy('id','desc')
-            ->limit('4')
+        $posts = \App\Article::where('status', 'PUBLISHED')
+            ->where('date', '<=', date('Y-m-d'))
+            ->orderByDesc('featured')
+            ->orderByDesc('date')
+            ->limit(3)
             ->get();
 
         return view('home')->with(compact('sliders', 'sportClasses', 'posts'));
@@ -44,6 +43,17 @@ class HomeController extends Controller
     public function about()
     {
         return view('about');
+    }
+
+    public function articles()
+    {
+        $posts = \App\Article::where('status', 'PUBLISHED')
+            ->where('date', '<=', date('Y-m-d'))
+            ->orderByDesc('featured')
+            ->orderByDesc('date')
+            ->paginate(9);
+
+        return view('blog')->with(compact('posts'));
     }
 
     public function contact()

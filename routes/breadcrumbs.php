@@ -11,6 +11,12 @@ Breadcrumbs::for('profile', function ($trail) {
     $trail->push('Meu Perfil');
 });
 
+// Dashboard > Reportar BUG
+Breadcrumbs::for('report', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Reportar um Problema');
+});
+
 // Dashboard > Funcionário > Gerenciar Turmas
 Breadcrumbs::for('employee.sport_classes.index', function ($trail) {
     $trail->parent('dashboard');
@@ -72,9 +78,15 @@ Breadcrumbs::for('employee.import_students.index', function ($trail) {
 });
 
 // Dashboard > Funcionário > Gerenciar Notícias
-Breadcrumbs::for('employee.blog.index', function ($trail) {
+Breadcrumbs::for('employee.articles.index', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Gerenciar Notícias');
+});
+
+// Dashboard > Funcionário > Gerenciar Categorias
+Breadcrumbs::for('employee.categories.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Gerenciar Categorias');
 });
 
 // Dashboard > Secretaria > Gerenciar Alunos

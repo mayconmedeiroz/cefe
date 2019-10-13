@@ -67,7 +67,7 @@
                             <article class="col-lg-6">
                                 <div class="post-entry-big">
                                     <a href="{{ route('article.show', ['id' => $posts[0]->id]) }}" class="img-link"><img
-                                                src="{{ asset('storage/posts/'.$posts[0]->image) }}" alt="Image"
+                                                src="{{ asset('storage/article') }}/{{ ($posts[0]->image) ? $posts[0]->image : 'default.jpg' }}" alt="Image"
                                                 class="img-fluid"></a>
                                     <div class="post-content">
                                         <div class="post-meta">
@@ -83,7 +83,7 @@
                                     @if (!$loop->first)
                                         <article class="post-entry-big horizontal d-flex mb-4">
                                             <a href="{{ route('article.show', ['id' => $post->id]) }}" class="img-link mr-4"><img
-                                                        src="{{ asset('storage/posts/'.$post->image) }}" alt="Image"
+                                                        src="{{ asset('storage/article/') }}/{{ ($posts[0]->image) ? $posts[0]->image : 'default.jpg' }}" alt="Image"
                                                         class="img-fluid"></a>
                                             <div class="post-content">
                                                 <div class="post-meta">

@@ -213,7 +213,7 @@ class UserController extends Controller
         if(!Auth::user()->updated_at)
         {
             $error = Validator::make($request->all(), [
-                'email' => 'required|email|unique:users',
+                'email' => 'required|email|unique:users,email',
                 'password' => 'required',
                 'confirmation-password' => 'required|same:password'
             ]);

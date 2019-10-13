@@ -34,7 +34,7 @@
                         <article class="col-lg-4 col-md-6 mb-4">
                             <div class="post-entry-big">
                                 <a href="/blog/{{ $post->id }}" class="img-link"><img
-                                            src="/storage/posts/{{ $post->image }}" alt="Image" class="img-fluid"></a>
+                                            src="/storage/article/{{ ($post->image) ? $post->image : 'default.jpg' }}" alt="Image" class="img-fluid"></a>
                                 <div class="post-content">
                                     <div class="post-meta">
                                         <a href="/blog/{{ $post->id }}">{{ strftime("%d de %B de %Y", strtotime($post->created_at)) }}</a>

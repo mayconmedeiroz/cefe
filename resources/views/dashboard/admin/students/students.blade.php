@@ -34,10 +34,10 @@
             {data: "id", name: "id"},
             {data: "enrollment", name: "enrollment"},
             {data: "name", name: "name"},
-            {data: "student_school_class[0].school.acronym", name: "acronym"},
-            {data: "student_school_class[0].class", name: "class"},
-            {data: "student_school_class[0].pivot.class_number", name: "class_number"},
-            {data: "student_class[0].name", name: "sport_class"}
+            {data: "acronym", name: "acronym"},
+            {data: "class", name: "class"},
+            {data: "class_number", name: "class_number"},
+            {data: "sport_class", name: "sport_class"},
         ];
 
         new DataTableController('admin', 'students', dataTableColumns, 'Aluno');

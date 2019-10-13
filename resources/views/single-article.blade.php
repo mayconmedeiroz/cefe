@@ -11,8 +11,8 @@
         <div class="container">
             <div class="row align-items-end">
                 <div class="col-lg-7">
-                    <h2 class="mb-0">{{ $post->title }}</h2>
-                    <p>{{ strftime("%d de %B de %Y", strtotime($post->created_at)) }}</p>
+                    <h2 class="mb-0">{{ $article->title }}</h2>
+                    <p>{{ strftime("%d de %B de %Y", strtotime($article->date)) }}</p>
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="post post-content col-md-9 mb-4">
-                    {!!  $post->body !!}
+                    {!!  $article->content !!}
                 </div>
             </div>
         </div>

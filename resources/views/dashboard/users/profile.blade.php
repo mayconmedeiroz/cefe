@@ -31,7 +31,7 @@
             </button>
         </div>
     </div>
-    <div class="row fight">
+    <div class="row">
         <div class="col-lg-6">
             <form method="POST" action="#" id="profileUserForm">
                 <div class="form">

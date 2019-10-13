@@ -89,20 +89,51 @@ class StudentController extends Controller
             $user = Auth::user();
             if ($user->level == 4) {
 
-                $users = User::with(['studentSchoolClass.school:id,acronym', 'studentClass:name'])
-                    ->select('users.id', 'users.enrollment', 'users.name')
-                    ->where('users.level',1);
+                $users = DB::table('users')
+                    ->leftJoin('student_school_classes', function($join){
+                        $join->on('student_school_classes.student_id', '=', 'users.id')
+                            ->whereNull('student_school_classes.deleted_at');
+                    })
+                    ->join('school_classes', 'student_school_classes.school_class_id', '=', 'school_classes.id')
+                    ->join('schools', 'school_classes.school_id', '=', 'schools.id')
+                    ->leftJoin('student_classes', function($join){
+                        $join->on('student_classes.student_id', '=', 'users.id')
+                            ->whereNull('student_classes.deleted_at');
+                    })
+                    ->leftJoin('sport_classes', function($join){
+                        $join->on('sport_classes.id', '=', 'student_classes.sport_class_id')
+                            ->whereNull('sport_classes.deleted_at');
+                    })
+                    ->select('users.id', 'users.enrollment', 'users.name', 'schools.acronym', 'school_classes.class', 'student_school_classes.class_number', 'sport_classes.name as sport_class')
+                    ->where('level', '1')
+                    ->whereNull('users.deleted_at')
+                    ->get();
+
 
             } else {
 
                 $school = Secretary::where('secretary_id', $user->id)->first();
 
-                $users = User::with(['studentSchoolClass.school:id,acronym', 'studentClass:name'])
-                    ->select('users.id', 'users.enrollment', 'users.name')
-                    ->where('users.level',1)
-                    ->whereHas('studentSchoolClass.school', function($query) use($school) {
-                        $query->where('id', $school->school_id);
-                    });
+                $users = DB::table('users')
+                    ->leftJoin('student_school_classes', function($join){
+                        $join->on('student_school_classes.student_id', '=', 'users.id')
+                            ->whereNull('student_school_classes.deleted_at');
+                    })
+                    ->join('school_classes', 'student_school_classes.school_class_id', '=', 'school_classes.id')
+                    ->join('schools', function($join) use($school){
+                        $join->on('school_classes.school_id', '=', 'schools.id')
+                            ->where('schools.id', $school->school_id);
+                    })
+                    ->leftJoin('student_classes', function($join){
+                        $join->on('student_classes.student_id', '=', 'users.id')
+                            ->whereNull('student_classes.deleted_at');
+                    })
+                    ->leftJoin('sport_classes', function($join){
+                        $join->on('sport_classes.id', '=', 'student_classes.sport_class_id')
+                            ->whereNull('sport_classes.deleted_at');
+                    })                    ->select('users.id', 'users.enrollment', 'users.name', 'school_classes.class', 'student_school_classes.class_number', 'sport_classes.name as sport_class')
+                    ->where('level', '1')
+                    ->whereNull('users.deleted_at');
 
             }
 

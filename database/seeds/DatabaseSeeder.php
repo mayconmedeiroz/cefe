@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
             StudentClassesTableSeeder::class,
             EvaluationsTableSeeder::class,
             SecretariesTableSeeder::class,
-            BlogSeeder::class,
+            #ArticleSeeder::class,
             HomepageSliderSeeder::class,
         ]);
     }

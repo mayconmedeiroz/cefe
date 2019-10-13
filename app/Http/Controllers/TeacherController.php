@@ -31,7 +31,8 @@ class TeacherController extends Controller
             ->where('users.level', '2')
             ->whereNull('users.deleted_at')
             ->whereNull('class_teachers.deleted_at')
-            ->groupBy('users.id');
+            ->groupBy('users.id')
+            ->get();
 
         return DataTables()->of($teachers)->make(true);
     }
