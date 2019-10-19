@@ -72,6 +72,12 @@ switch (Auth::user()->level) {
                             <span class="menu-link-text">Gerenciar Modalidades</span>
                         </a>
                     </li>
+                    <li class="menu-item {{ Request::is('admin/schools') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                        <a href="{{ route('employee.schools.index') }}" class="menu-link menu-toggle">
+                            <span class="menu-link-icon"><i class="fa fa-university"></i></span>
+                            <span class="menu-link-text">Gerenciar Escolas</span>
+                        </a>
+                    </li>
                     <li class="menu-section">
                         <h4 class="menu-section-text">Administração Secretário</h4>
                     </li>
@@ -129,19 +135,19 @@ switch (Auth::user()->level) {
                         <h4 class="menu-section-text">Administração Secretário</h4>
                     </li>
                     <li class="menu-item {{ Request::is('admin/students') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-                        <a href="{{ route('secretaries.students.index') }}" class="menu-link menu-toggle">
+                        <a href="{{ route('secretary.students.index') }}" class="menu-link menu-toggle">
                             <span class="menu-link-icon"><i class="fa fa-user-graduate"></i></span>
                             <span class="menu-link-text">Gerenciar Alunos</span>
                         </a>
                     </li>
                     <li class="menu-item {{ Request::is('admin/report_cards') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-                        <a href="{{ route('secretaries.report_cards.index') }}" class="menu-link menu-toggle">
+                        <a href="{{ route('secretary.report_cards.index') }}" class="menu-link menu-toggle">
                             <span class="menu-link-icon"><i class="fa fa-id-badge"></i></span>
                             <span class="menu-link-text">Boletim</span>
                         </a>
                     </li>
                     <li class="menu-item {{ Request::is('admin/import_students') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-                        <a href="{{ route('secretaries.import_students.index') }}" class="menu-link menu-toggle">
+                        <a href="{{ route('secretary.import_students.index') }}" class="menu-link menu-toggle">
                             <span class="menu-link-icon"><i class="fa fa-address-card"></i></span>
                             <span class="menu-link-text">Importar Alunos</span>
                         </a>
@@ -152,19 +158,31 @@ switch (Auth::user()->level) {
                         <h4 class="menu-section-text">Administração Professor</h4>
                     </li>
                     <li class="menu-item {{ Request::is('admin/sport_classes') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-                        <a href="{{ route('teachers.sport_classes.index') }}" class="menu-link menu-toggle">
+                        <a href="{{ route('teacher.sport_classes.index') }}" class="menu-link menu-toggle">
                             <span class="menu-link-icon"><i class="fa fa-chalkboard"></i></span>
                             <span class="menu-link-text">Gerenciar Turmas</span>
                         </a>
                     </li>
                     <li class="menu-item {{ Request::is('admin/grades') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-                        <a href="{{ route('teachers.grades.index') }}" class="menu-link menu-toggle">
+                        <a href="{{ route('teacher.grades.index') }}" class="menu-link menu-toggle">
                             <span class="menu-link-icon"><i class="fa fa-address-card"></i></span>
                             <span class="menu-link-text">Lançamento de Notas</span>
                         </a>
                     </li>
                 @break
                 @case(1)
+                    <li class="menu-item {{ Request::is('admin/sport_classes') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                        <a href="{{ route('teacher.sport_classes.index') }}" class="menu-link menu-toggle">
+                            <span class="menu-link-icon"><i class="fa fa-chalkboard"></i></span>
+                            <span class="menu-link-text">Gerenciar Turmas</span>
+                        </a>
+                    </li>
+                    <li class="menu-item {{ Request::is('admin/grades') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                        <a href="{{ route('teacher.grades.index') }}" class="menu-link menu-toggle">
+                            <span class="menu-link-icon"><i class="fa fa-address-card"></i></span>
+                            <span class="menu-link-text">Lançamento de Notas</span>
+                        </a>
+                    </li>
                 @break
             @endswitch
         </ul>

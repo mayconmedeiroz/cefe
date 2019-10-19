@@ -32,6 +32,7 @@ class ArticleController extends Controller
             ->selectRaw('CASE WHEN `featured` = 1 THEN "Sim" ELSE "Não" END AS `featured`')
             ->selectRaw(' CASE WHEN `featured` = "DRAFT" THEN "Revisão" ELSE "Publicado" END AS `status`')
             ->join('categories', 'categories.id', '=', 'articles.category_id')
+            ->whereNull('articles.deleted_at')
             ->get();
 
         return DataTables()->of($articles)->make(true);

@@ -1,16 +1,26 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <title>{{ $title }} - CEFE</title>
-    <meta charset="utf-8">
+    <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="Description" content="Site do Centro Esportivo da FAETEC.">
-    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('/css/global/owl.carousel.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('/css/global/aos.css') }}">
-    <link rel="stylesheet" href="{{ asset('/css/all.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('/css/global/style.css') }}">
+    <meta name="description" content="{{ $title }} - Centro Esportivo da FAETEC">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ $title }} - Centro Esportivo da FAETEC</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('vendors/fontawesome/css/all.min.css') }}">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{{ asset('vendors/bootstrap/css/bootstrap.min.css') }}">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ asset('vendors/owl-carrousel/css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendors/aos/css/aos.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style-homepage.css') }}">
 </head>
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 <div class="site-wrap">
@@ -28,7 +38,7 @@
             <div class="d-flex align-items-center">
                 <div class="site-logo">
                     <a href="{{ route('index') }}" class="d-block">
-                        <img src="{{ asset('img/global/logo.png') }}" alt="logo" title="Logo" class="img-fluid">
+                        <img src="{{ asset('img/logo.png') }}" alt="logo" title="Logo" class="img-fluid">
                     </a>
                 </div>
                 <div class="mr-auto">
@@ -59,7 +69,7 @@
 
 @yield('content')
 
-<section class="section-bg style-1" style="background-image: url('{{ asset('img/global/bg_1.jpg') }}');">
+<section class="section-bg style-1" style="background-image: url('{{ asset('img/bg_1.jpg') }}');">
     <div class="container">
         <div class="row">
             <div class="col-lg-4 col-md-6 mb-5 mb-lg-0">
@@ -93,7 +103,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="copyright py-0">
-                    <img src="{{ asset('img/global/logo-footer.png') }}" alt="logo-footer" title="Logo Footer" class="mb-2 img-fluid">
+                    <img src="{{ asset('img/logo-footer.png') }}" alt="logo-footer" title="Logo Footer" class="mb-2 img-fluid">
                     <p class="m-0">
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         Copyright &copy;2019 Todos os direitos reservados. | Template feito por <a
@@ -111,12 +121,12 @@
         <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#51be78"/>
     </svg>
 </div>
-<script src="{{ asset('/js/jquery.min.js')}}"></script>
-<script src="{{ asset('/js/bootstrap.bundle.min.js')}}"></script>
-<script src="{{ asset('/js/global/owl.carousel.min.js')}}"></script>
-<script src="{{ asset('/js/global/aos.js')}}"></script>
-<script src="{{ asset('/js/global/jquery.sticky.js')}}"></script>
-<script src="{{ asset('/js/global/main.js')}}"></script>
+<script src="{{ asset('vendors/jquery/jquery.min.js')}}"></script>
+<script src="{{ asset('vendors/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{ asset('vendors/owl-carrousel/js/owl.carousel.min.js')}}"></script>
+<script src="{{ asset('vendors/aos/js/aos.js')}}"></script>
+<script src="{{ asset('vendors/jquery-sticky/jquery.sticky.js')}}"></script>
+<script src="{{ asset('js/main.js')}}"></script>
 @yield('custom-js')
 </body>
 </html>

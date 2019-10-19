@@ -7,7 +7,7 @@
 
 @section('content')
     <div class="site-section ftco-subscribe-1 site-blocks-cover pb-4"
-         style="background-image: url('{{ asset('img/global/bg_1.jpg') }}');padding-top: 8em;">
+         style="background-image: url('{{ asset('img/bg_1.jpg') }}');padding-top: 8em;">
         <div class="container">
             <div class="row align-items-end">
                 <div class="col-lg-7">
@@ -33,13 +33,13 @@
                     @foreach($posts as $post)
                         <article class="col-lg-4 col-md-6 mb-4">
                             <div class="post-entry-big">
-                                <a href="/blog/{{ $post->id }}" class="img-link"><img
+                                <a href="{{ route('article.show', ['id' => $post->id]) }}" class="img-link"><img
                                             src="/storage/article/{{ ($post->image) ? $post->image : 'default.jpg' }}" alt="Image" class="img-fluid"></a>
                                 <div class="post-content">
                                     <div class="post-meta">
-                                        <a href="/blog/{{ $post->id }}">{{ strftime("%d de %B de %Y", strtotime($post->created_at)) }}</a>
+                                        <a href="{{ route('article.show', ['id' => $post->id]) }}">{{ strftime("%d de %B de %Y", strtotime($post->created_at)) }}</a>
                                     </div>
-                                    <h3 class="post-heading"><a href="/blog/{{ $post->id }}">{{ $post->title }}</a></h3>
+                                    <h3 class="post-heading"><a href="{{ route('article.show', ['id' => $post->id]) }}">{{ $post->title }}</a></h3>
                                 </div>
                             </div>
                         </article>

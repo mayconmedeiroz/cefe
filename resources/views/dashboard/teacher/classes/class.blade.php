@@ -1,7 +1,7 @@
 @extends('layouts.dashboard', ['title' => 'Turma ' . $classes->name ])
 
 @section('custom-css')
-    <link rel="stylesheet" href="{{ asset('css/datatables.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('vendors/datatables/css/datatables.min.css') }}"/>
 @endsection
 
 @section('content')
@@ -22,6 +22,6 @@
 @endsection
 
 @section('custom-js')
-    <script src="{{ asset('js/datatables.min.js') }}"></script>
+    <script src="{{ asset('vendors/datatables/js/datatables.min.js') }}"></script>
     <script src="{{ asset('js/teacher/sportClass.js') }}"></script>
 @endsection

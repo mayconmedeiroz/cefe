@@ -2,6 +2,8 @@ $(document).ready(function () {
     $('.aside-brand-aside-toggler').on('click', function (e) {
         e.preventDefault();
         $('.aside').toggleClass('toggled');
+        $('body').toggleClass('aside-enabled');
+        $('.toggle-open').toggleClass('toggled-open');
     });
 
     $.ajaxSetup({

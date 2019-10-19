@@ -14,6 +14,14 @@ class ReportController extends Controller
         return view('dashboard.report.report');
     }
 
+    public function uploadImage($request)
+    {
+        $image = 'bug_image'.time().'.'.request()->image->getClientOriginalExtension();
+        $request->image->storeAs('bug',$image, 'public');
+
+        return response()->json($image);
+    }
+
     public function storeReport(Request $request)
     {
         $error = Validator::make($request->all(), [
@@ -30,7 +38,7 @@ class ReportController extends Controller
             'title'         => $request->title,
             'content'       => $request->input('content'),
             'image'         => ($request->image) ? $this->uploadImage($request)->original : NULL,
-            'seriousness'        => $request->seriousness,
+            'seriousness'   => $request->seriousness,
         ]);
 
         return redirect()->back()->with(['error' => false, 'messages' => ['Problema reportado com sucesso.']]);

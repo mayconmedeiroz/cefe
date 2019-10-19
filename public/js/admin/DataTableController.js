@@ -247,8 +247,8 @@ class DataTableController {
                     setTimeout(function(){
                         $('#confirmModal').modal('hide');
                         $('#list').DataTable().ajax.reload();
+                        $('#confirmDelete').text('Confirmar');
                     }, 300);
-                    $(this).text('Confirmar');
                 }
             });
         });

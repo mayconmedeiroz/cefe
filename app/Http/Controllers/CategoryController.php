@@ -23,7 +23,8 @@ class CategoryController extends Controller
     public function getData(Request $request)
     {
         $data = DB::table('categories')
-            ->select('id', 'name');
+            ->select('id', 'name')
+            ->whereNull('deleted_at');
 
         return DataTables()->of($data)->make(true);
     }

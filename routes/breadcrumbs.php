@@ -83,6 +83,12 @@ Breadcrumbs::for('employee.articles.index', function ($trail) {
     $trail->push('Gerenciar Notícias');
 });
 
+// Dashboard > Funcionário > Gerenciar Escolas
+Breadcrumbs::for('employee.schools.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Gerenciar Escolas');
+});
+
 // Dashboard > Funcionário > Gerenciar Categorias
 Breadcrumbs::for('employee.categories.index', function ($trail) {
     $trail->parent('dashboard');

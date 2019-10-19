@@ -1,8 +1,8 @@
 @extends('layouts.dashboard', ['title' => 'Gerenciar Notícias'])
 
 @section('custom-css')
-    <link rel="stylesheet" href="{{ asset('css/datatables.min.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('css/summernote-bs4.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('vendors/datatables/css/datatables.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('vendors/summernote/css/summernote-bs4.css') }}"/>
 @endsection
 
 @section('content')
@@ -24,9 +24,9 @@
 @endsection
 
 @section('custom-js')
-<script src="{{ asset('js/datatables.min.js') }}"></script>
-<script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
-<script src="{{ asset('js/summernote-pt-BR.min.js') }}"></script>
+<script src="{{ asset('vendors/datatables/js/datatables.min.js') }}"></script>
+<script src="{{ asset('vendors/summernote/js/summernote-bs4.min.js') }}"></script>
+<script src="{{ asset('vendors/summernote/js/summernote-pt-BR.min.js') }}"></script>
 <script src="{{ asset('js/admin/DataTableController.js') }}"></script>
 <script src="{{ asset('js/admin/articles.js') }}"></script>
 <script>

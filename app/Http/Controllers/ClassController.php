@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use App\School;
 use App\Sport;
 use App\SportClass;
 use App\StudentClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ClassController extends Controller
 {
@@ -38,13 +38,27 @@ class ClassController extends Controller
 
     public function getData($id)
     {
-        $classes = User::with(['studentSchoolClass.school:id,acronym', 'studentClass:name'])
-            ->select('users.id', 'users.name')
-            ->whereHas('studentClass', function($query) use($id) {
-                $query->where('sport_class_id', $id);
-            });
+        $class = DB::table('users')
+            ->leftJoin('student_school_classes', function($join){
+                $join->on('student_school_classes.student_id', '=', 'users.id')
+                    ->whereNull('student_school_classes.deleted_at');
+            })
+            ->join('school_classes', 'student_school_classes.school_class_id', '=', 'school_classes.id')
+            ->join('schools', 'school_classes.school_id', '=', 'schools.id')
+            ->leftJoin('student_classes', function($join){
+                $join->on('student_classes.student_id', '=', 'users.id')
+                    ->whereNull('student_classes.deleted_at');
+            })
+            ->join('sport_classes', function($join) use($id){
+                $join->on('sport_classes.id', '=', 'student_classes.sport_class_id')
+                    ->where('sport_classes.id', $id)
+                    ->whereNull('sport_classes.deleted_at');
+            })
+            ->select('users.id', 'users.name', 'schools.acronym', 'school_classes.class', 'student_school_classes.class_number')
+            ->whereNull('users.deleted_at')
+            ->get();
 
-        return DataTables()->of($classes)->make(true);
+        return DataTables()->of($class)->make(true);
     }
 
     /**

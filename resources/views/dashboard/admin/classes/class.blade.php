@@ -1,7 +1,7 @@
 @extends('layouts.dashboard', ['title' => 'Turma ' . $classes->name ])
 
 @section('custom-css')
-    <link rel="stylesheet" href="{{ asset('css/datatables.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('vendors/datatables/css/datatables.min.css') }}"/>
 @endsection
 
 @section('content')
@@ -22,33 +22,42 @@
 @endsection
 
 @section('custom-js')
-<script src="{{ asset('js/datatables.min.js') }}"></script>
+<script src="{{ asset('vendors/datatables/js/datatables.min.js') }}"></script>
 <script src="{{ asset('js/admin/DataTableController.js') }}"></script>
 <script>
+    var sport_class;
+    var school_class;
     $(document).ready(function () {
         let dataTableColumns = [
             {data: "id", name: "id"},
             {data: "name", name: "name"},
-            {data: "student_school_class[0].school.acronym", name: "acronym"},
-            {data: "student_school_class[0].class", name: "class"},
-            {data: "student_school_class[0].pivot.class_number", name: "class_number"},
+            {data: "acronym", name: "acronym"},
+            {data: "class", name: "class"},
+            {data: "class_number", name: "class_number"},
         ];
 
         let sportId = window.location.href.split('/').slice(-1).pop();
 
-        new DataTableController(`class/${sportId}`, dataTableColumns, 'Turma');
+        new DataTableController('admin', `class/${sportId}`, dataTableColumns, 'Turma');
     });
 
     window.customCreate = function () {
         $('#password').attr('required', true);
     };
+
     window.customEdit = function (data) {
         $('#password').attr('required', false);
-        $('#school').val(data.student_school_class[0].school.id).change();
-        school_class = data.student_school_class[0].id;
-        $('#class_number').val(data.student_school_class[0].pivot.class_number);
-        $('#sport').val(data.student_class[0].sport.id).change();
-        sport_class = data.student_class[0].id;
+
+        if (data.student_school_class != '') {
+            $('#school').val(data.student_school_class[0].school.id).change();
+            school_class = data.student_school_class[0].id;
+            $('#class_number').val(data.student_school_class[0].pivot.class_number);
+        }
+
+        if (data.student_class != '') {
+            $('#sport').val(data.student_class[0].sport.id).change();
+            sport_class = data.student_class[0].id;
+        }
     };
 </script>
 <script src="{{ asset('js/admin/students.js') }}"></script>

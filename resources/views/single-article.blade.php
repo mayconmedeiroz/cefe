@@ -7,7 +7,7 @@
 
 @section('content')
     <div class="site-section ftco-subscribe-1 site-blocks-cover bg-light pb-4"
-         style="background-image: url('{{ asset('img/global/bg_1.jpg') }}');padding-top: 8em;">
+         style="background-image: url('{{ asset('img/bg_1.jpg') }}');padding-top: 8em;">
         <div class="container">
             <div class="row align-items-end">
                 <div class="col-lg-7">

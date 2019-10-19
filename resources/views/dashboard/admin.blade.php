@@ -1,7 +1,7 @@
 @extends('layouts.dashboard', ['title' => 'Dashboard'])
 
 @section('custom-css')
-    <link rel="stylesheet" href="{{ asset('css/fullcalendar.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('vendors/fullcalendar/css/fullcalendar.min.css') }}"/>
 @endsection
 
 @section('content')
@@ -44,8 +44,8 @@
 </div>
 @endsection
 @section('custom-js')
-    <script src="{{ asset('js/fullcalendar.min.js') }}"></script>
-    <script src="{{ asset('js/fullcalendar.pt-br.min.js') }}"></script>
+    <script src="{{ asset('vendors/fullcalendar/js/fullcalendar.min.js') }}"></script>
+    <script src="{{ asset('vendors/fullcalendar/js/fullcalendar.pt-br.min.js') }}"></script>
 
     <script>
         $(document).ready(function () {

@@ -1,7 +1,7 @@
 @extends('layouts.dashboard', ['title' => 'Listar Alunos'])
 
 @section('custom-css')
-    <link rel="stylesheet" href="{{ asset('css/datatables.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('vendors/datatables/css/datatables.min.css') }}"/>
 @endsection
 
 @section('content')
@@ -23,7 +23,7 @@
 @endsection
 
 @section('custom-js')
-<script src="{{ asset('js/datatables.min.js') }}"></script>
+<script src="{{ asset('vendors/datatables/js/datatables.min.js') }}"></script>
 <script src="{{ asset('js/admin/DataTableController.js') }}"></script>
 <script>
     var sport_class;
@@ -33,9 +33,9 @@
             {data: "id", name: "id"},
             {data: "enrollment", name: "enrollment"},
             {data: "name", name: "name"},
-            {data: "student_school_class[0].class", name: "class"},
-            {data: "student_school_class[0].pivot.class_number", name: "class_number"},
-            {data: "student_class[0].name", name: "sport_class"}
+            {data: "class", name: "class"},
+            {data: "class_number", name: "class_number"},
+            {data: "sport_class", name: "sport_class"},
         ];
 
         new DataTableController('secretary', 'students', dataTableColumns, 'Aluno');
@@ -61,7 +61,7 @@
     };
 
 </script>
-<script src="{{ asset('js/admin/students.js') }}"></script>
+<script src="{{ asset('js/secretary/students.js') }}"></script>
 @modal
     @slot('inputs')
         <div class="form-group">

@@ -21,10 +21,6 @@ Route::get('clear-cache', function() {
     return 'DONE'; //Return anything
 });
 
-Route::get('test', function() {
-    return view('test');
-});
-
 Route::get('/', 'HomeController@index')->name('index');
 Route::get('article/{id}', 'ArticleController@show')->name('article.show');
 Route::get('blog', 'HomeController@articles')->name('blog');
@@ -115,6 +111,10 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('employees', 'EmployeeController');
         Route::post('employees/getData', 'EmployeeController@getData');
         Route::post('employees/update', 'EmployeeController@update');
+
+        Route::resource('schools', 'SchoolController');
+        Route::post('schools/getData', 'SchoolController@getData');
+        Route::post('schools/update', 'SchoolController@update');
 
         Route::resource('sport_classes', 'SportClassController');
         Route::post('sport_classes/update', 'SportClassController@update');

@@ -25,6 +25,8 @@ class ReportCardController {
 							$('#school_class').append(`<option value="${value.id}">${value.class}</option>`);
 						});
 						$('.export-row').fadeOut('slow');
+                        $('#evaluation').prop('disabled', true);
+                        $('#school_class option:first, #evaluation option:first').prop('selected', true);
 					}
 				});
 			}
@@ -35,7 +37,7 @@ class ReportCardController {
 			$('#evaluation option:first').prop('selected', true);
 			$('.export-row').fadeOut('slow');
 		});
-	
+
 		$(document).on('change', '#evaluation', function() {
 			let school_year = $('#school_year').val();
 			let school = $('#school').val();

@@ -71,12 +71,6 @@ body button {
     min-width: 0
 }
 
-@media screen\0 {
-    .grid.grid-ver:not(.grid-desktop):not(.grid-desktop-and-tablet):not(.grid-tablet):not(.grid-tablet-and-mobile):not(.grid-mobile)>.grid-item.grid-item-fluid {
-        min-width: none
-    }
-}
-
 .grid>.grid-item {
     max-width: 100%
 }
@@ -325,7 +319,7 @@ body {
         text-indent: -9999px;
         appearance: none;
         box-shadow: none;
-        border-radius: none;
+        border-radius: 0;
         border: none;
         cursor: pointer;
         background: none;
@@ -399,12 +393,11 @@ body {
     .header-mobile .header-mobile-toolbar .header-mobile-topbar-toggler {
         appearance: none;
         box-shadow: none;
-        border-radius: none;
+        border-radius: 0;
         border: none;
         cursor: pointer;
         background: none;
         outline: none!important;
-        margin: 0;
         padding: 0;
         display: flex;
         align-items: center;
@@ -543,8 +536,7 @@ body {
 .header-topbar {
     display: flex;
     align-items: stretch;
-    padding: 0;
-    padding-right: 15px
+    padding: 0 15px 0 0;
 }
 
 .header-topbar .header-topbar-item {
@@ -597,10 +589,6 @@ body {
 }
 
 .header-topbar .header-topbar-item.header-topbar-item-user .header-topbar-user .header-topbar-username {
-    display: flex;
-    display: flex;
-    display: flex;
-    display: flex;
     display: flex;
     align-self: center;
     padding: 0 .55rem 0 0;
@@ -686,7 +674,7 @@ body {
 
 .aside-brand .aside-brand-logo {
     display: flex;
-    justify-content: flex-begin
+    justify-content: flex-start
 }
 
 .aside-brand .aside-brand-tools {
@@ -1039,10 +1027,10 @@ body {
 }
 
 @media (min-width:1025px) {
-    .aside-brand {
+    /*.aside-brand {
         background-color: #1a1a27;
         box-shadow: none
-    }
+    }*/
     .aside-brand .aside-brand-tools .aside-brand-aside-toggler svg g [fill] {
         transition: fill 0.3s ease;
         fill: #494b74
@@ -1419,13 +1407,14 @@ select {
 }
 
 .calendar button:hover {
-  background: #f7f8fa;
+  background: #5d78ff;
+  border: 0;
 }
 
 .calendar button:focus,
 .calendar button:active {
-  border: 1px solid #db1430 !important;
-  background: #db1430 !important;
+  border: 1px solid #5d78ff !important;
+  background: #5d78ff !important;
   color: #fff;
 }
 
@@ -1492,7 +1481,6 @@ select {
 }
 
 .form-first-login-title span {
-  font-family: Poppins;
   font-weight: bold;
   font-size: 30pt;
   color: #fff;
@@ -1527,6 +1515,9 @@ select {
   content: '-';
 }
 
+.toggled-open {
+    display: none;
+}
 
 /*///////////////////////////////////////////////////////////////////////*/
 /*///////////////////////////////////////////////////////////////////////*/

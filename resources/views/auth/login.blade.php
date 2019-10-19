@@ -11,13 +11,13 @@
     <title>Login - Centro Esportivo da FAETEC</title>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('vendors/bootstrap/css/bootstrap.min.css') }}"/>
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
 
     <!-- Style -->
-    <link rel="stylesheet" href="{{ asset('css/login.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/style-login.css') }}"/>
 </head>
 <body>
 <div class="grid grid-ver grid-root">
@@ -26,7 +26,7 @@
             <div class="grid-item grid-item-order-tablet-and-mobile-2 grid grid-hor login-aside" style="background: url({{ asset('img/background.jpg') }}) right 100%;">
                 <div class="grid-item">
                     <a href="{{ route('index') }}" class="login-logo">
-                        <img src="{{ asset('img/global/logo.png') }}" alt="Logo" title="Logo">
+                        <img src="{{ asset('img/logo.png') }}" alt="Logo" title="Logo">
                     </a>
                 </div>
                 <div class="grid-item grid-item-fluid grid grid-ver">
@@ -83,8 +83,8 @@
         </div>
     </div>
 </div>
-<script src="{{ asset('js/jquery.min.js') }}"></script>
-<script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('vendors/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('vendors/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('js/login.js') }}"></script>
 </body>
 </html>

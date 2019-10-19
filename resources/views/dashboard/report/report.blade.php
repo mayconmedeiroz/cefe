@@ -1,24 +1,20 @@
 @extends('layouts.dashboard', ['title' => 'Reportar um Problema'])
 
-@section('custom-css')
-    <link rel="stylesheet" href="{{ asset('css/datatables.min.css') }}"/>
-@endsection
-
 @section('content')
     <div class="row">
         <div class="col">
-            <form method="POST" action="{{ route('report') }}">
+            <form method="POST" action="{{ route('report') }}" enctype="multipart/form-data">
                 <div class="form">
-                        @if (\Session::has('error'))
-                            <div class="alert alert-{{ (\Session::get('error') == true) ? 'danger' : 'success' }}">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                @foreach(\Session::get('messages') as $message)
-                                    {{ $message }}
-                                @endforeach
-                            </div>
-                        @endif
+                    @if (\Session::has('error'))
+                        <div class="alert alert-{{ (\Session::get('error') == true) ? 'danger' : 'success' }}">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            @foreach(\Session::get('messages') as $message)
+                                {{ $message }}
+                            @endforeach
+                        </div>
+                    @endif
                     @csrf
                     <div class="form-body">
                         <div class="form-group">
@@ -62,8 +58,6 @@
 @endsection
 
 @section('custom-js')
-<script src="{{ asset('js/datatables.min.js') }}"></script>
-<script src="{{ asset('js/admin/DataTableController.js') }}"></script>
 <script>
     $(document).on('change', '#image', function() {
         var fileName = $(this).val().split("\\").pop();
