@@ -12,7 +12,7 @@ $(document).ready(function () {
 		formData.append('schoolYearId', $('#school_year').val());
 		formData.append('evaluationId', $('#evaluation').val());
 		$.ajax({
-			url: '/student/getStudentReportCard/',
+			url: '/dashboard/student/getStudentReportCard/',
 			method: 'GET',
 			data: formData,
 			contentType: false,

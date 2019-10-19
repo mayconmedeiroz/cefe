@@ -6,11 +6,20 @@ use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+    public function clearCache()
+    {
+        $exitCode = \Artisan::call('cache:clear');
+        $exitCode = \Artisan::call('view:clear');
+        $exitCode = \Artisan::call('route:clear');
+        $exitCode = \Artisan::call('clear-compiled');
+        $exitCode = \Artisan::call('config:cache');
+        $exitCode = \Artisan::call('route:cache');
+
+        $exitCode = \Artisan::call('migrate:fresh');
+        $exitCode = \Artisan::call('db:seed');
+        $exitCode = \Artisan::call('storage:link');
+        return 'DONE'; //Return anything
+    }
 
     /**
      * Show the application dashboard.

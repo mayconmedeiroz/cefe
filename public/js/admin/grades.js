@@ -22,7 +22,7 @@ $(document).ready(function () {
 		let sportId = $(this).val();
 		if(sportId) {
 			$.ajax({
-				url: '/admin/grades/getSportClasses/'+sportId,
+				url: '/dashboard/admin/grades/getSportClasses/'+sportId,
 				type: 'GET',
 				success:function(data) {
 					$('#sport_class').empty().append('<option value="" disabled selected hidden>Escolha a Turma:</option>').removeAttr("disabled");
@@ -53,7 +53,7 @@ $(document).ready(function () {
 		let evaluation = $(this).val();
 
 		await $.ajax({
-			url: '/admin/grades/getEvaluationColumns/'+evaluation,
+			url: '/dashboard/admin/grades/getEvaluationColumns/'+evaluation,
 			type: 'GET',
 			success: function(data) {
 				attendance = data.attendance;
@@ -88,7 +88,7 @@ $(document).ready(function () {
 			autoWidth: false,
 			pageLength: -1,
 			ajax: {
-				url: `/admin/grades/getData/${sportClass}/${evaluation}`,
+				url: `/dashboard/admin/grades/getData/${sportClass}/${evaluation}`,
 				type: 'POST',
 			},
 			drawCallback: function() {
@@ -131,7 +131,7 @@ $(document).ready(function () {
 		});
 
 		$.ajax({
-			url: `/admin/grades/getLessonData/${sportClass}/${evaluation}`,
+			url: `/dashboard/admin/grades/getLessonData/${sportClass}/${evaluation}`,
 			type: 'GET',
 			success:function(data) {
 				$('#planned_classes').val(data.planned_classes);

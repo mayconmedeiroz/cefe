@@ -33,7 +33,7 @@ $(document).ready(function () {
 		let evaluation = $(this).val();
 
 		await $.ajax({
-			url: '/teacher/grades/getEvaluationColumns/'+evaluation,
+			url: '/dashboard/teacher/grades/getEvaluationColumns/'+evaluation,
 			type: 'GET',
 			success: function(data) {
 				attendance = data.attendance;
@@ -68,7 +68,7 @@ $(document).ready(function () {
 			autoWidth: false,
 			pageLength: -1,
 			ajax: {
-				url: `/teacher/grades/getData/${sportClass}/${evaluation}`,
+				url: `/dashboard/teacher/grades/getData/${sportClass}/${evaluation}`,
 				type: 'POST',
 			},
 			drawCallback: function() {
@@ -111,7 +111,7 @@ $(document).ready(function () {
 		});
 
 		$.ajax({
-			url: `/teacher/grades/getLessonData/${sportClass}/${evaluation}`,
+			url: `/dashboard/teacher/grades/getLessonData/${sportClass}/${evaluation}`,
 			type: 'GET',
 			success:function(data) {
 				$('#planned_classes').val(data.planned_classes);
@@ -169,7 +169,7 @@ $(document).ready(function () {
 		obj.classes_held=$('#classes_held').val();
 		$.ajax({
 			data: obj,
-			url: '/teacher/grades/storeLesson/',
+			url: '/dashboard/teacher/grades/storeLesson/',
 			type: 'POST',
 			success:function(data) {
 				console.log(data, obj);

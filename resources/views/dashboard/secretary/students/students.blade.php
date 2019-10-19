@@ -24,7 +24,7 @@
 
 @section('custom-js')
 <script src="{{ asset('vendors/datatables/js/datatables.min.js') }}"></script>
-<script src="{{ asset('js/admin/DataTableController.js') }}"></script>
+<script src="{{ asset('js/Controller/DataTableController.js') }}"></script>
 <script>
     var sport_class;
     var school_class;

@@ -28,7 +28,7 @@ class ImportStudentController {
 			$('#form-result').html(html);
 
 			$.ajax({
-				url: `/${userLevel}/import_students`,
+				url: `/dashboard/${userLevel}/import_students`,
 				method: 'POST',
 				data: formData,
 				contentType: false,

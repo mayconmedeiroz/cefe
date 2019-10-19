@@ -64,7 +64,7 @@ class DataTableController {
             serverSide: true,
             autoWidth: false,
             ajax: {
-                url: `/${userLevel}/${urlMethod}/getData`,
+                url: `/dashboard/${userLevel}/${urlMethod}/getData`,
                 type: 'POST'
             },
             lengthMenu: [ [10, 25, 50, 100, -1], [10, 25, 50, 100, 'Todos'] ],
@@ -150,7 +150,7 @@ class DataTableController {
             let action = ($('#submit-button').val() === 'Adicionar') ? '' : '/update';
 
             $.ajax({
-                url:`/${userLevel}/${urlMethod}${action}`,
+                url:`/dashboard/${userLevel}/${urlMethod}${action}`,
                 method: 'POST',
                 data: formData,
                 contentType: false,
@@ -199,7 +199,7 @@ class DataTableController {
             $('#form-result').html('');
 
             $.ajax({
-                url:`/${userLevel}/${urlMethod}/${buttonId}/edit`,
+                url:`/dashboard/${userLevel}/${urlMethod}/${buttonId}/edit`,
                 dataType:"json",
                 success:function(data){
                     $('#submit-form')[0].reset();
@@ -242,7 +242,7 @@ class DataTableController {
 
             $.ajax({
                 method:'DELETE',
-                url:`/${userLevel}/${urlMethod}/${buttonId}`,
+                url:`/dashboard/${userLevel}/${urlMethod}/${buttonId}`,
                 success:function(){
                     setTimeout(function(){
                         $('#confirmModal').modal('hide');

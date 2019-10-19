@@ -27,7 +27,7 @@
 <script src="{{ asset('vendors/datatables/js/datatables.min.js') }}"></script>
 <script src="{{ asset('vendors/summernote/js/summernote-bs4.min.js') }}"></script>
 <script src="{{ asset('vendors/summernote/js/summernote-pt-BR.min.js') }}"></script>
-<script src="{{ asset('js/admin/DataTableController.js') }}"></script>
+<script src="{{ asset('js/Controller/DataTableController.js') }}"></script>
 <script src="{{ asset('js/admin/articles.js') }}"></script>
 <script>
     $(document).ready(function () {

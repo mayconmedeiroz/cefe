@@ -56,7 +56,7 @@
 @endsection
 
 @section('custom-js')
-<script src="{{ asset('js/admin/ReportCardController.js') }}"></script>
+<script src="{{ asset('js/Controller/ReportCardController.js') }}"></script>
 <script>
     new ReportCardController('admin');
 </script>

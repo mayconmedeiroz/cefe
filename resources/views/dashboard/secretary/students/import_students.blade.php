@@ -50,7 +50,7 @@
 @endsection
 
 @section('custom-js')
-    <script src="{{ asset('js/admin/ImportStudentController.js') }}"></script>
+    <script src="{{ asset('js/Controller/ImportStudentController.js') }}"></script>
     <script>
         new ImportStudentController('secretary');
     </script>

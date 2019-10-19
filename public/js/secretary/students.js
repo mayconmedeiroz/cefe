@@ -12,7 +12,7 @@ $(document).ready(function () {
 		let sportId = $(this).val();
 		if(sportId) {
 			$.ajax({
-				url: '/secretary/students/getSportClasses/'+sportId,
+				url: '/dashboard/secretary/students/getSportClasses/'+sportId,
 				type: "GET",
 				dataType: "json",
 				success:function(data) {

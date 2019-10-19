@@ -12,7 +12,7 @@ $(document).ready(function () {
 		let sportId = $(this).val();
 		if(sportId) {
 			$.ajax({
-				url: '/admin/students/getSportClasses/'+sportId,
+				url: '/dashboard/admin/students/getSportClasses/'+sportId,
 				type: "GET",
 				dataType: "json",
 				success:function(data) {
@@ -33,7 +33,7 @@ $(document).ready(function () {
 		let schoolId = $(this).val();
 		if(schoolId) {
 			$.ajax({
-				url: '/admin/students/getSchoolClasses/'+schoolId,
+				url: '/dashboard/admin/students/getSchoolClasses/'+schoolId,
 				type: "GET",
 				dataType: "json",
 				success:function(data) {

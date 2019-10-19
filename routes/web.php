@@ -11,16 +11,6 @@
 |
 */
 
-Route::get('clear-cache', function() {
-    $exitCode = Artisan::call('migrate:fresh');
-    $exitCode = Artisan::call('db:seed');
-    $exitCode = Artisan::call('storage:link');
-    $exitCode = Artisan::call('config:clear');
-    $exitCode = Artisan::call('cache:clear');
-    $exitCode = Artisan::call('config:cache');
-    return 'DONE'; //Return anything
-});
-
 Route::get('/', 'HomeController@index')->name('index');
 Route::get('article/{id}', 'ArticleController@show')->name('article.show');
 Route::get('blog', 'HomeController@articles')->name('blog');
@@ -31,21 +21,23 @@ Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
-Route::middleware(['auth'])->group(function () {
+Route::prefix('dashboard')->middleware(['auth'])->group(function () {
 
     //Routes available to all auth users
-    Route::get('dashboard', 'UserController@dashboard')->name('dashboard');
-    Route::get('profile', 'UserController@profile')->name('profile');
+    Route::get('/', 'UserController@dashboard')->name('dashboard');
+
     Route::get('report', 'ReportController@report')->name('report');
     Route::post('report', 'ReportController@storeReport');
 
+    Route::get('profile', 'UserController@profile')->name('profile');
     Route::post('updateAvatar', 'UserController@updateAvatar');
     Route::post('updateUser', 'UserController@updateUser');
     Route::post('changePassword', 'UserController@changePassword');
 
+    Route::post('first_login', 'UserController@firstLogin');
+
     //Routes available to student
     Route::name('student.')->prefix('student')->middleware(['student'])->group(function () {
-        Route::post('first_login', 'UserController@firstLogin');
         Route::resource('enroll', 'EnrollController');
         Route::get('report_card', 'ReportCardController@studentReportCardIndex')->name('studentReportCardIndex');
         Route::get('getStudentReportCard', 'ReportCardController@getStudentReportCard');
@@ -90,6 +82,9 @@ Route::middleware(['auth'])->group(function () {
 
     //Routes available to employee
     Route::name('employee.')->prefix('admin')->middleware(['employee'])->group(function () {
+
+        Route::get('clear-cache', 'HomeController@clearCache');
+
         Route::resource('sports', 'SportController');
         Route::post('sports/update', 'SportController@update');
         Route::post('sports/getData', 'SportController@getData');

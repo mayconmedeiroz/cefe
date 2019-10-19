@@ -20,7 +20,7 @@
 
 @section('custom-js')
 <script src="{{ asset('vendors/datatables/js/datatables.min.js') }}"></script>
-<script src="{{ asset('js/admin/DataTableController.js') }}"></script>
+<script src="{{ asset('js/Controller/DataTableController.js') }}"></script>
 <script>
     $(document).ready(function () {
         let dataTableColumns = [

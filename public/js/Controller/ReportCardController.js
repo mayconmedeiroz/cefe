@@ -16,7 +16,7 @@ class ReportCardController {
 			let schoolId = $(this).val();
 			if(schoolId) {
 				$.ajax({
-					url: `/${userLevel}/report_cards/getSchoolClasses/${schoolId}`,
+					url: `/dashboard/${userLevel}/report_cards/getSchoolClasses/${schoolId}`,
 					type: 'GET',
 					success:function(data) {
 						console.log(data);
@@ -43,10 +43,8 @@ class ReportCardController {
 			let school = $('#school').val();
 			let school_class = $('#school_class').val();
 			let evaluation = $('#evaluation').val();
-			$('.export-button').attr('href', `/${userLevel}/report_cards/export/${school_year}/${school}/${school_class}/${evaluation}`);
+			$('.export-button').attr('href', `/dashboard/${userLevel}/report_cards/export/${school_year}/${school}/${school_class}/${evaluation}`);
 			$('.export-row').fadeIn('slow');
 		});
 	}
-
-
 }

@@ -3,7 +3,7 @@ $(document).ready(function () {
 		e.preventDefault();
 
 		$.ajax({
-			url: '/student/first_login/',
+			url: '/dashboard/student/first_login/',
 			method: 'POST',
 			data: new FormData(this),
 			contentType: false,
