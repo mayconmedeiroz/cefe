@@ -1,4 +1,4 @@
-@extends('layouts.dashboard', ['title' => 'Turma ' . $classes->name ])
+@extends('layouts.dashboard', ['title' => 'Turma ' . $breadcrumb->name ])
 
 @section('custom-css')
     <link rel="stylesheet" href="{{ asset('vendors/datatables/css/datatables.min.css') }}"/>

@@ -51,9 +51,9 @@ class DataTableController {
             dataTablesColumns.push(
                 {name: 'action', orderable: false, searchable: false,
                     render: function (data, type, row) {
-                        return `${(typeof viewExists != 'undefined') ? `<a href="/${userLevel}/${viewExists}/${row.id}" class="view btn btn-secondary btn-sm"><i class="fas fa-eye"></i></a>` : ''}
-                                ${(!(userLevel === 'teacher')) ? `<button type="button" name="edit" id="${row.id}" class="edit btn btn-primary btn-sm ${(typeof viewExists != 'undefined') ? 'mx-lg-1' : 'mr-lg-1'}"><i class="fas fa-edit"></i></button>
-                                <button type="button" name="delete" id="${row.id}" class="delete btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>` : ''}`;
+                        return `${(typeof viewExists != 'undefined') ? `<a href="/dashboard/${userLevel}/${viewExists}/${row.id}" title="Visualizar" class="view btn btn-secondary btn-sm"><i class="fas fa-eye"></i></a>` : ''}
+                                ${(!(userLevel === 'teacher')) ? `<button type="button" name="edit" title="Modificar" id="${row.id}" class="edit btn btn-primary btn-sm ${(typeof viewExists != 'undefined') ? 'mx-lg-1' : 'mr-lg-1'}"><i class="fas fa-edit"></i></button>
+                                <button type="button" name="delete" id="${row.id}" title="Excluir" class="delete btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>` : ''}`;
                     }
                 }
             );
@@ -69,6 +69,7 @@ class DataTableController {
             },
             lengthMenu: [ [10, 25, 50, 100, -1], [10, 25, 50, 100, 'Todos'] ],
             pagingType: "full_numbers",
+            responsive: true,
             columns: dataTablesColumns,
             dom: "<'row'<'col-sm-12 mb-3'B>>" +
                  "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +

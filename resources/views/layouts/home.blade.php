@@ -74,23 +74,18 @@
         <div class="row">
             <div class="col-lg-4 col-md-6 mb-5 mb-lg-0">
                 <span class="icon fas fa-graduation-cap"></span>
-                <h3>Lorem ipsum dolor sit</h3>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reiciendis recusandae, iure repellat quis
-                    delectus ea? Dolore, amet reprehenderit.</p>
+                <h3>Grade fluida</h3>
+                <p>Facilidade de troca e escolha de turmas e modalidades de acordo com o ano.</p>
             </div>
             <div class="col-lg-4 col-md-6 mb-5 mb-lg-0">
                 <span class="icon fas fa-school"></span>
-                <h3>Lorem ipsum dolor sit</h3>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reiciendis recusandae, iure repellat quis
-                    delectus ea?
-                    Dolore, amet reprehenderit.</p>
+                <h3>Facilidade nos horários</h3>
+                <p>Horários de acordo com as escolas.</p>
             </div>
             <div class="col-lg-4 col-md-6 mb-5 mb-lg-0">
                 <span class="icon fas fa-calendar-alt"></span>
-                <h3>Lorem ipsum dolor sit</h3>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reiciendis recusandae, iure repellat quis
-                    delectus ea?
-                    Dolore, amet reprehenderit.</p>
+                <h3>Calendário facilitado</h3>
+                <p>Calendario para todos com informações.</p>
             </div>
         </div>
     </div>

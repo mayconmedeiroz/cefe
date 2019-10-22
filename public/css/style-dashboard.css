@@ -1157,6 +1157,49 @@ body {
     color: #4c4e6f
 }
 
+@media (max-width:1024px) {
+    .aside {
+        z-index: 1001;
+        position: fixed;
+        -webkit-overflow-scrolling: touch;
+        top: 0;
+        bottom: 0;
+        overflow-y: auto;
+        backface-visibility: hidden;
+        width: 275px!important;
+        transition: left .3s ease, right .3s ease;
+        left: -295px;
+    }
+    .aside.aside-on {
+        transition: left .3s ease, right .3s ease;
+        left: 0;
+    }
+}
+
+@media screen\0 and (max-width:1024px) {
+    .aside {
+        transition: none!important;
+    }
+}
+
+@media (max-width:1024px) {
+    .aside {
+        box-shadow: 0 1px 9px -3px rgba(0, 0, 0, .75);
+    }
+}
+
+@media (max-width:325px) {
+    .aside {
+        width: 90%!important;
+    }
+}
+
+@media screen\0 and (max-width:1024px) {
+    .aside {
+        transition: none!important;
+    }
+}
+
 /*///////////////////////////////////////////////////////////////////////*/
 /*///////////////////////////////////////////////////////////////////////*/
 /*///////////////////////////////////////////////////////////////////////*/
@@ -1240,6 +1283,10 @@ select {
 
 .list-div td {
   vertical-align: middle;
+}
+
+.list-div td:focus {
+    outline: none;
 }
 
 .selected {

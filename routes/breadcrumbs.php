@@ -54,9 +54,9 @@ Breadcrumbs::for('employee.employees.index', function ($trail) {
 });
 
 // Dashboard > Funcionário > Gerenciar Turmas > Turma {id}
-Breadcrumbs::for('employee.class.index', function ($trail, $classes) {
+Breadcrumbs::for('employee.class.index', function ($trail, $breadcrumb) {
     $trail->parent('employee.sport_classes.index');
-    $trail->push('Turma ' . $classes);
+    $trail->push('Turma ' . $breadcrumb);
 });
 
 // Dashboard > Funcionário > Lançamento de Notas
@@ -87,6 +87,12 @@ Breadcrumbs::for('employee.articles.index', function ($trail) {
 Breadcrumbs::for('employee.schools.index', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Gerenciar Escolas');
+});
+
+// Dashboard > Funcionário > Gerenciar Turmas de Escola
+Breadcrumbs::for('employee.school_classes.index', function ($trail, $breadcrumb) {
+    $trail->parent('dashboard');
+    $trail->push('Gerenciar Turmas da ' . $breadcrumb);
 });
 
 // Dashboard > Funcionário > Gerenciar Categorias

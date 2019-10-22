@@ -12,7 +12,7 @@
                 <th width="10%">ID</th>
                 <th>Nome</th>
                 <th>Sigla</th>
-                <th width="101px">Ação</th>
+                <th width="64px">Ação</th>
             </tr>
         </thead>
     </table>
@@ -31,8 +31,6 @@
         ];
 
         new DataTableController('admin', 'schools', dataTableColumns, 'Escola');
-
-        window.viewExists = 'school_classes';
     });
 </script>
 @modal

@@ -2,10 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\School;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class SchoolController extends Controller
 {
+    public function validation($request)
+    {
+        return Validator::make($request->all(), [
+            'name' => 'required|max:64|unique:schools,name,' . $request->id,
+            'acronym' => 'required|max:10|unique:schools,acronym,' . $request->id
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,6 +24,11 @@ class SchoolController extends Controller
     public function index()
     {
         return view('dashboard.admin.schools.schools');
+    }
+
+    public function getData()
+    {
+        return DataTables()->of(School::get())->make(true);
     }
 
     /**
@@ -34,7 +49,17 @@ class SchoolController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $error = $this->validation($request);
+
+        if($error->fails())
+            return response()->json(['error' => true, 'messages' => $error->errors()->all()]);
+
+        School::create([
+            'name'    => $request->name,
+            'acronym' => $request->acronym
+        ]);
+
+        return response()->json(['error' => false, 'messages' => ['Escola adicionada com sucesso.']]);
     }
 
     /**
@@ -56,7 +81,9 @@ class SchoolController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = School::findOrFail($id);
+
+        return response()->json($data);
     }
 
     /**
@@ -66,9 +93,19 @@ class SchoolController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $error = $this->validation($request);
+
+        if($error->fails())
+            return response()->json(['error' => true, 'messages' => $error->errors()->all()]);
+
+        School::findOrFail($request->id)->update([
+            'name'    => $request->name,
+            'acronym' => $request->acronym
+        ]);
+
+        return response()->json(['error' => false, 'messages' => ['Escola atualizada com sucesso.']]);
     }
 
     /**
@@ -79,6 +116,6 @@ class SchoolController extends Controller
      */
     public function destroy($id)
     {
-        //
+        School::findOrFail($id)->delete();
     }
 }

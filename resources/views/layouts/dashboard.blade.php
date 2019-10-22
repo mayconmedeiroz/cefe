@@ -88,7 +88,7 @@
                 </a>
             </div>
             <nav class="page-breadcrumb" aria-label="breadcrumb">
-                {!! html_entity_decode(Breadcrumbs::render(Request::route()->getName(), Request::is('*/class/*') ? $classes->name : '')) !!}
+                {!! html_entity_decode(Breadcrumbs::render(Request::route()->getName(), isset($breadcrumb) ? $breadcrumb->name : '')) !!}
             </nav>
             <div class="content grid-item grid-item-fluid grid grid-hor">
                 <div class="container container-fluid grid-item grid-item-fluid">

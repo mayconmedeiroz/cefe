@@ -18,6 +18,7 @@ class CreateSchoolsTable extends Migration
             $table->string('name', '64')->unique();
             $table->string('acronym', '10')->unique();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

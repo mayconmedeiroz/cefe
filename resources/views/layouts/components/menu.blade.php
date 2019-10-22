@@ -102,7 +102,7 @@ switch (Auth::user()->level) {
                     <li class="menu-section">
                         <h4 class="menu-section-text">Administração Professor</h4>
                     </li>
-                    <li class="menu-item {{ Request::is('*/sport_classes') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                    <li class="menu-item {{ (Request::is('*/sport_classes') || Request::is('*/class/*')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
                         <a href="{{ route('employee.sport_classes.index') }}" class="menu-link menu-toggle">
                             <span class="menu-link-icon"><i class="fa fa-chalkboard"></i></span>
                             <span class="menu-link-text">Gerenciar Turmas</span>
@@ -157,7 +157,7 @@ switch (Auth::user()->level) {
                     <li class="menu-section">
                         <h4 class="menu-section-text">Administração Professor</h4>
                     </li>
-                    <li class="menu-item {{ Request::is('*/sport_classes') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                    <li class="menu-item {{ (Request::is('*/sport_classes') || Request::is('*/class/*')) ? 'menu-item-active' : '' }}" aria-haspopup="true">
                         <a href="{{ route('teacher.sport_classes.index') }}" class="menu-link menu-toggle">
                             <span class="menu-link-icon"><i class="fa fa-chalkboard"></i></span>
                             <span class="menu-link-text">Gerenciar Turmas</span>

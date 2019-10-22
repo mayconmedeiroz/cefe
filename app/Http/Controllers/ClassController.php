@@ -22,16 +22,16 @@ class ClassController extends Controller
     {
         switch (Auth::user()->level) {
             case 2:
-                $classes = SportClass::findOrFail($id, ['name']);
+                $breadcrumb = SportClass::findOrFail($id, ['name']);
 
-                return view('dashboard.teacher.classes.class')->with(compact('classes'));
+                return view('dashboard.teacher.classes.class')->with(compact('breadcrumb'));
                 break;
             case 4:
                 $sports = Sport::all();
                 $schools = School::all();
-                $classes = SportClass::findOrFail($id, ['name']);
+                $breadcrumb = SportClass::findOrFail($id, ['name']);
 
-                return view('dashboard.admin.classes.class')->with(compact('classes', 'sports', 'schools'));
+                return view('dashboard.admin.classes.class')->with(compact('breadcrumb', 'sports', 'schools'));
                 break;
         }
      }

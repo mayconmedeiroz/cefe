@@ -58,7 +58,7 @@
                         daysOfWeek : '{{ $sportClass->weekday}}',
                         startTime : '{{ $sportClass->start_time }}',
                         endTime: '{{ $sportClass->end_time }}',
-                        url: '{!! url('/') !!}/admin/class/{{ $sportClass->id }}',
+                        url: '{{ route('employee.class.index', ['id' => $sportClass->id]) }}',
                     },
                 @endforeach
                 ],

@@ -25,6 +25,7 @@
                         daysOfWeek : '{{ $sportClass->weekday}}',
                         startTime : '{{ $sportClass->start_time }}',
                         endTime: '{{ $sportClass->end_time }}',
+                        url: '{{ route('teacher.class.index', ['id' => $sportClass->id]) }}',
                     },
                 @endforeach
                 ],

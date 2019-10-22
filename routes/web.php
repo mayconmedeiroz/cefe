@@ -14,7 +14,6 @@
 Route::get('/', 'HomeController@index')->name('index');
 Route::get('article/{id}', 'ArticleController@show')->name('article.show');
 Route::get('blog', 'HomeController@articles')->name('blog');
-Route::get('contact', 'HomeController@contact')->name('contact');
 Route::get('about', 'HomeController@about')->name('about');
 
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -143,5 +142,7 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
         Route::resource('categories', 'CategoryController');
         Route::post('categories/update', 'CategoryController@update');
         Route::post('categories/getData', 'CategoryController@getData');
+
+        Route::get('school_classes/{id}', 'SchoolClassController@index')->name('school_classes.index');
     });
 });

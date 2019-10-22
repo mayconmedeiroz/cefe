@@ -25,18 +25,14 @@
         <article class="row">
             <div class="col-lg-4">
                 <h2 class="section-title-underline">
-                    <span>Lorem ipsum dolor sit</span>
+                    <span>Sobre o CEFE</span>
                 </h2>
             </div>
             <div class="col-lg-4">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, iure dolorum! Nam veniam tempore
-                    tenetur aliquam architecto, hic alias quia quisquam, obcaecati laborum dolores. Ex libero cumque
-                    veritatis numquam placeat?</p>
+                <p>O CEFE é uma das partes mais importantes do campus.</p>
             </div>
             <div class="col-lg-4">
-                <p>Nam veniam tempore tenetur aliquam
-                    architecto, hic alias quia quisquam, obcaecati laborum dolores. Ex libero cumque veritatis numquam
-                    placeat?</p>
+                <p>A Educação Física é uma disciplina muito significativa, porém, por diversas vezes, pouco valorizada na grade curricular. Ela insere, adapta e incorpora o aluno no saber corporal de movimento, sua função é formar o cidadão qualificando-o.</p>
             </div>
         </article>
     </section>
@@ -49,12 +45,9 @@
                 </div>
                 <div class="col-lg-5 ml-auto align-self-center">
                     <h2 class="section-title-underline mb-5">
-                        <span>Lorem ipsum dolor sit</span>
+                        <span>Facilidade para os estudantes</span>
                     </h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At itaque dolore libero corrupti!
-                        Itaque, delectus?</p>
-                    <p>Modi sit dolor repellat esse! Sed necessitatibus itaque libero odit placeat nesciunt, voluptatum
-                        totam facere.</p>
+                    <p>Através do site o estudante não terá problemas como ter que se deslocar ao centro esportivo fisicamente.</p>
                 </div>
             </article>
 
@@ -64,12 +57,9 @@
                 </div>
                 <div class="col-lg-5 mr-auto align-self-center order-2 order-lg-1">
                     <h2 class="section-title-underline mb-5">
-                        <span>Lorem ipsum dolor sit</span>
+                        <span>Facilidades para o ambiente</span>
                     </h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At itaque dolore libero corrupti!
-                        Itaque, delectus?</p>
-                    <p>Modi sit dolor repellat esse! Sed necessitatibus itaque libero odit placeat nesciunt, voluptatum
-                        totam facere.</p>
+                    <p>O lançamento de notas online, facilidade de acesso ao diario.</p>
                 </div>
             </article>
         </div>
