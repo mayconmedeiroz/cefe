@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('test', function () {
+    return \App\SportClass::sport(4)->get();
+});
+
 Route::get('/', 'HomeController@index')->name('index');
 Route::get('article/{id}', 'ArticleController@show')->name('article.show');
 Route::get('blog', 'HomeController@articles')->name('blog');

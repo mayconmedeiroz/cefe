@@ -5,7 +5,7 @@
         <div class="col-12">
             <div class="profile p-4">
                 <div class="profile-pic d-inline-block">
-                    <img id="profile-avatar" src="storage/avatars/{{ Auth::user()->avatar }}">
+                    <img id="profile-avatar" src="/storage/avatars/{{ Auth::user()->avatar }}">
                     <div class="layer">
                         <div class="loader"></div>
                     </div>
@@ -105,7 +105,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url:'/updateAvatar',
+                    url:'/dashboard/updateAvatar',
                     method:'POST',
                     data: formData,
                     dataType:'JSON',
@@ -136,7 +136,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url:'/updateUser',
+                    url:'/dashboard/updateUser',
                     method:'POST',
                     data: formData,
                     dataType:'JSON',
@@ -170,7 +170,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url:'/changePassword',
+                    url:'/dashboard/changePassword',
                     method:'POST',
                     data: formData,
                     dataType:'JSON',

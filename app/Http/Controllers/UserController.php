@@ -133,19 +133,18 @@ class UserController extends Controller
                 if(Auth::user()->updated_at == NULL)
                 {
                     return view('dashboard.first_login');
-                } else {
-                    $userId = Auth::user()->id;
-
-                    $sportClasses = DB::table('sport_classes')
-                        ->join('student_classes', function($join) use($userId) {
-                            $join->on('student_classes.sport_class_id', '=', 'sport_classes.id')
-                                ->where('student_classes.student_id', $userId)
-                                ->whereNull('student_classes.deleted_at');
-                        })
-                        ->get();
-
-                    return view('dashboard.student')->with(compact('sportClasses'));
                 }
+                $userId = Auth::id();
+
+                $sportClasses = DB::table('sport_classes')
+                    ->join('student_classes', function($join) use($userId) {
+                        $join->on('student_classes.sport_class_id', '=', 'sport_classes.id')
+                            ->where('student_classes.student_id', $userId)
+                            ->whereNull('student_classes.deleted_at');
+                    })
+                    ->get();
+
+                return view('dashboard.student')->with(compact('sportClasses'));
                 break;
             case 2:
                 $userId = Auth::user()->id;

@@ -1262,10 +1262,16 @@ select {
   box-shadow: none !important;
 }
 
-.form-body .form-control {
+.form-body .form-control, .bootstrap-select>.dropdown-toggle {
   padding: 0.65rem 1rem;
   height: calc(1.5em + 1.3rem + 2px);
   font-size: 0.9rem;
+}
+
+.bootstrap-select>.dropdown-toggle {
+    color: #495057 !important;
+    background-color: #fff;
+    border: 1px solid #ced4da;
 }
 
 .form-footer {

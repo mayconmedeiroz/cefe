@@ -16,7 +16,7 @@ class StudentMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::user()->level == 1 && Auth::user()->updated_at == NULL) {
+        if(Auth::user()->level == 1 && Auth::user()->updated_at != NULL) {
             return $next($request);
         }
         abort(404);

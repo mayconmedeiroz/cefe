@@ -285,11 +285,4 @@ class StudentController extends Controller
         StudentSchoolClass::where('student_id', $id)->delete();
         User::findOrFail($id)->delete();
     }
-
-    public function hasSportClass()
-    {
-        return User::findOrFail(Auth::user()->id)
-            ->withCount('studentClass')
-            ->first();
-    }
 }

@@ -79,7 +79,6 @@
                     <div class="header-topbar-item header-topbar-item-user">
                         <div class="header-topbar-wrapper">
                             <div class="header-topbar-user">
-                                <span class="header-topbar-welcome d-none-mobile">Olá,</span>
                                 <span class="header-topbar-username d-none-mobile">{{ explode(" ", Auth::user()->name)[0] }}</span>
                                 <img alt="Avatar" src="{{ asset('storage/avatars/' . Auth::user()->avatar ) }}"/>
                             </div>
@@ -102,9 +101,14 @@
                     <div class="footer-copyright">2019 &copy; Centro Esportivo da FAETEC.
                     </div>
                     <div class="footer-menu">
-                        <a href="#" target="_blank" class="footer-menu-link link">Lorem</a>
                         <a href="#" target="_blank" class="footer-menu-link link">Ipsum</a>
                         <a href="#" target="_blank" class="footer-menu-link link">Dolor Sit</a>
+                        <a href="{{ route('logout') }}" class="footer-menu-link link"
+                           onclick="event.preventDefault();
+                           document.getElementById('logout-form').submit();">Sair</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </div>
                 </div>
             </footer>

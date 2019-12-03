@@ -126,7 +126,7 @@ $(document).ready(function () {
 			dom: "<'row'<'col-sm-12'tr>>",
 			buttons: [],
 			language: {
-				url: '/js/portuguese.datatable.json'
+				url: '/vendors/datatables/js/portuguese.datatable.json'
 			}
 		});
 
@@ -169,17 +169,14 @@ $(document).ready(function () {
 				}
 			}
 
-			console.log(obj);
 			obj.attendance=$(this).find(`td:eq(${attendanceTd}) input`).val();
 			obj.grade=$(this).find(`td:eq(${gradeTd}) input`).val();
 			obj.recuperation_grade=$(this).find(`td:eq(${recuperationTd}) input`).val();
 
 			 $.ajax({
 				data: obj,
-				url: '/admin/grades/',
+				url: '/dashboard/admin/grades/',
 				type: 'POST',
-				success:function(data) {
-				}
 			});
 		});
 		obj={};
@@ -189,13 +186,9 @@ $(document).ready(function () {
 		obj.classes_held=$('#classes_held').val();
 		$.ajax({
 			data: obj,
-			url: '/admin/grades/storeLesson/',
+			url: '/dashboard/admin/grades/storeLesson/',
 			type: 'POST',
-			success:function(data) {
-				console.log(data, obj);
-			}
 		});
-		console.log(obj);
 		$('#list').DataTable().ajax.reload();
 	});
 

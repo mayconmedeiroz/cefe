@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -51,5 +52,4 @@ class User extends Authenticatable
     {
         return $this->hasManyThrough('App\School', 'App\StudentClass');
     }
-
 }

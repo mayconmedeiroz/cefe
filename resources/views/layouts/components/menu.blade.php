@@ -171,16 +171,25 @@ switch (Auth::user()->level) {
                     </li>
                 @break
                 @case(1)
-                    <li class="menu-item {{ Request::is('*/sport_classes') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-                        <a href="{{ route('teacher.sport_classes.index') }}" class="menu-link menu-toggle">
+                    @if($data['hasSportClass'] || ( $data['hasSportClass'] > 1 && $data['recuperation'] ))
+                    <li class="menu-item {{ Request::is('*/enroll') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                        <a href="{{ route('student.enroll.index') }}" class="menu-link menu-toggle">
                             <span class="menu-link-icon"><i class="fa fa-chalkboard"></i></span>
-                            <span class="menu-link-text">Gerenciar Turmas</span>
+                            <span class="menu-link-text">Trocar modalidade</span>
                         </a>
                     </li>
-                    <li class="menu-item {{ Request::is('*/grades') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-                        <a href="{{ route('teacher.grades.index') }}" class="menu-link menu-toggle">
+                    @else
+                    <li class="menu-item {{ Request::is('*/enroll') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                        <a href="{{ route('student.enroll.index') }}" class="menu-link menu-toggle">
+                            <span class="menu-link-icon"><i class="fa fa-chalkboard"></i></span>
+                            <span class="menu-link-text">Inscrever-se em uma modalidade</span>
+                        </a>
+                    </li>
+                    @endif
+                    <li class="menu-item {{ Request::is('*/report_card') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                        <a href="{{ route('student.studentReportCardIndex') }}" class="menu-link menu-toggle">
                             <span class="menu-link-icon"><i class="fa fa-address-card"></i></span>
-                            <span class="menu-link-text">Lançamento de Notas</span>
+                            <span class="menu-link-text">Boletim</span>
                         </a>
                     </li>
                 @break

@@ -41,7 +41,7 @@
                                 <div class="course-1-content pb-4">
                                     <h2>Turma {{ $sportClass->name }}</h2>
                                     <p class="desc mb-4">{{ $sportClass->sport_time }}</p>
-                                    <p><a href="/student/enroll/{{ $sportClass->id }}"
+                                    <p><a href="{{ route('student.enroll.index') }}"
                                           class="btn btn-primary btn-red rounded-0 px-4">Inscrever-se na turma</a></p>
                                 </div>
                             </div>
